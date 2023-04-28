@@ -1,0 +1,12 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: README
+parts:
+  - caption: Fundamentals
+    chapters:
+    - file: fundamentals/README
+  - caption: Experiments
+    chapters:
+    - file: experiments/ATTCK-GPT/notebook

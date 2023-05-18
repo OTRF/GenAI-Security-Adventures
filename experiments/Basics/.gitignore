@@ -1,0 +1,3 @@
+.env
+db/db.pkl
+.ipynb_checkpoints

@@ -10,3 +10,5 @@ parts:
   - caption: Experiments
     chapters:
     - file: experiments/ATTCK-GPT/notebook
+    - file: experiments/Basics/OAI-TextPrompt-Sentiment
+    - file: experiments/Basics/OAI-TextPrompt-Summarizing

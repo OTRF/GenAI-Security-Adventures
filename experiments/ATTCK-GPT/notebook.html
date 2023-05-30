@@ -1,0 +1,1283 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>ATT&amp;CK GPT &#8212; GPT Security Adventures</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/ATTCK-GPT/notebook';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Open AI: Basic Text Prompt Sentiment Classifier" href="../Basics/OAI-TextPrompt-Sentiment.html" />
+    <link rel="prev" title="Embeddings" href="../../getting-started/Embeddings.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/Embeddings.html">Embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">ATT&amp;CK GPT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Basics/OAI-TextPrompt-Sentiment.html">Open AI: Basic Text Prompt Sentiment Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Basics/OAI-TextPrompt-Summarizing.html">Open AI: Basic Text Prompt Summarizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Bloodhound-GPT/notebook.html">Bloodhound GPT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Local-GPT/notebook.html">Local Experiment: GPT4All</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures/issues/new?title=Issue%20on%20page%20%2Fexperiments/ATTCK-GPT/notebook.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/experiments/ATTCK-GPT/notebook.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>ATT&CK GPT</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-att-ck-groups-knowledge-base">Create ATT&amp;CK Groups Knowledge Base</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-modules-and-define-variables">Import Modules and Define Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-att-ck-client">Initialize ATT&amp;CK Client</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-att-ck-groups-knowledge">Get ATT&amp;CK Groups Knowledge</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-att-ck-groups-documents">Create ATT&amp;CK Groups Documents</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-knowledge-base-embeddings">Generate Knowledge Base Embeddings</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-documents">Load Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#split-documents">Split Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#export-knowledge-base-as-jsonl-file-optional">Export Knowledge Base as JSONL File (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings">Generate Embeddings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-database-pickle-file-optional">Create Database Pickle File (Optional)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#query-att-ck-groups-knowledge-base">Query ATT&amp;CK Groups Knowledge Base</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-openai-optional">Initialize OpenAI (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-vector-store-retriever">Define Vector Store Retriever</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-relevant-documents">Get Relevant Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-answering">Question Answering</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="att-ck-gpt">
+<h1>ATT&amp;CK GPT<a class="headerlink" href="#att-ck-gpt" title="Permalink to this heading">#</a></h1>
+<section id="create-att-ck-groups-knowledge-base">
+<h2>Create ATT&amp;CK Groups Knowledge Base<a class="headerlink" href="#create-att-ck-groups-knowledge-base" title="Permalink to this heading">#</a></h2>
+<section id="import-modules-and-define-variables">
+<h3>Import Modules and Define Variables<a class="headerlink" href="#import-modules-and-define-variables" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">attackcti</span> <span class="kn">import</span> <span class="n">attack_client</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;taxii2client&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a few variables</span>
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s2">&quot;__file__&quot;</span><span class="p">)</span>
+<span class="n">knowledge_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;knowledge&quot;</span><span class="p">)</span>
+<span class="n">db_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;db&quot;</span><span class="p">)</span>
+<span class="n">templates_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;templates&quot;</span><span class="p">)</span>
+<span class="n">group_template</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">templates_directory</span><span class="p">,</span> <span class="s2">&quot;group.md&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initialize-att-ck-client">
+<h3>Initialize ATT&amp;CK Client<a class="headerlink" href="#initialize-att-ck-client" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lift</span> <span class="o">=</span> <span class="n">attack_client</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-att-ck-groups-knowledge">
+<h3>Get ATT&amp;CK Groups Knowledge<a class="headerlink" href="#get-att-ck-groups-knowledge" title="Permalink to this heading">#</a></h3>
+<p>Gettings technique STIX objects used by all groups accross all ATT&amp;CK matrices..</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">techniques_used_by_groups</span> <span class="o">=</span> <span class="n">lift</span><span class="o">.</span><span class="n">get_techniques_used_by_all_groups</span><span class="p">()</span>
+<span class="n">techniques_used_by_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;type&#39;: &#39;intrusion-set&#39;,
+ &#39;id&#39;: &#39;intrusion-set--b7f627e2-0817-4cd5-8d50-e75f8aa85cc6&#39;,
+ &#39;created_by_ref&#39;: &#39;identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5&#39;,
+ &#39;created&#39;: &#39;2023-02-23T15:31:38.829Z&#39;,
+ &#39;modified&#39;: &#39;2023-04-17T21:49:16.371Z&#39;,
+ &#39;name&#39;: &#39;LuminousMoth&#39;,
+ &#39;description&#39;: &#39;[LuminousMoth](https://attack.mitre.org/groups/G1014) is a Chinese-speaking cyber espionage group that has been active since at least October 2020. [LuminousMoth](https://attack.mitre.org/groups/G1014) has targeted high-profile organizations, including government entities, in Myanmar, the Philippines, Thailand, and other parts of Southeast Asia. Some security researchers have concluded there is a connection between [LuminousMoth](https://attack.mitre.org/groups/G1014) and [Mustang Panda](https://attack.mitre.org/groups/G0129) based on similar targeting and TTPs, as well as network infrastructure overlaps.(Citation: Kaspersky LuminousMoth July 2021)(Citation: Bitdefender LuminousMoth July 2021)&#39;,
+ &#39;aliases&#39;: [&#39;LuminousMoth&#39;],
+ &#39;external_references&#39;: [{&#39;source_name&#39;: &#39;mitre-attack&#39;,
+   &#39;url&#39;: &#39;https://attack.mitre.org/groups/G1014&#39;,
+   &#39;external_id&#39;: &#39;G1014&#39;},
+  {&#39;source_name&#39;: &#39;Bitdefender LuminousMoth July 2021&#39;,
+   &#39;description&#39;: &#39;Botezatu, B and etl. (2021, July 21). LuminousMoth - PlugX, File Exfiltration and Persistence Revisited. Retrieved October 20, 2022.&#39;,
+   &#39;url&#39;: &#39;https://www.bitdefender.com/blog/labs/luminousmoth-plugx-file-exfiltration-and-persistence-revisited&#39;},
+  {&#39;source_name&#39;: &#39;Kaspersky LuminousMoth July 2021&#39;,
+   &#39;description&#39;: &#39;Lechtik, M, and etl. (2021, July 14). LuminousMoth APT: Sweeping attacks for the chosen few. Retrieved October 20, 2022.&#39;,
+   &#39;url&#39;: &#39;https://securelist.com/apt-luminousmoth/103332/&#39;}],
+ &#39;object_marking_refs&#39;: [&#39;marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168&#39;],
+ &#39;x_mitre_attack_spec_version&#39;: &#39;3.1.0&#39;,
+ &#39;x_mitre_contributors&#39;: [&#39;Kyaw Pyiyt Htet, @KyawPyiytHtet&#39;,
+  &#39;Zaw Min Htun, @Z3TAE&#39;],
+ &#39;x_mitre_deprecated&#39;: False,
+ &#39;x_mitre_domains&#39;: [&#39;enterprise-attack&#39;],
+ &#39;x_mitre_modified_by_ref&#39;: &#39;identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5&#39;,
+ &#39;x_mitre_version&#39;: &#39;1.0&#39;,
+ &#39;technique_ref&#39;: &#39;attack-pattern--32901740-b42c-4fdd-bc02-345b5dc57082&#39;,
+ &#39;relationship_description&#39;: &#39;[LuminousMoth](https://attack.mitre.org/groups/G1014) has signed their malware with a valid digital signature.(Citation: Kaspersky LuminousMoth July 2021)&#39;,
+ &#39;relationship_id&#39;: &#39;relationship--eb4ce173-6f0e-4c12-9ff8-09c4fb1ae2d3&#39;,
+ &#39;revoked&#39;: False,
+ &#39;technique&#39;: &#39;Code Signing&#39;,
+ &#39;technique_description&#39;: &#39;Adversaries may create, acquire, or steal code signing materials to sign their malware or tools. Code signing provides a level of authenticity on a binary from the developer and a guarantee that the binary has not been tampered with. (Citation: Wikipedia Code Signing) The certificates used during an operation may be created, acquired, or stolen by the adversary. (Citation: Securelist Digital Certificates) (Citation: Symantec Digital Certificates) Unlike [Invalid Code Signature](https://attack.mitre.org/techniques/T1036/001), this activity will result in a valid signature.\n\nCode signing to verify software on first run can be used on modern Windows and macOS systems. It is not used on Linux due to the decentralized nature of the platform. (Citation: Wikipedia Code Signing)(Citation: EclecticLightChecksonEXECodeSigning)\n\nCode signing certificates may be used to bypass security policies that require signed code to execute on a system. &#39;,
+ &#39;tactic&#39;: [KillChainPhase(kill_chain_name=&#39;mitre-attack&#39;, phase_name=&#39;defense-evasion&#39;)],
+ &#39;technique_id&#39;: &#39;T1553.002&#39;,
+ &#39;matrix&#39;: &#39;mitre-attack&#39;,
+ &#39;platform&#39;: [&#39;macOS&#39;, &#39;Windows&#39;],
+ &#39;data_sources&#39;: [&#39;File: File Metadata&#39;]}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-att-ck-groups-documents">
+<h3>Create ATT&amp;CK Groups Documents<a class="headerlink" href="#create-att-ck-groups-documents" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Template</span>
+
+<span class="c1"># Create Group docs</span>
+<span class="n">all_groups</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">technique</span> <span class="ow">in</span> <span class="n">techniques_used_by_groups</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_groups</span><span class="p">:</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;external_references&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;external_id&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;modified&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;modified&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;aliases&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;aliases&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;x_mitre_contributors&#39;</span> <span class="ow">in</span> <span class="n">technique</span><span class="p">:</span>
+            <span class="n">group</span><span class="p">[</span><span class="s1">&#39;contributors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;x_mitre_contributors&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;techniques&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">all_groups</span><span class="p">[</span><span class="n">technique</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">group</span>
+    <span class="n">technique_used</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;matrix&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;matrix&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;x_mitre_domains&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;tactics&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;tactic&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;technique_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;technique_id&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;technique_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;technique&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;use&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;relationship_description&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;data_sources&#39;</span> <span class="ow">in</span> <span class="n">technique</span><span class="p">:</span>
+        <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;data_sources&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;data_sources&#39;</span><span class="p">]</span>
+    <span class="n">all_groups</span><span class="p">[</span><span class="n">technique</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]][</span><span class="s1">&#39;techniques&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">technique_used</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">knowledge_directory</span><span class="p">):</span>
+   <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Creating knowledge directory..&quot;</span><span class="p">)</span>
+   <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">knowledge_directory</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Creating markadown files for each group..&quot;</span><span class="p">)</span>
+<span class="n">markdown_template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">group_template</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">all_groups</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  [&gt;&gt;] Creating markdown file for </span><span class="si">{}</span><span class="s2">..&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_name&#39;</span><span class="p">]))</span>
+    <span class="n">group_for_render</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+    <span class="n">markdown</span> <span class="o">=</span> <span class="n">markdown_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">group_for_render</span><span class="p">,</span> <span class="n">group_name</span><span class="o">=</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_name&#39;</span><span class="p">],</span> <span class="n">group_id</span><span class="o">=</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_id&#39;</span><span class="p">])</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_name&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">knowledge_directory</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s1">.md&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">markdown</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Creating markadown files for each group..
+  [&gt;&gt;] Creating markdown file for LuminousMoth..
+  [&gt;&gt;] Creating markdown file for Metador..
+  [&gt;&gt;] Creating markdown file for CURIUM..
+  [&gt;&gt;] Creating markdown file for EXOTIC LILY..
+  [&gt;&gt;] Creating markdown file for Moses Staff..
+  [&gt;&gt;] Creating markdown file for SideCopy..
+  [&gt;&gt;] Creating markdown file for Aoqin Dragon..
+  [&gt;&gt;] Creating markdown file for Earth Lusca..
+  [&gt;&gt;] Creating markdown file for POLONIUM..
+  [&gt;&gt;] Creating markdown file for LAPSUS$..
+  [&gt;&gt;] Creating markdown file for Ember Bear..
+  [&gt;&gt;] Creating markdown file for BITTER..
+  [&gt;&gt;] Creating markdown file for Aquatic Panda..
+  [&gt;&gt;] Creating markdown file for Confucius..
+  [&gt;&gt;] Creating markdown file for LazyScripter..
+  [&gt;&gt;] Creating markdown file for TeamTNT..
+  [&gt;&gt;] Creating markdown file for Andariel..
+  [&gt;&gt;] Creating markdown file for Ferocious Kitten..
+  [&gt;&gt;] Creating markdown file for IndigoZebra..
+  [&gt;&gt;] Creating markdown file for BackdoorDiplomacy..
+  [&gt;&gt;] Creating markdown file for Transparent Tribe..
+  [&gt;&gt;] Creating markdown file for Nomadic Octopus..
+  [&gt;&gt;] Creating markdown file for Tonto Team..
+  [&gt;&gt;] Creating markdown file for Ajax Security Team..
+  [&gt;&gt;] Creating markdown file for Mustang Panda..
+  [&gt;&gt;] Creating markdown file for ZIRCONIUM..
+  [&gt;&gt;] Creating markdown file for TA551..
+  [&gt;&gt;] Creating markdown file for Higaisa..
+  [&gt;&gt;] Creating markdown file for HAFNIUM..
+  [&gt;&gt;] Creating markdown file for Windigo..
+  [&gt;&gt;] Creating markdown file for Volatile Cedar..
+  [&gt;&gt;] Creating markdown file for Silent Librarian..
+  [&gt;&gt;] Creating markdown file for Sidewinder..
+  [&gt;&gt;] Creating markdown file for Evilnum..
+  [&gt;&gt;] Creating markdown file for Indrik Spider..
+  [&gt;&gt;] Creating markdown file for Fox Kitten..
+  [&gt;&gt;] Creating markdown file for GOLD SOUTHFIELD..
+  [&gt;&gt;] Creating markdown file for Chimera..
+  [&gt;&gt;] Creating markdown file for Windshift..
+  [&gt;&gt;] Creating markdown file for Blue Mockingbird..
+  [&gt;&gt;] Creating markdown file for Whitefly..
+  [&gt;&gt;] Creating markdown file for Rocke..
+  [&gt;&gt;] Creating markdown file for DarkVishnya..
+  [&gt;&gt;] Creating markdown file for Mofang..
+  [&gt;&gt;] Creating markdown file for Wizard Spider..
+  [&gt;&gt;] Creating markdown file for Inception..
+  [&gt;&gt;] Creating markdown file for APT-C-36..
+  [&gt;&gt;] Creating markdown file for BlackTech..
+  [&gt;&gt;] Creating markdown file for APT41..
+  [&gt;&gt;] Creating markdown file for Machete..
+  [&gt;&gt;] Creating markdown file for Kimsuky..
+  [&gt;&gt;] Creating markdown file for GALLIUM..
+  [&gt;&gt;] Creating markdown file for TA505..
+  [&gt;&gt;] Creating markdown file for Silence..
+  [&gt;&gt;] Creating markdown file for WIRTE..
+  [&gt;&gt;] Creating markdown file for The White Company..
+  [&gt;&gt;] Creating markdown file for TEMP.Veles..
+  [&gt;&gt;] Creating markdown file for APT39..
+  [&gt;&gt;] Creating markdown file for FIN4..
+  [&gt;&gt;] Creating markdown file for Gallmaker..
+  [&gt;&gt;] Creating markdown file for SilverTerrier..
+  [&gt;&gt;] Creating markdown file for APT38..
+  [&gt;&gt;] Creating markdown file for Tropic Trooper..
+  [&gt;&gt;] Creating markdown file for Dark Caracal..
+  [&gt;&gt;] Creating markdown file for Gorgon Group..
+  [&gt;&gt;] Creating markdown file for Rancor..
+  [&gt;&gt;] Creating markdown file for Thrip..
+  [&gt;&gt;] Creating markdown file for Orangeworm..
+  [&gt;&gt;] Creating markdown file for HEXANE..
+  [&gt;&gt;] Creating markdown file for DarkHydrus..
+  [&gt;&gt;] Creating markdown file for Leafminer..
+  [&gt;&gt;] Creating markdown file for Cobalt Group..
+  [&gt;&gt;] Creating markdown file for APT19..
+  [&gt;&gt;] Creating markdown file for FIN8..
+  [&gt;&gt;] Creating markdown file for Elderwood..
+  [&gt;&gt;] Creating markdown file for BlackOasis..
+  [&gt;&gt;] Creating markdown file for MuddyWater..
+  [&gt;&gt;] Creating markdown file for Leviathan..
+  [&gt;&gt;] Creating markdown file for APT33..
+  [&gt;&gt;] Creating markdown file for APT37..
+  [&gt;&gt;] Creating markdown file for TA459..
+  [&gt;&gt;] Creating markdown file for PLATINUM..
+  [&gt;&gt;] Creating markdown file for Sowbug..
+  [&gt;&gt;] Creating markdown file for BRONZE BUTLER..
+  [&gt;&gt;] Creating markdown file for Magic Hound..
+  [&gt;&gt;] Creating markdown file for CopyKittens..
+  [&gt;&gt;] Creating markdown file for PROMETHIUM..
+  [&gt;&gt;] Creating markdown file for FIN5..
+  [&gt;&gt;] Creating markdown file for FIN10..
+  [&gt;&gt;] Creating markdown file for OilRig..
+  [&gt;&gt;] Creating markdown file for APT32..
+  [&gt;&gt;] Creating markdown file for RTM..
+  [&gt;&gt;] Creating markdown file for Gamaredon Group..
+  [&gt;&gt;] Creating markdown file for FIN7..
+  [&gt;&gt;] Creating markdown file for menuPass..
+  [&gt;&gt;] Creating markdown file for Winnti Group..
+  [&gt;&gt;] Creating markdown file for Group5..
+  [&gt;&gt;] Creating markdown file for Strider..
+  [&gt;&gt;] Creating markdown file for Patchwork..
+  [&gt;&gt;] Creating markdown file for Suckfly..
+  [&gt;&gt;] Creating markdown file for Stealth Falcon..
+  [&gt;&gt;] Creating markdown file for FIN6..
+  [&gt;&gt;] Creating markdown file for GCMAN..
+  [&gt;&gt;] Creating markdown file for Dragonfly..
+  [&gt;&gt;] Creating markdown file for Sandworm Team..
+  [&gt;&gt;] Creating markdown file for Poseidon Group..
+  [&gt;&gt;] Creating markdown file for Lazarus Group..
+  [&gt;&gt;] Creating markdown file for Scarlet Mimic..
+  [&gt;&gt;] Creating markdown file for Threat Group-1314..
+  [&gt;&gt;] Creating markdown file for Threat Group-3390..
+  [&gt;&gt;] Creating markdown file for APT18..
+  [&gt;&gt;] Creating markdown file for APT17..
+  [&gt;&gt;] Creating markdown file for Putter Panda..
+  [&gt;&gt;] Creating markdown file for APT16..
+  [&gt;&gt;] Creating markdown file for APT3..
+  [&gt;&gt;] Creating markdown file for Molerats..
+  [&gt;&gt;] Creating markdown file for Equation..
+  [&gt;&gt;] Creating markdown file for Naikon..
+  [&gt;&gt;] Creating markdown file for admin@338..
+  [&gt;&gt;] Creating markdown file for APT29..
+  [&gt;&gt;] Creating markdown file for APT30..
+  [&gt;&gt;] Creating markdown file for Darkhotel..
+  [&gt;&gt;] Creating markdown file for PittyTiger..
+  [&gt;&gt;] Creating markdown file for Turla..
+  [&gt;&gt;] Creating markdown file for Deep Panda..
+  [&gt;&gt;] Creating markdown file for Carbanak..
+  [&gt;&gt;] Creating markdown file for APT28..
+  [&gt;&gt;] Creating markdown file for APT1..
+  [&gt;&gt;] Creating markdown file for APT12..
+  [&gt;&gt;] Creating markdown file for Ke3chang..
+  [&gt;&gt;] Creating markdown file for Cleaver..
+  [&gt;&gt;] Creating markdown file for Moafee..
+  [&gt;&gt;] Creating markdown file for Axiom..
+  [&gt;&gt;] Creating markdown file for ALLANITE..
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="generate-knowledge-base-embeddings">
+<h2>Generate Knowledge Base Embeddings<a class="headerlink" href="#generate-knowledge-base-embeddings" title="Permalink to this heading">#</a></h2>
+<section id="load-documents">
+<h3>Load Documents<a class="headerlink" href="#load-documents" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">langchain.document_loaders</span> <span class="kn">import</span> <span class="n">UnstructuredMarkdownLoader</span>
+<span class="kn">import</span> <span class="nn">tiktoken</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># variables</span>
+<span class="n">group_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">knowledge_directory</span><span class="p">,</span> <span class="s2">&quot;*.md&quot;</span><span class="p">))</span>
+
+<span class="c1"># Loading Markdown files</span>
+<span class="n">md_docs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Loading Group markdown files..&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">group_files</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; [*] Loading </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">group</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredMarkdownLoader</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+    <span class="n">md_docs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[+] Number of .md documents processed: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">md_docs</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tiktoken</span><span class="o">.</span><span class="n">get_encoding</span><span class="p">(</span><span class="s1">&#39;cl100k_base&#39;</span><span class="p">)</span>
+
+<span class="c1"># create the length function</span>
+<span class="k">def</span> <span class="nf">tiktoken_len</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">text</span><span class="p">,</span>
+        <span class="n">disallowed_special</span><span class="o">=</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+<span class="n">tiktoken</span><span class="o">.</span><span class="n">encoding_for_model</span><span class="p">(</span><span class="s1">&#39;gpt-3.5-turbo&#39;</span><span class="p">)</span>
+<span class="n">token_counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">tiktoken_len</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">md_docs</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;[+] Token Counts:</span>
+<span class="s2">Min: </span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="n">token_counts</span><span class="p">)</span><span class="si">}</span>
+<span class="s2">Avg: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">token_counts</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">token_counts</span><span class="p">))</span><span class="si">}</span>
+<span class="s2">Max: </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="n">token_counts</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Loading Group markdown files..
+ [*] Loading admin@338.md
+ [*] Loading Ajax_Security_Team.md
+ [*] Loading ALLANITE.md
+ [*] Loading Andariel.md
+ [*] Loading Aoqin_Dragon.md
+ [*] Loading APT-C-36.md
+ [*] Loading APT1.md
+ [*] Loading APT12.md
+ [*] Loading APT16.md
+ [*] Loading APT17.md
+ [*] Loading APT18.md
+ [*] Loading APT19.md
+ [*] Loading APT28.md
+ [*] Loading APT29.md
+ [*] Loading APT3.md
+ [*] Loading APT30.md
+ [*] Loading APT32.md
+ [*] Loading APT33.md
+ [*] Loading APT37.md
+ [*] Loading APT38.md
+ [*] Loading APT39.md
+ [*] Loading APT41.md
+ [*] Loading Aquatic_Panda.md
+ [*] Loading Axiom.md
+ [*] Loading BackdoorDiplomacy.md
+ [*] Loading BITTER.md
+ [*] Loading BlackOasis.md
+ [*] Loading BlackTech.md
+ [*] Loading Blue_Mockingbird.md
+ [*] Loading BRONZE_BUTLER.md
+ [*] Loading Carbanak.md
+ [*] Loading Chimera.md
+ [*] Loading Cleaver.md
+ [*] Loading Cobalt_Group.md
+ [*] Loading Confucius.md
+ [*] Loading CopyKittens.md
+ [*] Loading CURIUM.md
+ [*] Loading Darkhotel.md
+ [*] Loading DarkHydrus.md
+ [*] Loading DarkVishnya.md
+ [*] Loading Dark_Caracal.md
+ [*] Loading Deep_Panda.md
+ [*] Loading Dragonfly.md
+ [*] Loading Earth_Lusca.md
+ [*] Loading Elderwood.md
+ [*] Loading Ember_Bear.md
+ [*] Loading Equation.md
+ [*] Loading Evilnum.md
+ [*] Loading EXOTIC_LILY.md
+ [*] Loading Ferocious_Kitten.md
+ [*] Loading FIN10.md
+ [*] Loading FIN4.md
+ [*] Loading FIN5.md
+ [*] Loading FIN6.md
+ [*] Loading FIN7.md
+ [*] Loading FIN8.md
+ [*] Loading Fox_Kitten.md
+ [*] Loading GALLIUM.md
+ [*] Loading Gallmaker.md
+ [*] Loading Gamaredon_Group.md
+ [*] Loading GCMAN.md
+ [*] Loading GOLD_SOUTHFIELD.md
+ [*] Loading Gorgon_Group.md
+ [*] Loading Group5.md
+ [*] Loading HAFNIUM.md
+ [*] Loading HEXANE.md
+ [*] Loading Higaisa.md
+ [*] Loading Inception.md
+ [*] Loading IndigoZebra.md
+ [*] Loading Indrik_Spider.md
+ [*] Loading Ke3chang.md
+ [*] Loading Kimsuky.md
+ [*] Loading LAPSUS$.md
+ [*] Loading Lazarus_Group.md
+ [*] Loading LazyScripter.md
+ [*] Loading Leafminer.md
+ [*] Loading Leviathan.md
+ [*] Loading LuminousMoth.md
+ [*] Loading Machete.md
+ [*] Loading Magic_Hound.md
+ [*] Loading menuPass.md
+ [*] Loading Metador.md
+ [*] Loading Moafee.md
+ [*] Loading Mofang.md
+ [*] Loading Molerats.md
+ [*] Loading Moses_Staff.md
+ [*] Loading MuddyWater.md
+ [*] Loading Mustang_Panda.md
+ [*] Loading Naikon.md
+ [*] Loading Nomadic_Octopus.md
+ [*] Loading OilRig.md
+ [*] Loading Orangeworm.md
+ [*] Loading Patchwork.md
+ [*] Loading PittyTiger.md
+ [*] Loading PLATINUM.md
+ [*] Loading POLONIUM.md
+ [*] Loading Poseidon_Group.md
+ [*] Loading PROMETHIUM.md
+ [*] Loading Putter_Panda.md
+ [*] Loading Rancor.md
+ [*] Loading Rocke.md
+ [*] Loading RTM.md
+ [*] Loading Sandworm_Team.md
+ [*] Loading Scarlet_Mimic.md
+ [*] Loading SideCopy.md
+ [*] Loading Sidewinder.md
+ [*] Loading Silence.md
+ [*] Loading Silent_Librarian.md
+ [*] Loading SilverTerrier.md
+ [*] Loading Sowbug.md
+ [*] Loading Stealth_Falcon.md
+ [*] Loading Strider.md
+ [*] Loading Suckfly.md
+ [*] Loading TA459.md
+ [*] Loading TA505.md
+ [*] Loading TA551.md
+ [*] Loading TeamTNT.md
+ [*] Loading TEMP.Veles.md
+ [*] Loading The_White_Company.md
+ [*] Loading Threat_Group-1314.md
+ [*] Loading Threat_Group-3390.md
+ [*] Loading Thrip.md
+ [*] Loading Tonto_Team.md
+ [*] Loading Transparent_Tribe.md
+ [*] Loading Tropic_Trooper.md
+ [*] Loading Turla.md
+ [*] Loading Volatile_Cedar.md
+ [*] Loading Whitefly.md
+ [*] Loading Windigo.md
+ [*] Loading Windshift.md
+ [*] Loading Winnti_Group.md
+ [*] Loading WIRTE.md
+ [*] Loading Wizard_Spider.md
+ [*] Loading ZIRCONIUM.md
+[+] Number of .md documents processed: 134
+[+] Token Counts:
+Min: 176
+Avg: 1619
+Max: 7350
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="split-documents">
+<h3>Split Documents<a class="headerlink" href="#split-documents" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">RecursiveCharacterTextSplitter</span>
+<span class="kn">from</span> <span class="nn">langchain.docstore.document</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Chunking Text</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[+] Initializing RecursiveCharacterTextSplitter..&#39;</span><span class="p">)</span>
+<span class="n">text_splitter</span> <span class="o">=</span> <span class="n">RecursiveCharacterTextSplitter</span><span class="p">(</span>
+    <span class="n">chunk_size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>  <span class="c1"># number of tokens overlap between chunks</span>
+    <span class="n">length_function</span><span class="o">=</span><span class="n">tiktoken_len</span><span class="p">,</span>
+    <span class="n">separators</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[+] Splitting documents in chunks..&#39;</span><span class="p">)</span>
+<span class="n">chunks</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_documents</span><span class="p">(</span><span class="n">md_docs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[+] Number of chunks: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Initializing RecursiveCharacterTextSplitter..
+[+] Splitting documents in chunks..
+[+] Number of chunks: 534
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[+] Splitting text in chunks..&#39;</span><span class="p">)</span>
+<span class="n">json_documents</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">chunks_documents</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">md_docs</span><span class="p">):</span>
+    <span class="n">doc_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">])</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">doc_name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="n">uid</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">12</span><span class="p">]</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chunks</span><span class="p">):</span>
+        <span class="c1"># Add JSON object to array</span>
+        <span class="n">json_documents</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">chunk</span><span class="p">,</span>
+            <span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="n">doc_name</span>
+        <span class="p">})</span>
+        <span class="c1"># Create docs</span>
+        <span class="n">document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="n">page_content</span><span class="o">=</span><span class="n">chunk</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">doc_name</span><span class="p">})</span>
+        <span class="n">chunks_documents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[+] Final Documents count: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">json_documents</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Splitting text in chunks..
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "eb383da3418145aea1267a6991159d16", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Final Documents count: 534
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="export-knowledge-base-as-jsonl-file-optional">
+<h3>Export Knowledge Base as JSONL File (Optional)<a class="headerlink" href="#export-knowledge-base-as-jsonl-file-optional" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">db_directory</span><span class="p">):</span>
+   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[+] Creating database directory..&#39;</span><span class="p">)</span>
+   <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">db_directory</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[+] Exporting groups as .jsonl file..&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">db_directory</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;attack-groups.jsonl&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">json_documents</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Exporting groups as .jsonl file..
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generate-embeddings">
+<h3>Generate Embeddings<a class="headerlink" href="#generate-embeddings" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.embeddings.openai</span> <span class="kn">import</span> <span class="n">OpenAIEmbeddings</span>
+<span class="kn">from</span> <span class="nn">langchain.vectorstores</span> <span class="kn">import</span> <span class="n">FAISS</span>
+<span class="kn">import</span> <span class="nn">openai</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s2">&quot;__file__&quot;</span><span class="p">)</span>
+<span class="n">db_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;db&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get your key: https://platform.openai.com/account/api-keys</span>
+<span class="n">load_dotenv</span><span class="p">()</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">db_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">db_directory</span><span class="p">,</span><span class="s2">&quot;db.pkl&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">db_file</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Starting embedding..&quot;</span><span class="p">)</span>
+    <span class="n">embeddings</span> <span class="o">=</span> <span class="n">OpenAIEmbeddings</span><span class="p">()</span>
+
+    <span class="c1"># Send text chunks to OpenAI Embeddings API</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Sending chunks to OpenAI Embeddings API..&quot;</span><span class="p">)</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">FAISS</span><span class="o">.</span><span class="n">from_documents</span><span class="p">(</span><span class="n">chunks_documents</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-database-pickle-file-optional">
+<h3>Create Database Pickle File (Optional)<a class="headerlink" href="#create-database-pickle-file-optional" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s2">&quot;__file__&quot;</span><span class="p">)</span>
+<span class="n">db_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;db&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">db_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">db_directory</span><span class="p">,</span><span class="s2">&quot;db.pkl&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">db_file</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">db_file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Save vectorstore</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Create Pickle file..&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">db_file</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">db</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;langchain.vectorstores.faiss.FAISS&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="query-att-ck-groups-knowledge-base">
+<h2>Query ATT&amp;CK Groups Knowledge Base<a class="headerlink" href="#query-att-ck-groups-knowledge-base" title="Permalink to this heading">#</a></h2>
+<section id="initialize-openai-optional">
+<h3>Initialize OpenAI (Optional)<a class="headerlink" href="#initialize-openai-optional" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">import</span> <span class="nn">openai</span>
+
+<span class="c1"># Get your key: https://platform.openai.com/account/api-keys</span>
+<span class="n">load_dotenv</span><span class="p">()</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="define-vector-store-retriever">
+<h3>Define Vector Store Retriever<a class="headerlink" href="#define-vector-store-retriever" title="Permalink to this heading">#</a></h3>
+<p>The retriever interface is a generic interface that makes it easy to combine documents with language models. This interface exposes a get_relevant_documents method which takes in a query (a string) and returns a list of documents.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retriever</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">(</span><span class="n">search_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;k&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-relevant-documents">
+<h3>Get Relevant Documents<a class="headerlink" href="#get-relevant-documents" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What are some phishing techniques used by threat actors?&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Getting relevant documents for query..&quot;</span><span class="p">)</span>
+<span class="n">relevant_docs</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">get_relevant_documents</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="n">relevant_docs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Getting relevant documents for query..
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Document(page_content=&#39;APT39 leveraged spearphishing emails with malicious attachments to initially compromise victims.(Citation: FireEye APT39 Jan 2019)(Citation: Symantec Chafer February 2018)(Citation: FBI FLASH APT39 September 2020)|&#39;, metadata={&#39;source&#39;: &#39;APT39.md&#39;}),
+ Document(page_content=&#39;Lazarus Group has been observed targeting organizations using spearphishing documents with embedded malicious payloads. (Citation: Novetta Threat Research Group February 2016) Highly targeted spear phishing campaigns have been conducted against a U.S. electric grid company. (Citation: Eduard Kovacs March 2018)|&#39;, metadata={&#39;source&#39;: &#39;Lazarus_Group.md&#39;}),
+ Document(page_content=&#39;TA505 has used spearphishing emails with malicious attachments to initially compromise victims.(Citation: Proofpoint TA505 Sep 2017)(Citation: Proofpoint TA505 June 2018)(Citation: Proofpoint TA505 Jan 2019)(Citation: Cybereason TA505 April 2019)(Citation: ProofPoint SettingContent-ms July 2018)(Citation: Proofpoint TA505 Mar 2018)(Citation: Trend Micro TA505 June 2019)(Citation: Proofpoint TA505 October 2019)(Citation: IBM TA505 April 2020)|&#39;, metadata={&#39;source&#39;: &#39;TA505.md&#39;}),
+ Document(page_content=&#39;Nomadic Octopus has targeted victims with spearphishing emails containing malicious attachments.(Citation: Security Affairs DustSquad Oct 2018)(Citation: ESET Nomadic Octopus 2018)|&#39;, metadata={&#39;source&#39;: &#39;Nomadic_Octopus.md&#39;}),
+ Document(page_content=&#39;APT29 has used spearphishing with a link to trick victims into clicking on a link to a zip file containing malicious files.(Citation: Mandiant No Easy Breach)(Citation: MSTIC NOBELIUM May 2021)(Citation: Secureworks IRON RITUAL USAID Phish May 2021)|\n|mitre-attack|enterprise-attack|Linux,Windows,macOS|T1203|Exploitation for Client Execution|\n\nAPT29 has used multiple software exploits for common client software, like Microsoft Word, Exchange, and Adobe Reader, to gain code execution.(Citation: F-Secure The Dukes)(Citation: Cybersecurity Advisory SVR TTP May 2021)(Citation: MSTIC NOBELIUM May 2021)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows,Network|T1090.003|Multi-hop Proxy|A backdoor used by\n\nAPT29 created a\n\nTor hidden service to forward traffic from the\n\nTor client to local ports 3389 (RDP), 139 (Netbios), and 445 (SMB) enabling full remote access from outside the network and has also used TOR.(Citation: Mandiant No Easy Breach)(Citation: MSTIC Nobelium Oct 2021)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1090.004|Domain Fronting|\n\nAPT29 has used the meek domain fronting plugin for\n\nTor to hide the destination of C2 traffic.(Citation: Mandiant No Easy Breach)|\n|mitre-attack|enterprise-attack|macOS,Windows,Linux|T1027.002|Software Packing|\n\nAPT29 used UPX to pack files.(Citation: Mandiant No Easy Breach)|\n|mitre-attack|enterprise-attack|Windows|T1550.003|Pass the Ticket|\n\nAPT29 used Kerberos ticket attacks for lateral movement.(Citation: Mandiant No Easy Breach)|\n|mitre-attack|enterprise-attack|Windows|T1047|Windows Management Instrumentation|&#39;, metadata={&#39;source&#39;: &#39;APT29.md&#39;}),
+ Document(page_content=&quot;APT33 utilize backdoors capable of capturing screenshots once installed on a system. (Citation: Jacqueline O&#39;Leary et al. September 2017)(Citation: Junnosuke Yagi March 2017)|\n|mitre-attack|enterprise-attack,ics-attack|Engineering Workstation,Human-Machine Interface,Control Server,Data Historian|T0865|Spearphishing Attachment|\n\nAPT33 sent spear phishing emails containing links to HTML application files, which were embedded with malicious code. (Citation: Jacqueline O&#39;Leary et al. September 2017)\n\nAPT33 has conducted targeted spear phishing campaigns against U.S. government agencies and private sector companies. (Citation: Andy Greenburg June 2019)|&quot;, metadata={&#39;source&#39;: &#39;APT33.md&#39;}),
+ Document(page_content=&quot;Techniques Used\n\nAPT29 has used residential proxies, including Azure Virtual Machines, to obfuscate their access to victim environments.(Citation: Mandiant APT29 Microsoft 365 2022)|\n|mitre-attack|enterprise-attack|Office 365,Windows,Google Workspace|T1114.002|Remote Email Collection|\n\nAPT29 has collected emails from targeted mailboxes within a compromised Azure AD tenant.(Citation: Mandiant APT29 Microsoft 365 2022)|\n|mitre-attack|enterprise-attack|Windows,Office 365,Google Workspace|T1098.002|Additional Email Delegate Permissions|\n\nAPT29 has used a compromised global administrator account in Azure AD to backdoor a service principal with\n\nAPT29 has gained access to a global administrator account in Azure AD.(Citation: Mandiant APT29 Microsoft 365 2022)|\n|mitre-attack|enterprise-attack|Windows,Azure AD,Office 365,SaaS,IaaS,Linux,macOS,Google Workspace,Containers,Network|T1078|Valid Accounts|\n\nAPT29 has used a compromised account to access an organization&#39;s VPN infrastructure.(Citation: Mandiant APT29 Microsoft 365 2022)|\n|mitre-attack|enterprise-attack|Azure AD,Windows,SaaS|T1098.005|Device Registration|\n\nAPT29 has enrolled a device in MFA to an Azure AD environment following a successful password guessing attack against a dormant account.(Citation: Mandiant APT29 Microsoft 365 2022)|\n|mitre-attack|enterprise-attack|Windows,Azure AD,Office 365,SaaS,IaaS,Linux,macOS,Google Workspace,Containers,Network|T1110.001|Password Guessing|\n\nAPT29 has successfully conducted password guessing attacks against a list of mailboxes.(Citation: Mandiant APT29 Microsoft 365 2022)|\n|mitre-attack|enterprise-attack|Windows,macOS,Linux,Containers,IaaS|T1562.001|Disable or Modify Tools|&quot;, metadata={&#39;source&#39;: &#39;APT29.md&#39;}),
+ Document(page_content=&#39;APT29 has used various forms of spearphishing attempting to get a user to click on a malicous link.(Citation: MSTIC NOBELIUM May 2021)(Citation: Secureworks IRON RITUAL USAID Phish May 2021)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1105|Ingress Tool Transfer|\n\nAPT29 has downloaded additional tools and malware onto compromised networks.(Citation: Mandiant No Easy Breach)(Citation: PWC WellMess July 2020)(Citation: F-Secure The Dukes)|\n|mitre-attack|enterprise-attack|PRE|T1587.001|Malware|\n\nAPT29 has used unique malware in many of their operations.(Citation: F-Secure The Dukes)(Citation: Mandiant No Easy Breach)(Citation: MSTIC Nobelium Toolset May 2021)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows,Containers|T1036.005|Match Legitimate Name or Location|\n\nAPT29 has renamed malicious DLLs with legitimate names to appear benign; they have also created an Azure AD certificate with a Common Name that matched the display name of the compromised service principal.(Citation: SentinelOne NobleBaron June 2021)(Citation: Mandiant APT29 Microsoft 365 2022)|\n|mitre-attack|enterprise-attack|Windows,Linux,Containers,macOS|T1133|External Remote Services|\n\nAPT29 has used compromised identities to access networks via VPNs and Citrix.(Citation: NCSC APT29 July 2020)(Citation: Mandiant APT29 Microsoft 365 2022)|\n|mitre-attack|enterprise-attack|PRE|T1587.003|Digital Certificates|\n\nAPT29 has created self-signed digital certificates to enable mutual TLS authentication for malware.(Citation: PWC WellMess July 2020)(Citation: PWC WellMess C2 August 2020)|\n|mitre-attack|enterprise-attack|PRE|T1583.006|Web Services|\n\nAPT29 has registered algorithmically generated Twitter handles that are used for C2 by malware, such as\n\nHAMMERTOSS.&#39;, metadata={&#39;source&#39;: &#39;APT29.md&#39;}),
+ Document(page_content=&#39;Magic Hound has attempted to lure victims into opening malicious email attachments.(Citation: ClearSky Kittens Back 3 August 2020)|\n|mitre-attack|enterprise-attack|PRE|T1585.001|Social Media Accounts|\n\nMagic Hound has created fake LinkedIn and other social media accounts to contact targets and convince them--through messages and voice communications--to open malicious links.(Citation: ClearSky Kittens Back 3 August 2020)|\n|mitre-attack|enterprise-attack|PRE|T1584.001|Domains|\n\nMagic Hound has used compromised domains to host links targeted to specific phishing victims.(Citation: ClearSky Kittens Back 3 August 2020)(Citation: Proofpoint TA453 July2021)(Citation: Certfa Charming Kitten January 2021)(Citation: Google Iran Threats October 2021)|\n|mitre-attack|enterprise-attack|PRE|T1583.001|Domains|\n\nMagic Hound has registered fraudulent domains such as &quot;mail-newyorker.com&quot; and &quot;news12.com.recover-session-service.site&quot; to target specific victims with phishing attacks.(Citation: Certfa Charming Kitten January 2021)|\n|mitre-attack|enterprise-attack|PRE|T1598.003|Spearphishing Link|\n\nMagic Hound has used SMS and email messages with links designed to steal credentials or track victims.(Citation: Certfa Charming Kitten January 2021)(Citation: ClearSky Kittens Back 3 August 2020)(Citation: Proofpoint TA453 March 2021)(Citation: Proofpoint TA453 July2021)(Citation: Google Iran Threats October 2021)(Citation: Microsoft Iranian Threat Actor Trends November 2021)|\n|mitre-attack|enterprise-attack|Windows,Office 365,Google Workspace,macOS,Linux|T1114|Email Collection|\n\nMagic Hound has compromised email credentials in order to steal sensitive data.(Citation: Certfa Charming Kitten January 2021)|\n|mitre-attack|enterprise-attack|PRE|T1586.002|Email Accounts|&#39;, metadata={&#39;source&#39;: &#39;Magic_Hound.md&#39;}),
+ Document(page_content=&#39;TA551 has used spoofed company emails that were acquired from email clients on previously infected hosts to target other individuals.(Citation: Unit 42 TA551 Jan 2021)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1105|Ingress Tool Transfer|\n\nTA551 has retrieved DLLs and installer binaries for malware execution from C2.(Citation: Unit 42 TA551 Jan 2021)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1027.003|Steganography|\n\nTA551 has hidden encoded data for malware DLLs in a PNG.(Citation: Unit 42 TA551 Jan 2021)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1071.001|Web Protocols|\n\nTA551 has used HTTP for C2 communications.(Citation: Unit 42 Valak July 2020)|\n|mitre-attack|enterprise-attack|Windows|T1218.011|Rundll32|\n\nTA551 has used rundll32.exe to load malicious DLLs.(Citation: Unit 42 TA551 Jan 2021)|\n|mitre-attack|enterprise-attack|Windows|T1218.010|Regsvr32|\n\nTA551 has used regsvr32.exe to load malicious DLLs.(Citation: Unit 42 Valak July 2020)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1132.001|Standard Encoding|\n\nTA551 has used encoded ASCII text for initial C2 communications.(Citation: Unit 42 Valak July 2020)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows,Containers|T1036|Masquerading|\n\nTA551 has masked malware DLLs as dat and jpg files.(Citation: Unit 42 TA551 Jan 2021)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1027.010|Command Obfuscation|\n\nTA551 has used obfuscated variable names in a JavaScript configuration file.(Citation: Unit 42 Valak July 2020)|&#39;, metadata={&#39;source&#39;: &#39;TA551.md&#39;})]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-answering">
+<h3>Question Answering<a class="headerlink" href="#question-answering" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.chains.question_answering</span> <span class="kn">import</span> <span class="n">load_qa_chain</span>
+<span class="kn">from</span> <span class="nn">langchain.llms</span> <span class="kn">import</span> <span class="n">OpenAI</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chain</span> <span class="o">=</span> <span class="n">load_qa_chain</span><span class="p">(</span><span class="n">OpenAI</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">chain_type</span><span class="o">=</span><span class="s2">&quot;stuff&quot;</span><span class="p">)</span>
+<span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_documents</span><span class="o">=</span><span class="n">relevant_docs</span><span class="p">,</span> <span class="n">question</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39; Threat actors have used spearphishing emails with malicious attachments, links to HTML application files embedded with malicious code, links to malicious zip files, and messages with links designed to steal credentials or track victims.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./experiments\ATTCK-GPT"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../getting-started/Embeddings.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Embeddings</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Basics/OAI-TextPrompt-Sentiment.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Open AI: Basic Text Prompt Sentiment Classifier</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-att-ck-groups-knowledge-base">Create ATT&amp;CK Groups Knowledge Base</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-modules-and-define-variables">Import Modules and Define Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-att-ck-client">Initialize ATT&amp;CK Client</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-att-ck-groups-knowledge">Get ATT&amp;CK Groups Knowledge</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-att-ck-groups-documents">Create ATT&amp;CK Groups Documents</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-knowledge-base-embeddings">Generate Knowledge Base Embeddings</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-documents">Load Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#split-documents">Split Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#export-knowledge-base-as-jsonl-file-optional">Export Knowledge Base as JSONL File (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings">Generate Embeddings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-database-pickle-file-optional">Create Database Pickle File (Optional)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#query-att-ck-groups-knowledge-base">Query ATT&amp;CK Groups Knowledge Base</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-openai-optional">Initialize OpenAI (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-vector-store-retriever">Define Vector Store Retriever</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-relevant-documents">Get Relevant Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-answering">Question Answering</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Roberto Rodriguez @Cyb3rWard0g
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

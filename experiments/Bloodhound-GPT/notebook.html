@@ -1,0 +1,1071 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Bloodhound GPT &#8212; GPT Security Adventures</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/Bloodhound-GPT/notebook';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Local Experiment: GPT4All" href="../Local-GPT/notebook.html" />
+    <link rel="prev" title="Open AI: Basic Text Prompt Summarizing" href="../Basics/OAI-TextPrompt-Summarizing.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/Embeddings.html">Embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ATTCK-GPT/notebook.html">ATT&amp;CK GPT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Basics/OAI-TextPrompt-Sentiment.html">Open AI: Basic Text Prompt Sentiment Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Basics/OAI-TextPrompt-Summarizing.html">Open AI: Basic Text Prompt Summarizing</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Bloodhound GPT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Local-GPT/notebook.html">Local Experiment: GPT4All</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures/issues/new?title=Issue%20on%20page%20%2Fexperiments/Bloodhound-GPT/notebook.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/experiments/Bloodhound-GPT/notebook.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Bloodhound GPT</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-neo4j-docker-image">Run Neo4j Docker Image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-langchain-modules">Import Langchain Modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-neo4j-connection">Initialize Neo4j Connection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-bloodhound-database">Generate Bloodhound Database</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-python-modules">Install Python Modules</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-data-and-import-to-database">Generate Data and Import to Database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#refresh-graph-schema">Refresh Graph Schema</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-a-basic-cypher-query-example">Run a Basic Cypher Query Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enable-natural-language-search-on-bloodhound-data">Enable Natural Language Search on Bloodhound Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-openai-module">Import OpenAI Module</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-open-ai-key-variable">Set Open AI Key Variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-langchain-graph-cypher-question-answer-chain">Initialize Langchain Graph Cypher Question &amp; Answer Chain</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cypher-basic-example-natural-language">Cypher Basic Example -&gt; Natural Language</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-cypher-queries-natural-language">Other Cypher Queries -&gt; Natural Language</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cypher-find-what-groups-can-rdp">1.1 Cypher: Find what groups can RDP</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#natural-language-find-what-groups-can-rdp">1.2 Natural Language: Find what groups can RDP</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cypher-find-all-members-of-the-domain-admins-group">2.1 Cypher: Find all members of the domain admins group</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#natural-language-find-all-members-of-the-domain-admins-group">1.2 Natural Language: Find all members of the domain admins group</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="bloodhound-gpt">
+<h1>Bloodhound GPT<a class="headerlink" href="#bloodhound-gpt" title="Permalink to this heading">#</a></h1>
+<section id="run-neo4j-docker-image">
+<h2>Run Neo4j Docker Image<a class="headerlink" href="#run-neo4j-docker-image" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>-d<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>neo4j<span class="w"> </span>-p<span class="w"> </span><span class="m">7474</span>:7474<span class="w"> </span>-p<span class="w"> </span><span class="m">7687</span>:7687<span class="w"> </span>-e<span class="w"> </span><span class="nv">NEO4J_AUTH</span><span class="o">=</span>none<span class="w"> </span>neo4j-apoc
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>45538b6099608e5d6ad4d3a24b009f7ffb974991f21b1cfbd9499a4177349ff0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>docker<span class="w"> </span>ps
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID   IMAGE        COMMAND                  CREATED         STATUS         PORTS                                                      NAMES
+45538b609960   neo4j-apoc   &quot;tini -g -- /startup…&quot;   9 seconds ago   Up 8 seconds   0.0.0.0:7474-&gt;7474/tcp, 7473/tcp, 0.0.0.0:7687-&gt;7687/tcp   neo4j
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>docker<span class="w"> </span>logs<span class="w"> </span>neo4j
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing Plugin &#39;apoc&#39; from /var/lib/neo4j/labs/apoc-*-core.jar to /var/lib/neo4j/plugins/apoc.jar
+Applying default values for plugin apoc to neo4j.conf
+2023-05-29 07:46:39.976+0000 INFO  Starting...
+2023-05-29 07:46:40.785+0000 INFO  This instance is ServerId{26af75fc} (26af75fc-cd09-4acf-ad9c-35d59f4767db)
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/var/lib/neo4j/plugins/apoc-5.8.0-extended.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/var/lib/neo4j/plugins/apoc.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.SimpleLoggerFactory]
+2023-05-29 07:46:41.480+0000 INFO  ======== Neo4j 5.8.0 ========
+2023-05-29 07:46:48.380+0000 INFO  Called db.clearQueryCaches(): Query cache already empty.
+2023-05-29 07:46:48.543+0000 INFO  Bolt enabled on 0.0.0.0:7687.
+2023-05-29 07:46:49.391+0000 INFO  Remote interface available at http://localhost:7474/
+2023-05-29 07:46:49.401+0000 INFO  id: 1ED160F2C343F7717EB3E6EE9B9D817136ED8CE99D8961B442B5766163273E41
+2023-05-29 07:46:49.401+0000 INFO  name: system
+2023-05-29 07:46:49.402+0000 INFO  creationDate: 2023-05-29T07:46:42.352Z
+2023-05-29 07:46:49.402+0000 INFO  Started.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="import-langchain-modules">
+<h2>Import Langchain Modules<a class="headerlink" href="#import-langchain-modules" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.chat_models</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span> <span class="nn">langchain.chains</span> <span class="kn">import</span> <span class="n">GraphCypherQAChain</span>
+<span class="kn">from</span> <span class="nn">langchain.graphs</span> <span class="kn">import</span> <span class="n">Neo4jGraph</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initialize-neo4j-connection">
+<h2>Initialize Neo4j Connection<a class="headerlink" href="#initialize-neo4j-connection" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph</span> <span class="o">=</span> <span class="n">Neo4jGraph</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;bolt://localhost:7687&quot;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can validate that we are connected to an empty neo4j server. We are going to add some data in a moment.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">get_schema</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        Node properties are the following:
+        []
+        Relationship properties are the following:
+        []
+        The relationships are the following:
+        []
+        
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generate-bloodhound-database">
+<h2>Generate Bloodhound Database<a class="headerlink" href="#generate-bloodhound-database" title="Permalink to this heading">#</a></h2>
+<p>For this step we use the <a class="reference external" href="https://github.com/BloodHoundAD/BloodHound-Tools/tree/master/DBCreator">Bloodhound DBCreator python script</a> to generate a randomized data set and import it to our plain neo4j database.</p>
+<section id="install-python-modules">
+<h3>Install Python Modules<a class="headerlink" href="#install-python-modules" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install -r DBCreator/requirements.txt
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: neo4j==5.9.0 in c:\users\robertorodriguez\appdata\local\programs\python\python311\lib\site-packages (from -r DBCreator/requirements.txt (line 1)) (5.9.0)
+Requirement already satisfied: neobolt==1.7.16 in c:\users\robertorodriguez\appdata\local\programs\python\python311\lib\site-packages (from -r DBCreator/requirements.txt (line 2)) (1.7.16)
+Requirement already satisfied: neotime==1.7.4 in c:\users\robertorodriguez\appdata\local\programs\python\python311\lib\site-packages (from -r DBCreator/requirements.txt (line 3)) (1.7.4)
+Requirement already satisfied: pytz==2023.3 in c:\users\robertorodriguez\appdata\local\programs\python\python311\lib\site-packages (from -r DBCreator/requirements.txt (line 4)) (2023.3)
+Requirement already satisfied: six==1.14.0 in c:\users\robertorodriguez\appdata\local\programs\python\python311\lib\site-packages (from -r DBCreator/requirements.txt (line 5)) (1.14.0)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generate-data-and-import-to-database">
+<h3>Generate Data and Import to Database<a class="headerlink" href="#generate-data-and-import-to-database" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python<span class="w"> </span>DBCreator/DBCreator.py
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Not connected to database. Use connect first
+Database Connection Successful!
+Starting data generation with nodes=500
+Populating Standard Nodes
+Adding Standard Edges
+Generating Computer Nodes
+Creating Domain Controllers
+Generating User Nodes
+Generating Group Nodes
+Adding Domain Admins to Local Admins of Computers
+Creating 15 Domain Admins (3% of users capped at 30)
+Applying random group nesting
+Adding users to groups
+Calculated 7 groups per user with a variance of - 6
+Adding local admin rights
+Adding RDP/ExecuteDCOM/AllowedToDelegateTo
+Adding sessions
+Adding Domain Admin ACEs
+Creating OUs
+Creating GPOs
+Adding outbound ACLs to 4 objects
+Marking some users as Kerberoastable
+Adding unconstrained delegation to a few computers
+Database Generation Finished!
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="refresh-graph-schema">
+<h3>Refresh Graph Schema<a class="headerlink" href="#refresh-graph-schema" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph</span><span class="o">.</span><span class="n">refresh_schema</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">get_schema</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        Node properties are the following:
+        [{&#39;properties&#39;: [{&#39;property&#39;: &#39;objectid&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;highvalue&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;domain&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;name&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;blocksInheritance&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;owned&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;operatingsystem&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;enabled&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;displayname&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;pwdlastset&#39;, &#39;type&#39;: &#39;INTEGER&#39;}, {&#39;property&#39;: &#39;lastlogon&#39;, &#39;type&#39;: &#39;INTEGER&#39;}, {&#39;property&#39;: &#39;hasspn&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}], &#39;labels&#39;: &#39;Base&#39;}, {&#39;properties&#39;: [{&#39;property&#39;: &#39;objectid&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;highvalue&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;domain&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;name&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;pwdlastset&#39;, &#39;type&#39;: &#39;INTEGER&#39;}, {&#39;property&#39;: &#39;owned&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;enabled&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;lastlogon&#39;, &#39;type&#39;: &#39;INTEGER&#39;}, {&#39;property&#39;: &#39;displayname&#39;, &#39;type&#39;: &#39;STRING&#39;}], &#39;labels&#39;: &#39;Group&#39;}, {&#39;properties&#39;: [{&#39;property&#39;: &#39;domain&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;name&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;highvalue&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}], &#39;labels&#39;: &#39;Domain&#39;}, {&#39;properties&#39;: [{&#39;property&#39;: &#39;domain&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;objectid&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;name&#39;, &#39;type&#39;: &#39;STRING&#39;}], &#39;labels&#39;: &#39;GPO&#39;}, {&#39;properties&#39;: [{&#39;property&#39;: &#39;blocksInheritance&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;domain&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;objectid&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;name&#39;, &#39;type&#39;: &#39;STRING&#39;}], &#39;labels&#39;: &#39;OU&#39;}, {&#39;properties&#39;: [{&#39;property&#39;: &#39;owned&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;domain&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;name&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;operatingsystem&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;enabled&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;objectid&#39;, &#39;type&#39;: &#39;STRING&#39;}], &#39;labels&#39;: &#39;Computer&#39;}, {&#39;properties&#39;: [{&#39;property&#39;: &#39;owned&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;domain&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;name&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;displayname&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;pwdlastset&#39;, &#39;type&#39;: &#39;INTEGER&#39;}, {&#39;property&#39;: &#39;enabled&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;lastlogon&#39;, &#39;type&#39;: &#39;INTEGER&#39;}, {&#39;property&#39;: &#39;objectid&#39;, &#39;type&#39;: &#39;STRING&#39;}, {&#39;property&#39;: &#39;hasspn&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}], &#39;labels&#39;: &#39;User&#39;}]
+        Relationship properties are the following:
+        [{&#39;type&#39;: &#39;GpLink&#39;, &#39;properties&#39;: [{&#39;property&#39;: &#39;enforced&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}, {&#39;property&#39;: &#39;isacl&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}]}, {&#39;type&#39;: &#39;Contains&#39;, &#39;properties&#39;: [{&#39;property&#39;: &#39;isacl&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}]}, {&#39;type&#39;: &#39;GenericAll&#39;, &#39;properties&#39;: [{&#39;property&#39;: &#39;isacl&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}]}, {&#39;type&#39;: &#39;Owns&#39;, &#39;properties&#39;: [{&#39;property&#39;: &#39;isacl&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}]}, {&#39;type&#39;: &#39;WriteOwner&#39;, &#39;properties&#39;: [{&#39;property&#39;: &#39;isacl&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}]}, {&#39;type&#39;: &#39;WriteDacl&#39;, &#39;properties&#39;: [{&#39;property&#39;: &#39;isacl&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}]}, {&#39;type&#39;: &#39;DCSync&#39;, &#39;properties&#39;: [{&#39;property&#39;: &#39;isacl&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}]}, {&#39;type&#39;: &#39;GetChanges&#39;, &#39;properties&#39;: [{&#39;property&#39;: &#39;isacl&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}]}, {&#39;type&#39;: &#39;GetChangesAll&#39;, &#39;properties&#39;: [{&#39;property&#39;: &#39;isacl&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}]}, {&#39;type&#39;: &#39;ForceChangePassword&#39;, &#39;properties&#39;: [{&#39;property&#39;: &#39;isacl&#39;, &#39;type&#39;: &#39;BOOLEAN&#39;}]}]
+        The relationships are the following:
+        [&#39;(:Base)-[:GenericAll]-&gt;(:Base)&#39;, &#39;(:Base)-[:WriteOwner]-&gt;(:Base)&#39;, &#39;(:Base)-[:WriteDacl]-&gt;(:Base)&#39;, &#39;(:Base)-[:DCSync]-&gt;(:Base)&#39;, &#39;(:Base)-[:GetChanges]-&gt;(:Base)&#39;, &#39;(:Base)-[:GetChangesAll]-&gt;(:Base)&#39;, &#39;(:Base)-[:AdminTo]-&gt;(:Base)&#39;, &#39;(:Base)-[:Owns]-&gt;(:Base)&#39;, &#39;(:Base)-[:GpLink]-&gt;(:Base)&#39;, &#39;(:Base)-[:Contains]-&gt;(:Base)&#39;, &#39;(:Base)-[:MemberOf]-&gt;(:Base)&#39;, &#39;(:Base)-[:AllowedToDelegate]-&gt;(:Base)&#39;, &#39;(:Base)-[:HasSession]-&gt;(:Base)&#39;, &#39;(:Base)-[:CanRDP]-&gt;(:Base)&#39;, &#39;(:Base)-[:ExecuteDCOM]-&gt;(:Base)&#39;, &#39;(:Base)-[:ReadLAPSPassword]-&gt;(:Base)&#39;, &#39;(:Base)-[:ForceChangePassword]-&gt;(:Base)&#39;, &#39;(:Group)-[:GenericAll]-&gt;(:Base)&#39;, &#39;(:Group)-[:WriteOwner]-&gt;(:Base)&#39;, &#39;(:Group)-[:WriteDacl]-&gt;(:Base)&#39;, &#39;(:Group)-[:DCSync]-&gt;(:Base)&#39;, &#39;(:Group)-[:GetChanges]-&gt;(:Base)&#39;, &#39;(:Group)-[:GetChangesAll]-&gt;(:Base)&#39;, &#39;(:Group)-[:AdminTo]-&gt;(:Base)&#39;, &#39;(:Group)-[:Owns]-&gt;(:Base)&#39;, &#39;(:Group)-[:MemberOf]-&gt;(:Base)&#39;, &#39;(:Group)-[:CanRDP]-&gt;(:Base)&#39;, &#39;(:Group)-[:ExecuteDCOM]-&gt;(:Base)&#39;, &#39;(:Group)-[:ForceChangePassword]-&gt;(:Base)&#39;, &#39;(:Group)-[:ReadLAPSPassword]-&gt;(:Base)&#39;, &#39;(:Domain)-[:GpLink]-&gt;(:Base)&#39;, &#39;(:Domain)-[:Contains]-&gt;(:Base)&#39;, &#39;(:GPO)-[:GpLink]-&gt;(:Base)&#39;, &#39;(:OU)-[:Contains]-&gt;(:Base)&#39;, &#39;(:Computer)-[:MemberOf]-&gt;(:Base)&#39;, &#39;(:Computer)-[:AllowedToDelegate]-&gt;(:Base)&#39;, &#39;(:Computer)-[:HasSession]-&gt;(:Base)&#39;, &#39;(:User)-[:MemberOf]-&gt;(:Base)&#39;, &#39;(:User)-[:CanRDP]-&gt;(:Base)&#39;, &#39;(:User)-[:ExecuteDCOM]-&gt;(:Base)&#39;, &#39;(:User)-[:AllowedToDelegate]-&gt;(:Base)&#39;, &#39;(:User)-[:ReadLAPSPassword]-&gt;(:Base)&#39;]
+        
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="run-a-basic-cypher-query-example">
+<h3>Run a Basic Cypher Query Example<a class="headerlink" href="#run-a-basic-cypher-query-example" title="Permalink to this heading">#</a></h3>
+<p>Let’s run a basic cypher query that we could then use as an example for our next steps.</p>
+<p>Let’s look for users that have a Service Principal Name Set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">MATCH (u:User {hasspn:true})</span>
+<span class="sd">RETURN u.name</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;u.name&#39;: &#39;LZUNICH00009@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;VCERVENKA00027@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;CBOOSE00074@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;MZARRABI00096@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;AMEDE00171@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;DDOUYETTE00201@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;RKNIFFEN00223@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;MPAULIS00237@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;WPUTNAL00248@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;CSTAS00251@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;NDAMANN00268@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;EREDDER00272@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;LEBERHEART00328@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;ATASCHEREAU00345@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;EENYEART00380@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;AFINLAY00408@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;ROREGON00445@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;GCHRISP00455@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;CMCKEITHAN00461@TESTLAB.LOCAL&#39;},
+ {&#39;u.name&#39;: &#39;JBERKHIMER00463@TESTLAB.LOCAL&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="enable-natural-language-search-on-bloodhound-data">
+<h2>Enable Natural Language Search on Bloodhound Data<a class="headerlink" href="#enable-natural-language-search-on-bloodhound-data" title="Permalink to this heading">#</a></h2>
+<section id="import-openai-module">
+<h3>Import OpenAI Module<a class="headerlink" href="#import-openai-module" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">openai</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="set-open-ai-key-variable">
+<h3>Set Open AI Key Variable<a class="headerlink" href="#set-open-ai-key-variable" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get your key: https://platform.openai.com/account/api-keys</span>
+<span class="n">load_dotenv</span><span class="p">()</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initialize-langchain-graph-cypher-question-answer-chain">
+<h3>Initialize Langchain Graph Cypher Question &amp; Answer Chain<a class="headerlink" href="#initialize-langchain-graph-cypher-question-answer-chain" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chain</span> <span class="o">=</span> <span class="n">GraphCypherQAChain</span><span class="o">.</span><span class="n">from_llm</span><span class="p">(</span>
+    <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">graph</span><span class="o">=</span><span class="n">graph</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cypher-basic-example-natural-language">
+<h3>Cypher Basic Example -&gt; Natural Language<a class="headerlink" href="#cypher-basic-example-natural-language" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;What Users have a Service Principal Name Set?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">&gt; Entering new GraphCypherQAChain chain...</span>
+Generated Cypher:
+<span class=" -Color -Color-Bold -Color-Bold-Green">MATCH (u:User {hasspn: true}) RETURN u.name</span>
+Full Context:
+<span class=" -Color -Color-Bold -Color-Bold-Green">[{&#39;u.name&#39;: &#39;LZUNICH00009@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;VCERVENKA00027@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;CBOOSE00074@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;MZARRABI00096@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;AMEDE00171@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;DDOUYETTE00201@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;RKNIFFEN00223@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;MPAULIS00237@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;WPUTNAL00248@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;CSTAS00251@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;NDAMANN00268@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;EREDDER00272@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;LEBERHEART00328@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;ATASCHEREAU00345@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;EENYEART00380@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;AFINLAY00408@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;ROREGON00445@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;GCHRISP00455@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;CMCKEITHAN00461@TESTLAB.LOCAL&#39;}, {&#39;u.name&#39;: &#39;JBERKHIMER00463@TESTLAB.LOCAL&#39;}]</span>
+
+<span class=" -Color -Color-Bold">&gt; Finished chain.</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The following users have a Service Principal Name set: LZUNICH00009@TESTLAB.LOCAL, VCERVENKA00027@TESTLAB.LOCAL, CBOOSE00074@TESTLAB.LOCAL, MZARRABI00096@TESTLAB.LOCAL, AMEDE00171@TESTLAB.LOCAL, DDOUYETTE00201@TESTLAB.LOCAL, RKNIFFEN00223@TESTLAB.LOCAL, MPAULIS00237@TESTLAB.LOCAL, WPUTNAL00248@TESTLAB.LOCAL, CSTAS00251@TESTLAB.LOCAL, NDAMANN00268@TESTLAB.LOCAL, EREDDER00272@TESTLAB.LOCAL, LEBERHEART00328@TESTLAB.LOCAL, ATASCHEREAU00345@TESTLAB.LOCAL, EENYEART00380@TESTLAB.LOCAL, AFINLAY00408@TESTLAB.LOCAL, ROREGON00445@TESTLAB.LOCAL, GCHRISP00455@TESTLAB.LOCAL, CMCKEITHAN00461@TESTLAB.LOCAL, JBERKHIMER00463@TESTLAB.LOCAL.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="other-cypher-queries-natural-language">
+<h3>Other Cypher Queries -&gt; Natural Language<a class="headerlink" href="#other-cypher-queries-natural-language" title="Permalink to this heading">#</a></h3>
+<section id="cypher-find-what-groups-can-rdp">
+<h4>1.1 Cypher: Find what groups can RDP<a class="headerlink" href="#cypher-find-what-groups-can-rdp" title="Permalink to this heading">#</a></h4>
+<p>Reference: <a class="reference external" href="https://hausec.com/2019/09/09/bloodhound-cypher-cheatsheet/">https://hausec.com/2019/09/09/bloodhound-cypher-cheatsheet/</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">MATCH p=(m:Group)-[r:CanRDP]-&gt;(n:Computer) RETURN m.name, n.name ORDER BY m.name</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;m.name&#39;: &#39;IT00057@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00034.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00057@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00079.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00057@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00297.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00108@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00463.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00128@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00158.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00128@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00217.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00131@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00447.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00131@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00254.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00131@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00168.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00146@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00394.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00146@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00099.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00146@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00111.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00173@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00139.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00173@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00360.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00180@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00461.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00180@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00387.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00182@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00104.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00183@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00497.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00183@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00195.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00205@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00407.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00206@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00261.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00206@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00164.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00206@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00127.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00231@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00267.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00231@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00186.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00231@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00093.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00231@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00024.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00233@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00128.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00309@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00463.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00309@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00064.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00309@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00295.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00309@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00395.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00312@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00393.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00346@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00470.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00346@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00267.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00359@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00495.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00359@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00293.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00359@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00338.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00362@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00231.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00362@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00422.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00383@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00254.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00383@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00190.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00383@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00373.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00404@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00470.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00404@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00095.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00418@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00319.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00418@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00209.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00460@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00365.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00461@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00425.TESTLAB.LOCAL&#39;},
+ {&#39;m.name&#39;: &#39;IT00461@TESTLAB.LOCAL&#39;, &#39;n.name&#39;: &#39;COMP00176.TESTLAB.LOCAL&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="natural-language-find-what-groups-can-rdp">
+<h4>1.2 Natural Language: Find what groups can RDP<a class="headerlink" href="#natural-language-find-what-groups-can-rdp" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Return the name of 5 groups and the name of the computers that the groups can RDP to and order the results by the groups name.</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">&gt; Entering new GraphCypherQAChain chain...</span>
+Generated Cypher:
+<span class=" -Color -Color-Bold -Color-Bold-Green">MATCH (g:Group)-[:CanRDP]-&gt;(c:Computer)</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">RETURN g.name, c.name</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">ORDER BY g.name</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">LIMIT 5</span>
+Full Context:
+<span class=" -Color -Color-Bold -Color-Bold-Green">[{&#39;g.name&#39;: &#39;IT00057@TESTLAB.LOCAL&#39;, &#39;c.name&#39;: &#39;COMP00297.TESTLAB.LOCAL&#39;}, {&#39;g.name&#39;: &#39;IT00057@TESTLAB.LOCAL&#39;, &#39;c.name&#39;: &#39;COMP00034.TESTLAB.LOCAL&#39;}, {&#39;g.name&#39;: &#39;IT00057@TESTLAB.LOCAL&#39;, &#39;c.name&#39;: &#39;COMP00079.TESTLAB.LOCAL&#39;}, {&#39;g.name&#39;: &#39;IT00108@TESTLAB.LOCAL&#39;, &#39;c.name&#39;: &#39;COMP00463.TESTLAB.LOCAL&#39;}, {&#39;g.name&#39;: &#39;IT00128@TESTLAB.LOCAL&#39;, &#39;c.name&#39;: &#39;COMP00158.TESTLAB.LOCAL&#39;}]</span>
+
+<span class=" -Color -Color-Bold">&gt; Finished chain.</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Here are the names of 5 groups and the corresponding computers that they can RDP to, ordered by group name:\n\n- Group IT00057@TESTLAB.LOCAL can RDP to computers COMP00034.TESTLAB.LOCAL, COMP00079.TESTLAB.LOCAL, and COMP00297.TESTLAB.LOCAL.\n- Group IT00108@TESTLAB.LOCAL can RDP to computer COMP00463.TESTLAB.LOCAL.\n- Group IT00128@TESTLAB.LOCAL can RDP to computer COMP00158.TESTLAB.LOCAL.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cypher-find-all-members-of-the-domain-admins-group">
+<h4>2.1 Cypher: Find all members of the domain admins group<a class="headerlink" href="#cypher-find-all-members-of-the-domain-admins-group" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">MATCH (u:User)-[:MemberOf]-&gt;(g:Group {name:&#39;DOMAIN ADMINS@TESTLAB.LOCAL&#39;}) return u.name, u.displayname</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;u.name&#39;: &#39;ADAPINTO00242@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Abbey Dapinto&#39;},
+ {&#39;u.name&#39;: &#39;LDERKACH00085@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Lula Derkach&#39;},
+ {&#39;u.name&#39;: &#39;GCHRISP00455@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Glennis Chrisp&#39;},
+ {&#39;u.name&#39;: &#39;LZUNICH00009@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Lashunda Zunich&#39;},
+ {&#39;u.name&#39;: &#39;WLEMAY00087@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Williams Lemay&#39;},
+ {&#39;u.name&#39;: &#39;MPAULIS00237@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Melony Paulis&#39;},
+ {&#39;u.name&#39;: &#39;ACHAMBERLIAN00466@TESTLAB.LOCAL&#39;,
+  &#39;u.displayname&#39;: &#39;Audria Chamberlian&#39;},
+ {&#39;u.name&#39;: &#39;VCERVENKA00027@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Veola Cervenka&#39;},
+ {&#39;u.name&#39;: &#39;CHOSOI00406@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Curtis Hosoi&#39;},
+ {&#39;u.name&#39;: &#39;CBOOSE00074@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Carry Boose&#39;},
+ {&#39;u.name&#39;: &#39;FSOHL00036@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Fay Sohl&#39;},
+ {&#39;u.name&#39;: &#39;KROSENKOETTER00049@TESTLAB.LOCAL&#39;,
+  &#39;u.displayname&#39;: &#39;Kylie Rosenkoetter&#39;},
+ {&#39;u.name&#39;: &#39;JLAPPAS00212@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Janina Lappas&#39;},
+ {&#39;u.name&#39;: &#39;MZARRABI00096@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Miranda Zarrabi&#39;},
+ {&#39;u.name&#39;: &#39;NDAMANN00268@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Nannie Damann&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="natural-language-find-all-members-of-the-domain-admins-group">
+<h4>1.2 Natural Language: Find all members of the domain admins group<a class="headerlink" href="#natural-language-find-all-members-of-the-domain-admins-group" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Find all members of the domain admins group. Return the name and display name properties of the users.</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">&gt; Entering new GraphCypherQAChain chain...</span>
+Generated Cypher:
+<span class=" -Color -Color-Bold -Color-Bold-Green">MATCH (u:User)-[:MemberOf]-&gt;(:Group{name:&#39;Domain Admins&#39;})</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">RETURN u.name, u.displayname</span>
+Full Context:
+<span class=" -Color -Color-Bold -Color-Bold-Green">[]</span>
+
+<span class=" -Color -Color-Bold">&gt; Finished chain.</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;To find all members of the domain admins group and return their name and display name properties, you can use the following PowerShell command:\n\nGet-ADGroupMember -Identity &quot;Domain Admins&quot; | Get-ADUser -Properties Name, DisplayName | Select-Object Name, DisplayName\n\nThis will retrieve the necessary information for all users who are members of the &quot;Domain Admins&quot; group.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Find all members of the &#39;DOMAIN ADMINS@TESTLAB.LOCAL&#39; group.</span>
+<span class="s2">    Return the name and display name properties of the users.</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">&gt; Entering new GraphCypherQAChain chain...</span>
+Generated Cypher:
+<span class=" -Color -Color-Bold -Color-Bold-Green">MATCH (g:Group {name: &#39;DOMAIN ADMINS@TESTLAB.LOCAL&#39;})-[:MemberOf]-&gt;(u:User)</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">RETURN u.name, u.displayname</span>
+Full Context:
+<span class=" -Color -Color-Bold -Color-Bold-Green">[]</span>
+
+<span class=" -Color -Color-Bold">&gt; Finished chain.</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;To find all members of the \&#39;DOMAIN ADMINS@TESTLAB.LOCAL\&#39; group and return their name and display name properties, you can use the following PowerShell command:\n\nGet-ADGroupMember -Identity &quot;DOMAIN ADMINS@TESTLAB.LOCAL&quot; | Get-ADUser -Properties Name, DisplayName | Select-Object Name, DisplayName\n\nThis will retrieve the necessary information for all users in the specified group.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Find all users that are members of the &#39;DOMAIN ADMINS@TESTLAB.LOCAL&#39; group.</span>
+<span class="s2">    Return the name and display name properties of the users.</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">&gt; Entering new GraphCypherQAChain chain...</span>
+Generated Cypher:
+<span class=" -Color -Color-Bold -Color-Bold-Green">MATCH (u:User)-[:MemberOf]-&gt;(g:Group{name:&#39;DOMAIN ADMINS@TESTLAB.LOCAL&#39;})</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">RETURN u.name, u.displayname</span>
+Full Context:
+<span class=" -Color -Color-Bold -Color-Bold-Green">[{&#39;u.name&#39;: &#39;ADAPINTO00242@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Abbey Dapinto&#39;}, {&#39;u.name&#39;: &#39;LDERKACH00085@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Lula Derkach&#39;}, {&#39;u.name&#39;: &#39;GCHRISP00455@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Glennis Chrisp&#39;}, {&#39;u.name&#39;: &#39;LZUNICH00009@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Lashunda Zunich&#39;}, {&#39;u.name&#39;: &#39;WLEMAY00087@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Williams Lemay&#39;}, {&#39;u.name&#39;: &#39;MPAULIS00237@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Melony Paulis&#39;}, {&#39;u.name&#39;: &#39;ACHAMBERLIAN00466@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Audria Chamberlian&#39;}, {&#39;u.name&#39;: &#39;VCERVENKA00027@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Veola Cervenka&#39;}, {&#39;u.name&#39;: &#39;CHOSOI00406@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Curtis Hosoi&#39;}, {&#39;u.name&#39;: &#39;CBOOSE00074@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Carry Boose&#39;}, {&#39;u.name&#39;: &#39;FSOHL00036@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Fay Sohl&#39;}, {&#39;u.name&#39;: &#39;KROSENKOETTER00049@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Kylie Rosenkoetter&#39;}, {&#39;u.name&#39;: &#39;JLAPPAS00212@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Janina Lappas&#39;}, {&#39;u.name&#39;: &#39;MZARRABI00096@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Miranda Zarrabi&#39;}, {&#39;u.name&#39;: &#39;NDAMANN00268@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Nannie Damann&#39;}]</span>
+
+<span class=" -Color -Color-Bold">&gt; Finished chain.</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;Based on the provided information, I can tell you that I am unable to determine which users are members of the &#39;DOMAIN ADMINS@TESTLAB.LOCAL&#39; group. The information provided only includes the name and display name properties of several users in the TESTLAB.LOCAL domain. Without additional information or access to the domain&#39;s user and group data, I am unable to provide a list of users that are members of a specific group.&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    The results of a cypher query answers the question.</span>
+<span class="s2">    Find all users that are members of the &#39;DOMAIN ADMINS@TESTLAB.LOCAL&#39; group.</span>
+<span class="s2">    Return the name and display name properties of the users.</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">&gt; Entering new GraphCypherQAChain chain...</span>
+Generated Cypher:
+<span class=" -Color -Color-Bold -Color-Bold-Green">MATCH (u:User)-[:MemberOf]-&gt;(:Group{name:&#39;DOMAIN ADMINS@TESTLAB.LOCAL&#39;})</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">RETURN u.name, u.displayname</span>
+Full Context:
+<span class=" -Color -Color-Bold -Color-Bold-Green">[{&#39;u.name&#39;: &#39;ADAPINTO00242@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Abbey Dapinto&#39;}, {&#39;u.name&#39;: &#39;LDERKACH00085@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Lula Derkach&#39;}, {&#39;u.name&#39;: &#39;GCHRISP00455@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Glennis Chrisp&#39;}, {&#39;u.name&#39;: &#39;LZUNICH00009@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Lashunda Zunich&#39;}, {&#39;u.name&#39;: &#39;WLEMAY00087@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Williams Lemay&#39;}, {&#39;u.name&#39;: &#39;MPAULIS00237@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Melony Paulis&#39;}, {&#39;u.name&#39;: &#39;ACHAMBERLIAN00466@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Audria Chamberlian&#39;}, {&#39;u.name&#39;: &#39;VCERVENKA00027@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Veola Cervenka&#39;}, {&#39;u.name&#39;: &#39;CHOSOI00406@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Curtis Hosoi&#39;}, {&#39;u.name&#39;: &#39;CBOOSE00074@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Carry Boose&#39;}, {&#39;u.name&#39;: &#39;FSOHL00036@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Fay Sohl&#39;}, {&#39;u.name&#39;: &#39;KROSENKOETTER00049@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Kylie Rosenkoetter&#39;}, {&#39;u.name&#39;: &#39;JLAPPAS00212@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Janina Lappas&#39;}, {&#39;u.name&#39;: &#39;MZARRABI00096@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Miranda Zarrabi&#39;}, {&#39;u.name&#39;: &#39;NDAMANN00268@TESTLAB.LOCAL&#39;, &#39;u.displayname&#39;: &#39;Nannie Damann&#39;}]</span>
+
+<span class=" -Color -Color-Bold">&gt; Finished chain.</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;Based on the provided information, the following users are members of the &#39;DOMAIN ADMINS@TESTLAB.LOCAL&#39; group: Abbey Dapinto, Lula Derkach, Glennis Chrisp, Lashunda Zunich, Williams Lemay, Melony Paulis, Audria Chamberlian, Veola Cervenka, Curtis Hosoi, Carry Boose, Fay Sohl, Kylie Rosenkoetter, Janina Lappas, Miranda Zarrabi, and Nannie Damann. Their respective names and display names are also provided in the information.&quot;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./experiments\Bloodhound-GPT"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Basics/OAI-TextPrompt-Summarizing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Open AI: Basic Text Prompt Summarizing</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Local-GPT/notebook.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Local Experiment: GPT4All</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-neo4j-docker-image">Run Neo4j Docker Image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-langchain-modules">Import Langchain Modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-neo4j-connection">Initialize Neo4j Connection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-bloodhound-database">Generate Bloodhound Database</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-python-modules">Install Python Modules</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-data-and-import-to-database">Generate Data and Import to Database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#refresh-graph-schema">Refresh Graph Schema</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-a-basic-cypher-query-example">Run a Basic Cypher Query Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enable-natural-language-search-on-bloodhound-data">Enable Natural Language Search on Bloodhound Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-openai-module">Import OpenAI Module</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-open-ai-key-variable">Set Open AI Key Variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-langchain-graph-cypher-question-answer-chain">Initialize Langchain Graph Cypher Question &amp; Answer Chain</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cypher-basic-example-natural-language">Cypher Basic Example -&gt; Natural Language</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-cypher-queries-natural-language">Other Cypher Queries -&gt; Natural Language</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cypher-find-what-groups-can-rdp">1.1 Cypher: Find what groups can RDP</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#natural-language-find-what-groups-can-rdp">1.2 Natural Language: Find what groups can RDP</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cypher-find-all-members-of-the-domain-admins-group">2.1 Cypher: Find all members of the domain admins group</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#natural-language-find-all-members-of-the-domain-admins-group">1.2 Natural Language: Find all members of the domain admins group</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Roberto Rodriguez @Cyb3rWard0g
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

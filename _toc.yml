@@ -6,9 +6,12 @@ root: README
 parts:
   - caption: Fundamentals
     chapters:
-    - file: fundamentals/README
+    - file: getting-started/Embeddings
   - caption: Experiments
     chapters:
     - file: experiments/ATTCK-GPT/notebook
     - file: experiments/Basics/OAI-TextPrompt-Sentiment
     - file: experiments/Basics/OAI-TextPrompt-Summarizing
+    - file: experiments/Bloodhound-GPT/notebook
+    - file: experiments/Local-GPT/notebook
+    - file: experiments/ROADTools-GPT/notebook

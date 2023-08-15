@@ -18,7 +18,7 @@ ALLANITE,Palmetto Fusion
 
 |Matrix|Domain|Platform|Technique ID|Technique Name|Use|
 | :---| :---| :---| :---| :---| :---|
-|mitre-attack|ics-attack|Control Server,Data Historian,Engineering Workstation,Field Controller/RTU/PLC/IED,Human-Machine Interface,Input/Output Server,Safety Instrumented System/Protection Relay|T0859|Valid Accounts|[ALLANITE](https://attack.mitre.org/groups/G1000) utilized credentials collected through phishing and watering hole attacks. (Citation: Dragos)|
-|mitre-attack|ics-attack|Engineering Workstation,Human-Machine Interface,Control Server,Data Historian|T0865|Spearphishing Attachment|[ALLANITE](https://attack.mitre.org/groups/G1000) utilized spear phishing to gain access into energy sector environments. (Citation: Jeff Jones May 2018)|
 |mitre-attack|ics-attack|Human-Machine Interface|T0852|Screen Capture|[ALLANITE](https://attack.mitre.org/groups/G1000) has been identified to collect and distribute screenshots of ICS systems such as HMIs. (Citation: Dragos) (Citation: ICS-CERT October 2017)|
 |mitre-attack|ics-attack|None|T0817|Drive-by Compromise|[ALLANITE](https://attack.mitre.org/groups/G1000) leverages watering hole attacks to gain access into electric utilities. (Citation: Eduard Kovacs May 2018)|
+|mitre-attack|ics-attack|Engineering Workstation,Human-Machine Interface,Control Server,Data Historian|T0865|Spearphishing Attachment|[ALLANITE](https://attack.mitre.org/groups/G1000) utilized spear phishing to gain access into energy sector environments. (Citation: Jeff Jones May 2018)|
+|mitre-attack|ics-attack|Control Server,Data Historian,Engineering Workstation,Field Controller/RTU/PLC/IED,Human-Machine Interface,Input/Output Server,Safety Instrumented System/Protection Relay|T0859|Valid Accounts|[ALLANITE](https://attack.mitre.org/groups/G1000) utilized credentials collected through phishing and watering hole attacks. (Citation: Dragos)|

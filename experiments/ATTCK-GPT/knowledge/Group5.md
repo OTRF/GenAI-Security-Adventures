@@ -19,6 +19,6 @@ Group5
 |Matrix|Domain|Platform|Technique ID|Technique Name|Use|
 | :---| :---| :---| :---| :---| :---|
 |mitre-attack|enterprise-attack|Linux,macOS,Windows|T1027|Obfuscated Files or Information|[Group5](https://attack.mitre.org/groups/G0043) disguised its malicious binaries with several layers of obfuscation, including encrypting the files.(Citation: Citizen Lab Group5)|
-|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1070.004|File Deletion|Malware used by [Group5](https://attack.mitre.org/groups/G0043) is capable of remotely deleting files from victims.(Citation: Citizen Lab Group5)|
 |mitre-attack|enterprise-attack|Linux,macOS,Windows|T1113|Screen Capture|Malware used by [Group5](https://attack.mitre.org/groups/G0043) is capable of watching the victim's screen.(Citation: Citizen Lab Group5)|
 |mitre-attack|enterprise-attack|Windows,macOS,Linux,Network|T1056.001|Keylogging|Malware used by [Group5](https://attack.mitre.org/groups/G0043) is capable of capturing keystrokes.(Citation: Citizen Lab Group5)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1070.004|File Deletion|Malware used by [Group5](https://attack.mitre.org/groups/G0043) is capable of remotely deleting files from victims.(Citation: Citizen Lab Group5)|

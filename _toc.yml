@@ -9,9 +9,9 @@ parts:
     - file: getting-started/Embeddings
   - caption: Experiments
     chapters:
+    - file: experiments/Basics/OAI-Inferring-Sentiment
+    - file: experiments/Basics/OAI-Summarizing-Incident
     - file: experiments/ATTCK-GPT/notebook
-    - file: experiments/Basics/OAI-TextPrompt-Sentiment
-    - file: experiments/Basics/OAI-TextPrompt-Summarizing
     - file: experiments/Bloodhound-GPT/notebook
     - file: experiments/Local-GPT/notebook
     - file: experiments/ROADTools-GPT/notebook

@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Local Experiment: GPT4All &#8212; GPT Security Adventures</title>
+    <title>Inferring: Sentiment Classifier &#8212; GPT Security Adventures</title>
   
   
   
@@ -64,11 +64,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/Local-GPT/notebook';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/Basics/OAI-Inferring-Sentiment';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="ROADTools GPT" href="../ROADTools-GPT/notebook.html" />
-    <link rel="prev" title="Bloodhound GPT" href="../Bloodhound-GPT/notebook.html" />
+    <link rel="next" title="Summarizing: Incident Data" href="OAI-Summarizing-Incident.html" />
+    <link rel="prev" title="Embeddings" href="../../getting-started/Embeddings.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -157,11 +157,11 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../Basics/OAI-Inferring-Sentiment.html">Inferring: Sentiment Classifier</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Basics/OAI-Summarizing-Incident.html">Summarizing: Incident Data</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Inferring: Sentiment Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OAI-Summarizing-Incident.html">Summarizing: Incident Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ATTCK-GPT/notebook.html">Retrieval Augmented Generation (RAG)​ and ATT&amp;CK Groups</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Bloodhound-GPT/notebook.html">Bloodhound GPT</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Local Experiment: GPT4All</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Local-GPT/notebook.html">Local Experiment: GPT4All</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ROADTools-GPT/notebook.html">ROADTools GPT</a></li>
 </ul>
 
@@ -234,7 +234,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures/issues/new?title=Issue%20on%20page%20%2Fexperiments/Local-GPT/notebook.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures/issues/new?title=Issue%20on%20page%20%2Fexperiments/Basics/OAI-Inferring-Sentiment.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -264,7 +264,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../_sources/experiments/Local-GPT/notebook.ipynb" target="_blank"
+      <li><a href="../../_sources/experiments/Basics/OAI-Inferring-Sentiment.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -346,7 +346,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Local Experiment: GPT4All</h1>
+    <h1>Inferring: Sentiment Classifier</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -357,13 +357,12 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-modules">Import Modules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gpt4all-with-local-model">Initialize GPT4All with Local Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#privide-a-prompt">Privide a Prompt</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-langchain-chain">Using a Langchain Chain</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-additional-modules">Import Additional Modules</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-a-prompt-template">Define a Prompt Template</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gpt4all-chain-with-callbacks">Initialize GPT4All Chain With Callbacks</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-a-query">Define a Query</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-open-ai-key">Set Open AI Key</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-completion-function">Create Completion Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#email-sentiment-classifier">Email Sentiment Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-prompt-classifier">Create Prompt Classifier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-prompt">Run Prompt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#provide-a-few-examples-few-shot-learning">Provide a few Examples (Few-Shot Learning)</a></li>
 </ul>
 </li>
 </ul>
@@ -377,140 +376,139 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="local-experiment-gpt4all">
-<h1>Local Experiment: GPT4All<a class="headerlink" href="#local-experiment-gpt4all" title="Permalink to this heading">#</a></h1>
-<p>Reference: <a class="reference external" href="https://medium.com/&#64;ssmaameri/private-llms-on-local-and-in-the-cloud-with-langchain-gpt4all-and-cerebrium-6dade79f45f6">https://medium.com/&#64;ssmaameri/private-llms-on-local-and-in-the-cloud-with-langchain-gpt4all-and-cerebrium-6dade79f45f6</a></p>
+  <section class="tex2jax_ignore mathjax_ignore" id="inferring-sentiment-classifier">
+<h1>Inferring: Sentiment Classifier<a class="headerlink" href="#inferring-sentiment-classifier" title="Permalink to this heading">#</a></h1>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>Collaborators:</p>
+<ul>
+<li><p>Roberto Rodriguez (&#64;Cyb3rWard0g)</p></li>
+</ul>
+</li>
+<li><p>References:</p>
+<ul>
+<li><p><a class="reference external" href="https://www.deeplearning.ai/short-courses/">https://www.deeplearning.ai/short-courses/</a></p></li>
+</ul>
+</li>
+</ul>
 <section id="import-modules">
 <h2>Import Modules<a class="headerlink" href="#import-modules" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.llms</span> <span class="kn">import</span> <span class="n">GPT4All</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">openai</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="initialize-gpt4all-with-local-model">
-<h2>Initialize GPT4All with Local Model<a class="headerlink" href="#initialize-gpt4all-with-local-model" title="Permalink to this heading">#</a></h2>
+<section id="set-open-ai-key">
+<h2>Set Open AI Key<a class="headerlink" href="#set-open-ai-key" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">llm</span> <span class="o">=</span> <span class="n">GPT4All</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;./model/ggml-gpt4all-j-v1.3-groovy.bin&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found model file.
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get your key: https://platform.openai.com/account/api-keys</span>
+<span class="n">load_dotenv</span><span class="p">()</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="privide-a-prompt">
-<h2>Privide a Prompt<a class="headerlink" href="#privide-a-prompt" title="Permalink to this heading">#</a></h2>
+<section id="create-completion-function">
+<h2>Create Completion Function<a class="headerlink" href="#create-completion-function" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">llm</span><span class="p">(</span><span class="s2">&quot;Where is Peru?&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Peru lies in South America and shares borders with Bolivia to the north; Ecuador to the east; Colombia on its southern border.
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Peru lies in South America and shares borders with Bolivia to the north; Ecuador to the east; Colombia on its southern border.&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">llm</span><span class="p">(</span><span class="s2">&quot;Tell me a joke.&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sure! Here&#39;s one for you: Why did the scarecrow win an award? Because he was outstanding in his field, of course!!
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;Sure! Here&#39;s one for you: Why did the scarecrow win an award? Because he was outstanding in his field, of course!!&quot;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_completion</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">):</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span><span class="n">prompt</span><span class="p">}]</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="c1"># Degree of randomness</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="using-a-langchain-chain">
-<h2>Using a Langchain Chain<a class="headerlink" href="#using-a-langchain-chain" title="Permalink to this heading">#</a></h2>
-<section id="import-additional-modules">
-<h3>Import Additional Modules<a class="headerlink" href="#import-additional-modules" title="Permalink to this heading">#</a></h3>
+<section id="email-sentiment-classifier">
+<h2>Email Sentiment Classifier<a class="headerlink" href="#email-sentiment-classifier" title="Permalink to this heading">#</a></h2>
+<section id="create-prompt-classifier">
+<h3>Create Prompt Classifier<a class="headerlink" href="#create-prompt-classifier" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain</span> <span class="kn">import</span> <span class="n">PromptTemplate</span><span class="p">,</span> <span class="n">LLMChain</span>
-<span class="kn">from</span> <span class="nn">langchain.callbacks.streaming_stdout</span> <span class="kn">import</span> <span class="n">StreamingStdOutCallbackHandler</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="define-a-prompt-template">
-<h3>Define a Prompt Template<a class="headerlink" href="#define-a-prompt-template" title="Permalink to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">You are a friendly chatbot assistant that responds in a conversational</span>
-<span class="s2">manner to users questions. Keep the answers short, unless specifically</span>
-<span class="s2">asked by the user to elaborate on something.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Classify the email subject text below, delimited by three dashes (-),</span>
+<span class="s2">as being malicious or benign. Explain why.</span>
 
-<span class="s2">Question: </span><span class="si">{question}</span>
-
-<span class="s2">Answer:&quot;&quot;&quot;</span>
-<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span> <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">])</span>
+<span class="s2">---</span>
+<span class="s2">Account email verification code, enter now and reply</span>
+<span class="s2">---</span>
+<span class="s2">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="initialize-gpt4all-chain-with-callbacks">
-<h3>Initialize GPT4All Chain With Callbacks<a class="headerlink" href="#initialize-gpt4all-chain-with-callbacks" title="Permalink to this heading">#</a></h3>
+<section id="run-prompt">
+<h3>Run Prompt<a class="headerlink" href="#run-prompt" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">llm</span> <span class="o">=</span> <span class="n">GPT4All</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;./model/ggml-gpt4all-j-v1.3-groovy.bin&#39;</span><span class="p">,</span>
-    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">StreamingStdOutCallbackHandler</span><span class="p">()]</span>
-<span class="p">)</span>
-
-<span class="n">llm_chain</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span> <span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">get_completion</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found model file.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The email subject text &quot;Account email verification code, enter now and reply&quot; is likely benign. 
+
+This is because the subject text appears to be a legitimate email regarding the verification of an account email. It does not contain any suspicious or alarming language that would indicate malicious intent. Additionally, the request to enter the verification code and reply is a common practice for account verification processes. However, it is important to exercise caution and verify the sender&#39;s identity and the legitimacy of the email before taking any further actions.
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="define-a-query">
-<h3>Define a Query<a class="headerlink" href="#define-a-query" title="Permalink to this heading">#</a></h3>
+<section id="provide-a-few-examples-few-shot-learning">
+<h3>Provide a few Examples (Few-Shot Learning)<a class="headerlink" href="#provide-a-few-examples-few-shot-learning" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;How do I perform a device code phishing attack?&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Classify the email subject text below, delimited by triple backticks (&#39;&#39;&#39;),</span>
+<span class="s2">as being malicious or benign. Explain why.</span>
+
+<span class="s2">Examples:</span>
+
+<span class="s2">Subjet: CY23 Email Verification Now</span>
+<span class="s2">Label: malicious</span>
+
+<span class="s2">Subjet: Enter Market Email Verification Code Today</span>
+<span class="s2">Label: malicious</span>
+
+<span class="s2">Subjet: New Account Email Verification Code Verify now</span>
+<span class="s2">Label: malicious</span>
+
+<span class="s2">Subject: Submit your code review today</span>
+<span class="s2">Label: benign</span>
+
+<span class="s2">Subject: &#39;&#39;&#39;Account email verification code, enter now and reply&#39;&#39;&#39;</span>
+<span class="s2">Label:</span>
+<span class="s2">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">llm_chain</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">get_completion</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Device Code Phishing Attack involves tricking someone into providing you with their phone number or personal information through an email that looks legitimate and contains instructions for accessing further online accounts, such as bank account numbers to steal money. To conduct this type of cyber-attack successfully requires a skilled attacker who knows how to manipulate users&#39; emotions by pretending they are sending them important news alerts via text messages when in reality it is just part 1 or 2 of the scammer&#39;s lure sequence for more personal information and phishing attempts later on, depending on their goals.To perform this type
- Device Code Phishing Attack involves tricking someone into providing you with their phone number or personal information through an email that looks legitimate and contains instructions for accessing further online accounts, such as bank account numbers to steal money. To conduct this type of cyber-attack successfully requires a skilled attacker who knows how to manipulate users&#39; emotions by pretending they are sending them important news alerts via text messages when in reality it is just part 1 or 2 of the scammer&#39;s lure sequence for more personal information and phishing attempts later on, depending on their goals.To perform this type
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;question&#39;: &#39;How do I perform a device code phishing attack?&#39;,
- &#39;text&#39;: &quot; Device Code Phishing Attack involves tricking someone into providing you with their phone number or personal information through an email that looks legitimate and contains instructions for accessing further online accounts, such as bank account numbers to steal money. To conduct this type of cyber-attack successfully requires a skilled attacker who knows how to manipulate users&#39; emotions by pretending they are sending them important news alerts via text messages when in reality it is just part 1 or 2 of the scammer&#39;s lure sequence for more personal information and phishing attempts later on, depending on their goals.To perform this type&quot;}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>malicious
+
+Explanation: The subject text contains phrases like &quot;email verification code&quot; and &quot;enter now and reply,&quot; which are commonly used in phishing emails to trick recipients into providing their personal information. This suggests that the email may be attempting to deceive or exploit the recipient, making it malicious.
 </pre></div>
 </div>
 </div>
@@ -532,7 +530,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./experiments\Local-GPT"
+            path: "./experiments\Basics"
         },
         predefinedOutput: true
     }
@@ -551,20 +549,20 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../Bloodhound-GPT/notebook.html"
+       href="../../getting-started/Embeddings.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Bloodhound GPT</p>
+        <p class="prev-next-title">Embeddings</p>
       </div>
     </a>
     <a class="right-next"
-       href="../ROADTools-GPT/notebook.html"
+       href="OAI-Summarizing-Incident.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ROADTools GPT</p>
+        <p class="prev-next-title">Summarizing: Incident Data</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -587,13 +585,12 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-modules">Import Modules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gpt4all-with-local-model">Initialize GPT4All with Local Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#privide-a-prompt">Privide a Prompt</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-langchain-chain">Using a Langchain Chain</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-additional-modules">Import Additional Modules</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-a-prompt-template">Define a Prompt Template</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gpt4all-chain-with-callbacks">Initialize GPT4All Chain With Callbacks</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-a-query">Define a Query</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-open-ai-key">Set Open AI Key</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-completion-function">Create Completion Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#email-sentiment-classifier">Email Sentiment Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-prompt-classifier">Create Prompt Classifier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-prompt">Run Prompt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#provide-a-few-examples-few-shot-learning">Provide a few Examples (Few-Shot Learning)</a></li>
 </ul>
 </li>
 </ul>

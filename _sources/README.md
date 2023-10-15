@@ -6,7 +6,7 @@
 
 An open-source initiative to share notes, presentations, and a diverse collection of experiments presented in Jupyter Notebooks, all aimed at helping you grasp the essential concepts behind large language models and exploring the intriguing intersection of security and natural language processing.
 
-## https://cyb3rward0g.github.io/GPT-Security-Adventures/README.html
+## https://otrf.github.io/GPT-Security-Adventures/README.html
 
 ## Contributing
 

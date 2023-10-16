@@ -11,9 +11,9 @@ parts:
     chapters:
     - file: experiments/Basics/OAI-Inferring-Sentiment
     - file: experiments/Basics/OAI-Summarizing-Incident
-    - file: experiments/RAG/Threat-Intelligence-ATTCK-Groups/source-knowledge/notebook
-    - file: experiments/RAG/Threat-Intelligence-ATTCK-Groups/LangChain/notebook
-    - file: experiments/RAG/Threat-Intelligence-ATTCK-Groups/AutoGen/notebook
+    - file: experiments/RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook
+    - file: experiments/RAG/Threat-Intelligence/ATTCK-Groups/LangChain/notebook
+    - file: experiments/RAG/Threat-Intelligence/ATTCK-Groups/AutoGen/notebook
     - file: experiments/Bloodhound-GPT/notebook
     - file: experiments/Local-GPT/notebook
     - file: experiments/ROADTools-GPT/notebook

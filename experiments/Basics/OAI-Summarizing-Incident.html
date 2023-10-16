@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/Basics/OAI-Summarizing-Incident';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Retrieval Augmented Generation (RAG)​ and ATT&amp;CK Groups" href="../ATTCK-GPT/notebook.html" />
+    <link rel="next" title="Create ATT&amp;CK Groups Source knowledge" href="../RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook.html" />
     <link rel="prev" title="Inferring: Sentiment Classifier" href="OAI-Inferring-Sentiment.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -159,7 +159,9 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="OAI-Inferring-Sentiment.html">Inferring: Sentiment Classifier</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Summarizing: Incident Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ATTCK-GPT/notebook.html">Retrieval Augmented Generation (RAG)​ and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook.html">Create ATT&amp;CK Groups Source knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAG/Threat-Intelligence/ATTCK-Groups/LangChain/notebook.html">RAG - LangChain and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAG/Threat-Intelligence/ATTCK-Groups/AutoGen/notebook.html">RAG - AutoGen and ATT&amp;CK Groups</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Bloodhound-GPT/notebook.html">Bloodhound GPT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Local-GPT/notebook.html">Local Experiment: GPT4All</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ROADTools-GPT/notebook.html">ROADTools GPT</a></li>
@@ -499,7 +501,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">Prodice a summar of my incident based on the following alerts.</span>
+<span class="s2">Provide a summary of my incident based on the following alerts.</span>
 <span class="s2">Give me a few sentences summarizing what actually happened based</span>
 <span class="s2">on the alerts names and descriptions.</span>
 
@@ -512,7 +514,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Based on the alerts, it appears that there was a suspicious process executed in PowerShell, indicating potential malicious activity. There were also multiple instances of suspicious behavior by an HTML application, suggesting the use of HTML files to deliver malware. Additionally, there were suspicious LDAP queries, indicating reconnaissance activity, and suspicious user account discovery, suggesting attempts to gather information for future attacks. Furthermore, event logs were cleared, an uncommon file was created and added to the startup folder, and suspicious PowerShell commands were executed, all potentially indicating malicious activity. There were also alerts related to potential human-operated malicious activity, suspicious remote activity, suspicious WMI process creation, suspicious PowerShell download or encoded command execution, possible initial access via OneNote, possible ransomware activity, suspicious WMI activity initiated remotely, file backups being deleted, suspicious scheduled task process launched, suspicious sequence of exploration activities, and suspicious remote PowerShell execution. These alerts collectively suggest a significant security incident involving various malicious activities and potential threats such as ransomware.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Based on the provided alerts, the incident involves multiple suspicious activities and behaviors on the machine. These include the execution of suspicious PowerShell commands by suspicious processes, suspicious behavior by HTML applications indicating possible delivery of malware, suspicious LDAP queries indicating potential reconnaissance activity, suspicious user account discovery, event log clearing indicating a malicious actor, creation of uncommon files in the startup folder for persistence, suspicious WMI process creation, suspicious remote activity, suspicious PowerShell download or encoded command execution, potential human-operated malicious activity, suspicious WMI activity initiated remotely, file backups being deleted, suspicious scheduled task process launched, suspicious sequence of exploration activities, possible initial access via OneNote, possible ransomware activity, suspicious remote PowerShell execution, suspicious behavior by svchost.exe, suspicious process discovery, and suspicious behavior by HTML applications. These alerts suggest a wide range of potential malicious activities, including reconnaissance, lateral movement, malware delivery, and ransomware activity.
 </pre></div>
 </div>
 </div>
@@ -604,11 +606,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../ATTCK-GPT/notebook.html"
+       href="../RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Retrieval Augmented Generation (RAG)​ and ATT&amp;CK Groups</p>
+        <p class="prev-next-title">Create ATT&amp;CK Groups Source knowledge</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

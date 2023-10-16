@@ -1,0 +1,1304 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Create ATT&amp;CK Groups Source knowledge &#8212; GPT Security Adventures</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/jquery.js"></script>
+    <script src="../../../../../_static/underscore.js"></script>
+    <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../../_static/copybutton.js"></script>
+    <script src="../../../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook';</script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="RAG - LangChain and ATT&amp;CK Groups" href="../LangChain/notebook.html" />
+    <link rel="prev" title="Summarizing: Incident Data" href="../../../../Basics/OAI-Summarizing-Incident.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../../../README.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../../../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting-started/Embeddings.html">Embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Basics/OAI-Inferring-Sentiment.html">Inferring: Sentiment Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Basics/OAI-Summarizing-Incident.html">Summarizing: Incident Data</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Create ATT&amp;CK Groups Source knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LangChain/notebook.html">RAG - LangChain and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../AutoGen/notebook.html">RAG - AutoGen and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Bloodhound-GPT/notebook.html">Bloodhound GPT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Local-GPT/notebook.html">Local Experiment: GPT4All</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ROADTools-GPT/notebook.html">ROADTools GPT</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures/issues/new?title=Issue%20on%20page%20%2Fexperiments/RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../_sources/experiments/RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Create ATT&CK Groups Source knowledge</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-modules">Import Modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-initial-variables">Define Initial Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-att-ck-client">Initialize ATT&amp;CK Client</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-att-ck-groups">Get ATT&amp;CK Groups</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-att-ck-groups-documents">Create ATT&amp;CK Groups Documents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#index-source-knowledge">Index Source Knowledge</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-documents">Load Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#split-documents">Split Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contribute-split-documents-optional">Contribute Split Documents (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings">Generate Embeddings</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="create-att-ck-groups-source-knowledge">
+<h1>Create ATT&amp;CK Groups Source knowledge<a class="headerlink" href="#create-att-ck-groups-source-knowledge" title="Permalink to this heading">#</a></h1>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>Collaborators:</p>
+<ul>
+<li><p>Roberto Rodriguez (&#64;Cyb3rWard0g)</p></li>
+</ul>
+</li>
+<li><p>References:</p>
+<ul>
+<li><p><a class="reference external" href="https://python.langchain.com/en/latest/modules/indexes/getting_started.html">https://python.langchain.com/en/latest/modules/indexes/getting_started.html</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=eqOfr4AGLk8">https://www.youtube.com/watch?v=eqOfr4AGLk8</a></p></li>
+</ul>
+</li>
+</ul>
+<section id="import-modules">
+<h2>Import Modules<a class="headerlink" href="#import-modules" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">attackcti</span> <span class="kn">import</span> <span class="n">attack_client</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;taxii2client&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="define-initial-variables">
+<h2>Define Initial Variables<a class="headerlink" href="#define-initial-variables" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a few variables</span>
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s2">&quot;__file__&quot;</span><span class="p">)</span>
+<span class="n">documents_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;documents&quot;</span><span class="p">)</span>
+<span class="n">contrib_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;contrib&quot;</span><span class="p">)</span>
+<span class="n">embeddings_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;embeddings&quot;</span><span class="p">)</span>
+<span class="n">templates_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;templates&quot;</span><span class="p">)</span>
+<span class="n">group_template</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">templates_directory</span><span class="p">,</span> <span class="s2">&quot;group.md&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initialize-att-ck-client">
+<h2>Initialize ATT&amp;CK Client<a class="headerlink" href="#initialize-att-ck-client" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lift</span> <span class="o">=</span> <span class="n">attack_client</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-att-ck-groups">
+<h2>Get ATT&amp;CK Groups<a class="headerlink" href="#get-att-ck-groups" title="Permalink to this heading">#</a></h2>
+<p>Gettings technique STIX objects used by all groups accross all ATT&amp;CK matrices..</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">techniques_used_by_groups</span> <span class="o">=</span> <span class="n">lift</span><span class="o">.</span><span class="n">get_techniques_used_by_all_groups</span><span class="p">()</span>
+<span class="n">techniques_used_by_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;type&#39;: &#39;intrusion-set&#39;,
+ &#39;id&#39;: &#39;intrusion-set--b7f627e2-0817-4cd5-8d50-e75f8aa85cc6&#39;,
+ &#39;created_by_ref&#39;: &#39;identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5&#39;,
+ &#39;created&#39;: &#39;2023-02-23T15:31:38.829Z&#39;,
+ &#39;modified&#39;: &#39;2023-04-17T21:49:16.371Z&#39;,
+ &#39;name&#39;: &#39;LuminousMoth&#39;,
+ &#39;description&#39;: &#39;[LuminousMoth](https://attack.mitre.org/groups/G1014) is a Chinese-speaking cyber espionage group that has been active since at least October 2020. [LuminousMoth](https://attack.mitre.org/groups/G1014) has targeted high-profile organizations, including government entities, in Myanmar, the Philippines, Thailand, and other parts of Southeast Asia. Some security researchers have concluded there is a connection between [LuminousMoth](https://attack.mitre.org/groups/G1014) and [Mustang Panda](https://attack.mitre.org/groups/G0129) based on similar targeting and TTPs, as well as network infrastructure overlaps.(Citation: Kaspersky LuminousMoth July 2021)(Citation: Bitdefender LuminousMoth July 2021)&#39;,
+ &#39;aliases&#39;: [&#39;LuminousMoth&#39;],
+ &#39;external_references&#39;: [{&#39;source_name&#39;: &#39;mitre-attack&#39;,
+   &#39;url&#39;: &#39;https://attack.mitre.org/groups/G1014&#39;,
+   &#39;external_id&#39;: &#39;G1014&#39;},
+  {&#39;source_name&#39;: &#39;Bitdefender LuminousMoth July 2021&#39;,
+   &#39;description&#39;: &#39;Botezatu, B and etl. (2021, July 21). LuminousMoth - PlugX, File Exfiltration and Persistence Revisited. Retrieved October 20, 2022.&#39;,
+   &#39;url&#39;: &#39;https://www.bitdefender.com/blog/labs/luminousmoth-plugx-file-exfiltration-and-persistence-revisited&#39;},
+  {&#39;source_name&#39;: &#39;Kaspersky LuminousMoth July 2021&#39;,
+   &#39;description&#39;: &#39;Lechtik, M, and etl. (2021, July 14). LuminousMoth APT: Sweeping attacks for the chosen few. Retrieved October 20, 2022.&#39;,
+   &#39;url&#39;: &#39;https://securelist.com/apt-luminousmoth/103332/&#39;}],
+ &#39;object_marking_refs&#39;: [&#39;marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168&#39;],
+ &#39;x_mitre_attack_spec_version&#39;: &#39;3.1.0&#39;,
+ &#39;x_mitre_contributors&#39;: [&#39;Kyaw Pyiyt Htet, @KyawPyiytHtet&#39;,
+  &#39;Zaw Min Htun, @Z3TAE&#39;],
+ &#39;x_mitre_deprecated&#39;: False,
+ &#39;x_mitre_domains&#39;: [&#39;enterprise-attack&#39;],
+ &#39;x_mitre_modified_by_ref&#39;: &#39;identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5&#39;,
+ &#39;x_mitre_version&#39;: &#39;1.0&#39;,
+ &#39;technique_ref&#39;: &#39;attack-pattern--32901740-b42c-4fdd-bc02-345b5dc57082&#39;,
+ &#39;relationship_description&#39;: &#39;[LuminousMoth](https://attack.mitre.org/groups/G1014) has signed their malware with a valid digital signature.(Citation: Kaspersky LuminousMoth July 2021)&#39;,
+ &#39;relationship_id&#39;: &#39;relationship--eb4ce173-6f0e-4c12-9ff8-09c4fb1ae2d3&#39;,
+ &#39;revoked&#39;: False,
+ &#39;technique&#39;: &#39;Code Signing&#39;,
+ &#39;technique_description&#39;: &#39;Adversaries may create, acquire, or steal code signing materials to sign their malware or tools. Code signing provides a level of authenticity on a binary from the developer and a guarantee that the binary has not been tampered with. (Citation: Wikipedia Code Signing) The certificates used during an operation may be created, acquired, or stolen by the adversary. (Citation: Securelist Digital Certificates) (Citation: Symantec Digital Certificates) Unlike [Invalid Code Signature](https://attack.mitre.org/techniques/T1036/001), this activity will result in a valid signature.\n\nCode signing to verify software on first run can be used on modern Windows and macOS systems. It is not used on Linux due to the decentralized nature of the platform. (Citation: Wikipedia Code Signing)(Citation: EclecticLightChecksonEXECodeSigning)\n\nCode signing certificates may be used to bypass security policies that require signed code to execute on a system. &#39;,
+ &#39;tactic&#39;: [KillChainPhase(kill_chain_name=&#39;mitre-attack&#39;, phase_name=&#39;defense-evasion&#39;)],
+ &#39;technique_id&#39;: &#39;T1553.002&#39;,
+ &#39;matrix&#39;: &#39;mitre-attack&#39;,
+ &#39;platform&#39;: [&#39;macOS&#39;, &#39;Windows&#39;],
+ &#39;data_sources&#39;: [&#39;File: File Metadata&#39;]}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-att-ck-groups-documents">
+<h2>Create ATT&amp;CK Groups Documents<a class="headerlink" href="#create-att-ck-groups-documents" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Template</span>
+
+<span class="c1"># Create Group docs</span>
+<span class="n">all_groups</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">technique</span> <span class="ow">in</span> <span class="n">techniques_used_by_groups</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_groups</span><span class="p">:</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;external_references&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;external_id&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;modified&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;modified&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;aliases&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;aliases&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;x_mitre_contributors&#39;</span> <span class="ow">in</span> <span class="n">technique</span><span class="p">:</span>
+            <span class="n">group</span><span class="p">[</span><span class="s1">&#39;contributors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;x_mitre_contributors&#39;</span><span class="p">]</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;techniques&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">all_groups</span><span class="p">[</span><span class="n">technique</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">group</span>
+    <span class="n">technique_used</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;matrix&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;matrix&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;x_mitre_domains&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;tactics&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;tactic&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;technique_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;technique_id&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;technique_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;technique&#39;</span><span class="p">]</span>
+    <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;use&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;relationship_description&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;data_sources&#39;</span> <span class="ow">in</span> <span class="n">technique</span><span class="p">:</span>
+        <span class="n">technique_used</span><span class="p">[</span><span class="s1">&#39;data_sources&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">technique</span><span class="p">[</span><span class="s1">&#39;data_sources&#39;</span><span class="p">]</span>
+    <span class="n">all_groups</span><span class="p">[</span><span class="n">technique</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]][</span><span class="s1">&#39;techniques&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">technique_used</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">documents_directory</span><span class="p">):</span>
+   <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Creating knowledge directory..&quot;</span><span class="p">)</span>
+   <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">documents_directory</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Creating markadown files for each group..&quot;</span><span class="p">)</span>
+<span class="n">markdown_template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">group_template</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">all_groups</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  [&gt;&gt;] Creating markdown file for </span><span class="si">{}</span><span class="s2">..&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_name&#39;</span><span class="p">]))</span>
+    <span class="n">group_for_render</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+    <span class="n">markdown</span> <span class="o">=</span> <span class="n">markdown_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">group_for_render</span><span class="p">,</span> <span class="n">group_name</span><span class="o">=</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_name&#39;</span><span class="p">],</span> <span class="n">group_id</span><span class="o">=</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_id&#39;</span><span class="p">])</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;group_name&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">documents_directory</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s1">.md&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">markdown</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Creating markadown files for each group..
+  [&gt;&gt;] Creating markdown file for LuminousMoth..
+  [&gt;&gt;] Creating markdown file for Metador..
+  [&gt;&gt;] Creating markdown file for CURIUM..
+  [&gt;&gt;] Creating markdown file for EXOTIC LILY..
+  [&gt;&gt;] Creating markdown file for Moses Staff..
+  [&gt;&gt;] Creating markdown file for SideCopy..
+  [&gt;&gt;] Creating markdown file for Aoqin Dragon..
+  [&gt;&gt;] Creating markdown file for Earth Lusca..
+  [&gt;&gt;] Creating markdown file for POLONIUM..
+  [&gt;&gt;] Creating markdown file for LAPSUS$..
+  [&gt;&gt;] Creating markdown file for Ember Bear..
+  [&gt;&gt;] Creating markdown file for BITTER..
+  [&gt;&gt;] Creating markdown file for Aquatic Panda..
+  [&gt;&gt;] Creating markdown file for Confucius..
+  [&gt;&gt;] Creating markdown file for LazyScripter..
+  [&gt;&gt;] Creating markdown file for TeamTNT..
+  [&gt;&gt;] Creating markdown file for Andariel..
+  [&gt;&gt;] Creating markdown file for Ferocious Kitten..
+  [&gt;&gt;] Creating markdown file for IndigoZebra..
+  [&gt;&gt;] Creating markdown file for BackdoorDiplomacy..
+  [&gt;&gt;] Creating markdown file for Transparent Tribe..
+  [&gt;&gt;] Creating markdown file for Nomadic Octopus..
+  [&gt;&gt;] Creating markdown file for Tonto Team..
+  [&gt;&gt;] Creating markdown file for Ajax Security Team..
+  [&gt;&gt;] Creating markdown file for Mustang Panda..
+  [&gt;&gt;] Creating markdown file for ZIRCONIUM..
+  [&gt;&gt;] Creating markdown file for TA551..
+  [&gt;&gt;] Creating markdown file for Higaisa..
+  [&gt;&gt;] Creating markdown file for HAFNIUM..
+  [&gt;&gt;] Creating markdown file for Windigo..
+  [&gt;&gt;] Creating markdown file for Volatile Cedar..
+  [&gt;&gt;] Creating markdown file for Silent Librarian..
+  [&gt;&gt;] Creating markdown file for Sidewinder..
+  [&gt;&gt;] Creating markdown file for Evilnum..
+  [&gt;&gt;] Creating markdown file for Indrik Spider..
+  [&gt;&gt;] Creating markdown file for Fox Kitten..
+  [&gt;&gt;] Creating markdown file for GOLD SOUTHFIELD..
+  [&gt;&gt;] Creating markdown file for Chimera..
+  [&gt;&gt;] Creating markdown file for Windshift..
+  [&gt;&gt;] Creating markdown file for Blue Mockingbird..
+  [&gt;&gt;] Creating markdown file for Whitefly..
+  [&gt;&gt;] Creating markdown file for Rocke..
+  [&gt;&gt;] Creating markdown file for DarkVishnya..
+  [&gt;&gt;] Creating markdown file for Mofang..
+  [&gt;&gt;] Creating markdown file for Wizard Spider..
+  [&gt;&gt;] Creating markdown file for Inception..
+  [&gt;&gt;] Creating markdown file for APT-C-36..
+  [&gt;&gt;] Creating markdown file for BlackTech..
+  [&gt;&gt;] Creating markdown file for APT41..
+  [&gt;&gt;] Creating markdown file for Machete..
+  [&gt;&gt;] Creating markdown file for Kimsuky..
+  [&gt;&gt;] Creating markdown file for GALLIUM..
+  [&gt;&gt;] Creating markdown file for TA505..
+  [&gt;&gt;] Creating markdown file for Silence..
+  [&gt;&gt;] Creating markdown file for WIRTE..
+  [&gt;&gt;] Creating markdown file for The White Company..
+  [&gt;&gt;] Creating markdown file for TEMP.Veles..
+  [&gt;&gt;] Creating markdown file for APT39..
+  [&gt;&gt;] Creating markdown file for FIN4..
+  [&gt;&gt;] Creating markdown file for Gallmaker..
+  [&gt;&gt;] Creating markdown file for SilverTerrier..
+  [&gt;&gt;] Creating markdown file for APT38..
+  [&gt;&gt;] Creating markdown file for Tropic Trooper..
+  [&gt;&gt;] Creating markdown file for HEXANE..
+  [&gt;&gt;] Creating markdown file for DarkHydrus..
+  [&gt;&gt;] Creating markdown file for APT19..
+  [&gt;&gt;] Creating markdown file for Cobalt Group..
+  [&gt;&gt;] Creating markdown file for Orangeworm..
+  [&gt;&gt;] Creating markdown file for Thrip..
+  [&gt;&gt;] Creating markdown file for Gorgon Group..
+  [&gt;&gt;] Creating markdown file for Rancor..
+  [&gt;&gt;] Creating markdown file for Dark Caracal..
+  [&gt;&gt;] Creating markdown file for Leafminer..
+  [&gt;&gt;] Creating markdown file for Leviathan..
+  [&gt;&gt;] Creating markdown file for Elderwood..
+  [&gt;&gt;] Creating markdown file for BlackOasis..
+  [&gt;&gt;] Creating markdown file for FIN8..
+  [&gt;&gt;] Creating markdown file for APT33..
+  [&gt;&gt;] Creating markdown file for PLATINUM..
+  [&gt;&gt;] Creating markdown file for TA459..
+  [&gt;&gt;] Creating markdown file for APT37..
+  [&gt;&gt;] Creating markdown file for MuddyWater..
+  [&gt;&gt;] Creating markdown file for Magic Hound..
+  [&gt;&gt;] Creating markdown file for FIN5..
+  [&gt;&gt;] Creating markdown file for PROMETHIUM..
+  [&gt;&gt;] Creating markdown file for CopyKittens..
+  [&gt;&gt;] Creating markdown file for BRONZE BUTLER..
+  [&gt;&gt;] Creating markdown file for Sowbug..
+  [&gt;&gt;] Creating markdown file for APT32..
+  [&gt;&gt;] Creating markdown file for FIN10..
+  [&gt;&gt;] Creating markdown file for OilRig..
+  [&gt;&gt;] Creating markdown file for RTM..
+  [&gt;&gt;] Creating markdown file for Gamaredon Group..
+  [&gt;&gt;] Creating markdown file for FIN7..
+  [&gt;&gt;] Creating markdown file for menuPass..
+  [&gt;&gt;] Creating markdown file for Winnti Group..
+  [&gt;&gt;] Creating markdown file for Group5..
+  [&gt;&gt;] Creating markdown file for Strider..
+  [&gt;&gt;] Creating markdown file for Patchwork..
+  [&gt;&gt;] Creating markdown file for Suckfly..
+  [&gt;&gt;] Creating markdown file for Stealth Falcon..
+  [&gt;&gt;] Creating markdown file for FIN6..
+  [&gt;&gt;] Creating markdown file for GCMAN..
+  [&gt;&gt;] Creating markdown file for Dragonfly..
+  [&gt;&gt;] Creating markdown file for Sandworm Team..
+  [&gt;&gt;] Creating markdown file for Poseidon Group..
+  [&gt;&gt;] Creating markdown file for Lazarus Group..
+  [&gt;&gt;] Creating markdown file for Scarlet Mimic..
+  [&gt;&gt;] Creating markdown file for Threat Group-1314..
+  [&gt;&gt;] Creating markdown file for Threat Group-3390..
+  [&gt;&gt;] Creating markdown file for APT18..
+  [&gt;&gt;] Creating markdown file for APT17..
+  [&gt;&gt;] Creating markdown file for Putter Panda..
+  [&gt;&gt;] Creating markdown file for APT16..
+  [&gt;&gt;] Creating markdown file for APT3..
+  [&gt;&gt;] Creating markdown file for Molerats..
+  [&gt;&gt;] Creating markdown file for Equation..
+  [&gt;&gt;] Creating markdown file for Naikon..
+  [&gt;&gt;] Creating markdown file for admin@338..
+  [&gt;&gt;] Creating markdown file for APT29..
+  [&gt;&gt;] Creating markdown file for APT30..
+  [&gt;&gt;] Creating markdown file for Darkhotel..
+  [&gt;&gt;] Creating markdown file for PittyTiger..
+  [&gt;&gt;] Creating markdown file for Turla..
+  [&gt;&gt;] Creating markdown file for Deep Panda..
+  [&gt;&gt;] Creating markdown file for Carbanak..
+  [&gt;&gt;] Creating markdown file for APT28..
+  [&gt;&gt;] Creating markdown file for APT1..
+  [&gt;&gt;] Creating markdown file for APT12..
+  [&gt;&gt;] Creating markdown file for Ke3chang..
+  [&gt;&gt;] Creating markdown file for Cleaver..
+  [&gt;&gt;] Creating markdown file for Moafee..
+  [&gt;&gt;] Creating markdown file for Axiom..
+  [&gt;&gt;] Creating markdown file for ALLANITE..
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="index-source-knowledge">
+<h2>Index Source Knowledge<a class="headerlink" href="#index-source-knowledge" title="Permalink to this heading">#</a></h2>
+<section id="load-documents">
+<h3>Load Documents<a class="headerlink" href="#load-documents" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">langchain.document_loaders</span> <span class="kn">import</span> <span class="n">UnstructuredMarkdownLoader</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># variables</span>
+<span class="n">group_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">documents_directory</span><span class="p">,</span> <span class="s2">&quot;*.md&quot;</span><span class="p">))</span>
+
+<span class="c1"># Loading Markdown files</span>
+<span class="n">md_docs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Loading Group markdown files..&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">group_files</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; [*] Loading </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">group</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredMarkdownLoader</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+    <span class="n">md_docs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[+] Number of .md documents processed: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">md_docs</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Loading Group markdown files..
+ [*] Loading admin@338.md
+ [*] Loading Ajax_Security_Team.md
+ [*] Loading ALLANITE.md
+ [*] Loading Andariel.md
+ [*] Loading Aoqin_Dragon.md
+ [*] Loading APT-C-36.md
+ [*] Loading APT1.md
+ [*] Loading APT12.md
+ [*] Loading APT16.md
+ [*] Loading APT17.md
+ [*] Loading APT18.md
+ [*] Loading APT19.md
+ [*] Loading APT28.md
+ [*] Loading APT29.md
+ [*] Loading APT3.md
+ [*] Loading APT30.md
+ [*] Loading APT32.md
+ [*] Loading APT33.md
+ [*] Loading APT37.md
+ [*] Loading APT38.md
+ [*] Loading APT39.md
+ [*] Loading APT41.md
+ [*] Loading Aquatic_Panda.md
+ [*] Loading Axiom.md
+ [*] Loading BackdoorDiplomacy.md
+ [*] Loading BITTER.md
+ [*] Loading BlackOasis.md
+ [*] Loading BlackTech.md
+ [*] Loading Blue_Mockingbird.md
+ [*] Loading BRONZE_BUTLER.md
+ [*] Loading Carbanak.md
+ [*] Loading Chimera.md
+ [*] Loading Cleaver.md
+ [*] Loading Cobalt_Group.md
+ [*] Loading Confucius.md
+ [*] Loading CopyKittens.md
+ [*] Loading CURIUM.md
+ [*] Loading Darkhotel.md
+ [*] Loading DarkHydrus.md
+ [*] Loading DarkVishnya.md
+ [*] Loading Dark_Caracal.md
+ [*] Loading Deep_Panda.md
+ [*] Loading Dragonfly.md
+ [*] Loading Earth_Lusca.md
+ [*] Loading Elderwood.md
+ [*] Loading Ember_Bear.md
+ [*] Loading Equation.md
+ [*] Loading Evilnum.md
+ [*] Loading EXOTIC_LILY.md
+ [*] Loading Ferocious_Kitten.md
+ [*] Loading FIN10.md
+ [*] Loading FIN4.md
+ [*] Loading FIN5.md
+ [*] Loading FIN6.md
+ [*] Loading FIN7.md
+ [*] Loading FIN8.md
+ [*] Loading Fox_Kitten.md
+ [*] Loading GALLIUM.md
+ [*] Loading Gallmaker.md
+ [*] Loading Gamaredon_Group.md
+ [*] Loading GCMAN.md
+ [*] Loading GOLD_SOUTHFIELD.md
+ [*] Loading Gorgon_Group.md
+ [*] Loading Group5.md
+ [*] Loading HAFNIUM.md
+ [*] Loading HEXANE.md
+ [*] Loading Higaisa.md
+ [*] Loading Inception.md
+ [*] Loading IndigoZebra.md
+ [*] Loading Indrik_Spider.md
+ [*] Loading Ke3chang.md
+ [*] Loading Kimsuky.md
+ [*] Loading LAPSUS$.md
+ [*] Loading Lazarus_Group.md
+ [*] Loading LazyScripter.md
+ [*] Loading Leafminer.md
+ [*] Loading Leviathan.md
+ [*] Loading LuminousMoth.md
+ [*] Loading Machete.md
+ [*] Loading Magic_Hound.md
+ [*] Loading menuPass.md
+ [*] Loading Metador.md
+ [*] Loading Moafee.md
+ [*] Loading Mofang.md
+ [*] Loading Molerats.md
+ [*] Loading Moses_Staff.md
+ [*] Loading MuddyWater.md
+ [*] Loading Mustang_Panda.md
+ [*] Loading Naikon.md
+ [*] Loading Nomadic_Octopus.md
+ [*] Loading OilRig.md
+ [*] Loading Orangeworm.md
+ [*] Loading Patchwork.md
+ [*] Loading PittyTiger.md
+ [*] Loading PLATINUM.md
+ [*] Loading POLONIUM.md
+ [*] Loading Poseidon_Group.md
+ [*] Loading PROMETHIUM.md
+ [*] Loading Putter_Panda.md
+ [*] Loading Rancor.md
+ [*] Loading Rocke.md
+ [*] Loading RTM.md
+ [*] Loading Sandworm_Team.md
+ [*] Loading Scarlet_Mimic.md
+ [*] Loading SideCopy.md
+ [*] Loading Sidewinder.md
+ [*] Loading Silence.md
+ [*] Loading Silent_Librarian.md
+ [*] Loading SilverTerrier.md
+ [*] Loading Sowbug.md
+ [*] Loading Stealth_Falcon.md
+ [*] Loading Strider.md
+ [*] Loading Suckfly.md
+ [*] Loading TA459.md
+ [*] Loading TA505.md
+ [*] Loading TA551.md
+ [*] Loading TeamTNT.md
+ [*] Loading TEMP.Veles.md
+ [*] Loading The_White_Company.md
+ [*] Loading Threat_Group-1314.md
+ [*] Loading Threat_Group-3390.md
+ [*] Loading Thrip.md
+ [*] Loading Tonto_Team.md
+ [*] Loading Transparent_Tribe.md
+ [*] Loading Tropic_Trooper.md
+ [*] Loading Turla.md
+ [*] Loading Volatile_Cedar.md
+ [*] Loading Whitefly.md
+ [*] Loading Windigo.md
+ [*] Loading Windshift.md
+ [*] Loading Winnti_Group.md
+ [*] Loading WIRTE.md
+ [*] Loading Wizard_Spider.md
+ [*] Loading ZIRCONIUM.md
+[+] Number of .md documents processed: 134
+</pre></div>
+</div>
+</div>
+</div>
+<p>Check a doc page content</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">md_docs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>admin@338 - G0018
+
+Created: 2017-05-31T21:31:53.579Z
+
+Modified: 2020-03-18T19:54:59.120Z
+
+Contributors: Tatsuya Daitoku, Cyber Defense Institute, Inc.
+
+Aliases
+
+admin@338
+
+Description
+
+admin@338 is a China-based cyber threat group. It has previously used newsworthy events as lures to deliver malware and has primarily targeted organizations involved in financial, economic, and trade policy, typically using publicly available RATs such as PoisonIvy, as well as some non-public backdoors. (Citation: FireEye admin@338)
+
+Techniques Used
+
+admin@338 has sent emails with malicious Microsoft Office documents attached.(Citation: FireEye admin@338)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1204.002|Malicious File|
+
+admin@338 has attempted to get victims to launch malicious Microsoft Word attachments delivered via spearphishing emails.(Citation: FireEye admin@338)|
+|mitre-attack|enterprise-attack|Linux,Windows,macOS|T1203|Exploitation for Client Execution|
+
+admin@338 has exploited client software vulnerabilities for execution, such as Microsoft Word CVE-2012-0158.(Citation: FireEye admin@338)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1087.001|Local Account|
+
+admin@338 actors used the following commands following exploitation of a machine with
+
+LOWBALL malware to enumerate user accounts:
+
+admin@338 actors used the following command to rename one of their tools to a benign file name:
+
+admin@338 actors used the following command following exploitation of a machine with
+
+LOWBALL malware to list local groups:
+
+admin@338 actors used the following commands after exploiting a machine with
+
+LOWBALL malware to obtain information about the OS:
+
+admin@338 actors used the following command after exploiting a machine with
+
+LOWBALL malware to acquire information about local networks:
+
+admin@338 actors used the following command following exploitation of a machine with
+
+LOWBALL malware to obtain information about services:
+
+admin@338 actors used the following command following exploitation of a machine with
+
+LOWBALL malware to display network connections:
+
+admin@338 actors used the following commands after exploiting a machine with
+
+LOWBALL malware to obtain information about files and directories:
+
+LOWBALL malware,
+
+admin@338 actors created a file containing a list of commands to be executed on the compromised computer.(Citation: FireEye admin@338)|
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="split-documents">
+<h3>Split Documents<a class="headerlink" href="#split-documents" title="Permalink to this heading">#</a></h3>
+<p>Check token counts on loaded documents</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tiktoken</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tiktoken</span><span class="o">.</span><span class="n">encoding_for_model</span><span class="p">(</span><span class="s1">&#39;gpt-3.5-turbo&#39;</span><span class="p">)</span>
+<span class="n">token_integers</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">md_docs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">,</span> <span class="n">disallowed_special</span><span class="o">=</span><span class="p">())</span>
+<span class="n">num_tokens</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">token_integers</span><span class="p">)</span>
+<span class="n">token_bytes</span> <span class="o">=</span> <span class="p">[</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode_single_token_bytes</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_integers</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;token count: </span><span class="si">{</span><span class="n">num_tokens</span><span class="si">}</span><span class="s2"> tokens&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;token integers: </span><span class="si">{</span><span class="n">token_integers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;token bytes: </span><span class="si">{</span><span class="n">token_bytes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>token count: 532 tokens
+token integers: [2953, 31, 18633, 482, 480, 4119, 23, 271, 11956, 25, 220, 679, 22, 12, 2304, 12, 2148, 51, 1691, 25, 2148, 25, 4331, 13, 24847, 57, 271, 19696, 25, 220, 2366, 15, 12, 2839, 12, 972, 51, 777, 25, 4370, 25, 2946, 13, 4364, 57, 271, 54084, 9663, 25, 350, 1900, 45644, 423, 1339, 16900, 11, 34711, 16777, 10181, 11, 4953, 382, 96309, 271, 2953, 31, 18633, 271, 5116, 271, 2953, 31, 18633, 374, 264, 5734, 6108, 21516, 6023, 1912, 13, 1102, 706, 8767, 1511, 502, 2332, 34594, 4455, 439, 326, 1439, 311, 6493, 40831, 323, 706, 15871, 17550, 11351, 6532, 304, 6020, 11, 7100, 11, 323, 6696, 4947, 11, 11383, 1701, 17880, 2561, 98980, 82, 1778, 439, 52212, 40, 14029, 11, 439, 1664, 439, 1063, 2536, 57571, 1203, 28404, 13, 320, 34, 7709, 25, 6785, 51158, 4074, 31, 18633, 696, 29356, 8467, 12477, 271, 2953, 31, 18633, 706, 3288, 14633, 449, 39270, 5210, 8410, 9477, 12673, 13127, 34, 7709, 25, 6785, 51158, 4074, 31, 18633, 8, 7511, 91, 1800, 265, 12, 21208, 91, 79034, 12, 21208, 91, 47424, 11, 12214, 3204, 11, 13466, 91, 51, 4364, 19, 13, 6726, 91, 30700, 9824, 2958, 44838, 2953, 31, 18633, 706, 17644, 311, 636, 12697, 311, 7195, 39270, 5210, 9506, 34779, 12886, 4669, 41963, 764, 11218, 14633, 13127, 34, 7709, 25, 6785, 51158, 4074, 31, 18633, 8, 7511, 91, 1800, 265, 12, 21208, 91, 79034, 12, 21208, 91, 47424, 11, 13466, 11, 12214, 3204, 91, 51, 4364, 18, 91, 8193, 385, 7709, 369, 8589, 32028, 44838, 2953, 31, 18633, 706, 51763, 3016, 3241, 52227, 369, 11572, 11, 1778, 439, 5210, 9506, 46869, 12, 679, 17, 12, 16037, 23, 13127, 34, 7709, 25, 6785, 51158, 4074, 31, 18633, 8, 7511, 91, 1800, 265, 12, 21208, 91, 79034, 12, 21208, 91, 47424, 11, 12214, 3204, 11, 13466, 91, 51, 6640, 22, 13, 4119, 91, 7469, 8785, 44838, 2953, 31, 18633, 20142, 1511, 279, 2768, 11545, 2768, 40761, 315, 264, 5780, 449, 271, 9628, 79580, 40831, 311, 13555, 1217, 9815, 1473, 2953, 31, 18633, 20142, 1511, 279, 2768, 3290, 311, 30174, 832, 315, 872, 7526, 311, 264, 65309, 1052, 836, 1473, 2953, 31, 18633, 20142, 1511, 279, 2768, 3290, 2768, 40761, 315, 264, 5780, 449, 271, 9628, 79580, 40831, 311, 1160, 2254, 5315, 1473, 2953, 31, 18633, 20142, 1511, 279, 2768, 11545, 1306, 71701, 264, 5780, 449, 271, 9628, 79580, 40831, 311, 6994, 2038, 922, 279, 10293, 1473, 2953, 31, 18633, 20142, 1511, 279, 2768, 3290, 1306, 71701, 264, 5780, 449, 271, 9628, 79580, 40831, 311, 21953, 2038, 922, 2254, 14488, 1473, 2953, 31, 18633, 20142, 1511, 279, 2768, 3290, 2768, 40761, 315, 264, 5780, 449, 271, 9628, 79580, 40831, 311, 6994, 2038, 922, 3600, 1473, 2953, 31, 18633, 20142, 1511, 279, 2768, 3290, 2768, 40761, 315, 264, 5780, 449, 271, 9628, 79580, 40831, 311, 3113, 4009, 13537, 1473, 2953, 31, 18633, 20142, 1511, 279, 2768, 11545, 1306, 71701, 264, 5780, 449, 271, 9628, 79580, 40831, 311, 6994, 2038, 922, 3626, 323, 29725, 1473, 9628, 79580, 40831, 3638, 2953, 31, 18633, 20142, 3549, 264, 1052, 8649, 264, 1160, 315, 11545, 311, 387, 16070, 389, 279, 44500, 6500, 13127, 34, 7709, 25, 6785, 51158, 4074, 31, 18633, 18419]
+token bytes: [b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; -&#39;, b&#39; G&#39;, b&#39;001&#39;, b&#39;8&#39;, b&#39;\n\n&#39;, b&#39;Created&#39;, b&#39;:&#39;, b&#39; &#39;, b&#39;201&#39;, b&#39;7&#39;, b&#39;-&#39;, b&#39;05&#39;, b&#39;-&#39;, b&#39;31&#39;, b&#39;T&#39;, b&#39;21&#39;, b&#39;:&#39;, b&#39;31&#39;, b&#39;:&#39;, b&#39;53&#39;, b&#39;.&#39;, b&#39;579&#39;, b&#39;Z&#39;, b&#39;\n\n&#39;, b&#39;Modified&#39;, b&#39;:&#39;, b&#39; &#39;, b&#39;202&#39;, b&#39;0&#39;, b&#39;-&#39;, b&#39;03&#39;, b&#39;-&#39;, b&#39;18&#39;, b&#39;T&#39;, b&#39;19&#39;, b&#39;:&#39;, b&#39;54&#39;, b&#39;:&#39;, b&#39;59&#39;, b&#39;.&#39;, b&#39;120&#39;, b&#39;Z&#39;, b&#39;\n\n&#39;, b&#39;Contrib&#39;, b&#39;utors&#39;, b&#39;:&#39;, b&#39; T&#39;, b&#39;ats&#39;, b&#39;uya&#39;, b&#39; D&#39;, b&#39;ait&#39;, b&#39;oku&#39;, b&#39;,&#39;, b&#39; Cyber&#39;, b&#39; Defense&#39;, b&#39; Institute&#39;, b&#39;,&#39;, b&#39; Inc&#39;, b&#39;.\n\n&#39;, b&#39;Aliases&#39;, b&#39;\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39;\n\n&#39;, b&#39;Description&#39;, b&#39;\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; is&#39;, b&#39; a&#39;, b&#39; China&#39;, b&#39;-based&#39;, b&#39; cyber&#39;, b&#39; threat&#39;, b&#39; group&#39;, b&#39;.&#39;, b&#39; It&#39;, b&#39; has&#39;, b&#39; previously&#39;, b&#39; used&#39;, b&#39; new&#39;, b&#39;sw&#39;, b&#39;orthy&#39;, b&#39; events&#39;, b&#39; as&#39;, b&#39; l&#39;, b&#39;ures&#39;, b&#39; to&#39;, b&#39; deliver&#39;, b&#39; malware&#39;, b&#39; and&#39;, b&#39; has&#39;, b&#39; primarily&#39;, b&#39; targeted&#39;, b&#39; organizations&#39;, b&#39; involved&#39;, b&#39; in&#39;, b&#39; financial&#39;, b&#39;,&#39;, b&#39; economic&#39;, b&#39;,&#39;, b&#39; and&#39;, b&#39; trade&#39;, b&#39; policy&#39;, b&#39;,&#39;, b&#39; typically&#39;, b&#39; using&#39;, b&#39; publicly&#39;, b&#39; available&#39;, b&#39; RAT&#39;, b&#39;s&#39;, b&#39; such&#39;, b&#39; as&#39;, b&#39; Poison&#39;, b&#39;I&#39;, b&#39;vy&#39;, b&#39;,&#39;, b&#39; as&#39;, b&#39; well&#39;, b&#39; as&#39;, b&#39; some&#39;, b&#39; non&#39;, b&#39;-public&#39;, b&#39; back&#39;, b&#39;doors&#39;, b&#39;.&#39;, b&#39; (&#39;, b&#39;C&#39;, b&#39;itation&#39;, b&#39;:&#39;, b&#39; Fire&#39;, b&#39;Eye&#39;, b&#39; admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39;)\n\n&#39;, b&#39;Techn&#39;, b&#39;iques&#39;, b&#39; Used&#39;, b&#39;\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; has&#39;, b&#39; sent&#39;, b&#39; emails&#39;, b&#39; with&#39;, b&#39; malicious&#39;, b&#39; Microsoft&#39;, b&#39; Office&#39;, b&#39; documents&#39;, b&#39; attached&#39;, b&#39;.(&#39;, b&#39;C&#39;, b&#39;itation&#39;, b&#39;:&#39;, b&#39; Fire&#39;, b&#39;Eye&#39;, b&#39; admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39;)&#39;, b&#39;|\n&#39;, b&#39;|&#39;, b&#39;mit&#39;, b&#39;re&#39;, b&#39;-&#39;, b&#39;attack&#39;, b&#39;|&#39;, b&#39;enterprise&#39;, b&#39;-&#39;, b&#39;attack&#39;, b&#39;|&#39;, b&#39;Linux&#39;, b&#39;,&#39;, b&#39;mac&#39;, b&#39;OS&#39;, b&#39;,&#39;, b&#39;Windows&#39;, b&#39;|&#39;, b&#39;T&#39;, b&#39;120&#39;, b&#39;4&#39;, b&#39;.&#39;, b&#39;002&#39;, b&#39;|&#39;, b&#39;Mal&#39;, b&#39;icious&#39;, b&#39; File&#39;, b&#39;|\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; has&#39;, b&#39; attempted&#39;, b&#39; to&#39;, b&#39; get&#39;, b&#39; victims&#39;, b&#39; to&#39;, b&#39; launch&#39;, b&#39; malicious&#39;, b&#39; Microsoft&#39;, b&#39; Word&#39;, b&#39; attachments&#39;, b&#39; delivered&#39;, b&#39; via&#39;, b&#39; spear&#39;, b&#39;ph&#39;, b&#39;ishing&#39;, b&#39; emails&#39;, b&#39;.(&#39;, b&#39;C&#39;, b&#39;itation&#39;, b&#39;:&#39;, b&#39; Fire&#39;, b&#39;Eye&#39;, b&#39; admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39;)&#39;, b&#39;|\n&#39;, b&#39;|&#39;, b&#39;mit&#39;, b&#39;re&#39;, b&#39;-&#39;, b&#39;attack&#39;, b&#39;|&#39;, b&#39;enterprise&#39;, b&#39;-&#39;, b&#39;attack&#39;, b&#39;|&#39;, b&#39;Linux&#39;, b&#39;,&#39;, b&#39;Windows&#39;, b&#39;,&#39;, b&#39;mac&#39;, b&#39;OS&#39;, b&#39;|&#39;, b&#39;T&#39;, b&#39;120&#39;, b&#39;3&#39;, b&#39;|&#39;, b&#39;Exp&#39;, b&#39;lo&#39;, b&#39;itation&#39;, b&#39; for&#39;, b&#39; Client&#39;, b&#39; Execution&#39;, b&#39;|\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; has&#39;, b&#39; exploited&#39;, b&#39; client&#39;, b&#39; software&#39;, b&#39; vulnerabilities&#39;, b&#39; for&#39;, b&#39; execution&#39;, b&#39;,&#39;, b&#39; such&#39;, b&#39; as&#39;, b&#39; Microsoft&#39;, b&#39; Word&#39;, b&#39; CVE&#39;, b&#39;-&#39;, b&#39;201&#39;, b&#39;2&#39;, b&#39;-&#39;, b&#39;015&#39;, b&#39;8&#39;, b&#39;.(&#39;, b&#39;C&#39;, b&#39;itation&#39;, b&#39;:&#39;, b&#39; Fire&#39;, b&#39;Eye&#39;, b&#39; admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39;)&#39;, b&#39;|\n&#39;, b&#39;|&#39;, b&#39;mit&#39;, b&#39;re&#39;, b&#39;-&#39;, b&#39;attack&#39;, b&#39;|&#39;, b&#39;enterprise&#39;, b&#39;-&#39;, b&#39;attack&#39;, b&#39;|&#39;, b&#39;Linux&#39;, b&#39;,&#39;, b&#39;mac&#39;, b&#39;OS&#39;, b&#39;,&#39;, b&#39;Windows&#39;, b&#39;|&#39;, b&#39;T&#39;, b&#39;108&#39;, b&#39;7&#39;, b&#39;.&#39;, b&#39;001&#39;, b&#39;|&#39;, b&#39;Local&#39;, b&#39; Account&#39;, b&#39;|\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; actors&#39;, b&#39; used&#39;, b&#39; the&#39;, b&#39; following&#39;, b&#39; commands&#39;, b&#39; following&#39;, b&#39; exploitation&#39;, b&#39; of&#39;, b&#39; a&#39;, b&#39; machine&#39;, b&#39; with&#39;, b&#39;\n\n&#39;, b&#39;LOW&#39;, b&#39;BALL&#39;, b&#39; malware&#39;, b&#39; to&#39;, b&#39; enumerate&#39;, b&#39; user&#39;, b&#39; accounts&#39;, b&#39;:\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; actors&#39;, b&#39; used&#39;, b&#39; the&#39;, b&#39; following&#39;, b&#39; command&#39;, b&#39; to&#39;, b&#39; rename&#39;, b&#39; one&#39;, b&#39; of&#39;, b&#39; their&#39;, b&#39; tools&#39;, b&#39; to&#39;, b&#39; a&#39;, b&#39; benign&#39;, b&#39; file&#39;, b&#39; name&#39;, b&#39;:\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; actors&#39;, b&#39; used&#39;, b&#39; the&#39;, b&#39; following&#39;, b&#39; command&#39;, b&#39; following&#39;, b&#39; exploitation&#39;, b&#39; of&#39;, b&#39; a&#39;, b&#39; machine&#39;, b&#39; with&#39;, b&#39;\n\n&#39;, b&#39;LOW&#39;, b&#39;BALL&#39;, b&#39; malware&#39;, b&#39; to&#39;, b&#39; list&#39;, b&#39; local&#39;, b&#39; groups&#39;, b&#39;:\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; actors&#39;, b&#39; used&#39;, b&#39; the&#39;, b&#39; following&#39;, b&#39; commands&#39;, b&#39; after&#39;, b&#39; exploiting&#39;, b&#39; a&#39;, b&#39; machine&#39;, b&#39; with&#39;, b&#39;\n\n&#39;, b&#39;LOW&#39;, b&#39;BALL&#39;, b&#39; malware&#39;, b&#39; to&#39;, b&#39; obtain&#39;, b&#39; information&#39;, b&#39; about&#39;, b&#39; the&#39;, b&#39; OS&#39;, b&#39;:\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; actors&#39;, b&#39; used&#39;, b&#39; the&#39;, b&#39; following&#39;, b&#39; command&#39;, b&#39; after&#39;, b&#39; exploiting&#39;, b&#39; a&#39;, b&#39; machine&#39;, b&#39; with&#39;, b&#39;\n\n&#39;, b&#39;LOW&#39;, b&#39;BALL&#39;, b&#39; malware&#39;, b&#39; to&#39;, b&#39; acquire&#39;, b&#39; information&#39;, b&#39; about&#39;, b&#39; local&#39;, b&#39; networks&#39;, b&#39;:\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; actors&#39;, b&#39; used&#39;, b&#39; the&#39;, b&#39; following&#39;, b&#39; command&#39;, b&#39; following&#39;, b&#39; exploitation&#39;, b&#39; of&#39;, b&#39; a&#39;, b&#39; machine&#39;, b&#39; with&#39;, b&#39;\n\n&#39;, b&#39;LOW&#39;, b&#39;BALL&#39;, b&#39; malware&#39;, b&#39; to&#39;, b&#39; obtain&#39;, b&#39; information&#39;, b&#39; about&#39;, b&#39; services&#39;, b&#39;:\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; actors&#39;, b&#39; used&#39;, b&#39; the&#39;, b&#39; following&#39;, b&#39; command&#39;, b&#39; following&#39;, b&#39; exploitation&#39;, b&#39; of&#39;, b&#39; a&#39;, b&#39; machine&#39;, b&#39; with&#39;, b&#39;\n\n&#39;, b&#39;LOW&#39;, b&#39;BALL&#39;, b&#39; malware&#39;, b&#39; to&#39;, b&#39; display&#39;, b&#39; network&#39;, b&#39; connections&#39;, b&#39;:\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; actors&#39;, b&#39; used&#39;, b&#39; the&#39;, b&#39; following&#39;, b&#39; commands&#39;, b&#39; after&#39;, b&#39; exploiting&#39;, b&#39; a&#39;, b&#39; machine&#39;, b&#39; with&#39;, b&#39;\n\n&#39;, b&#39;LOW&#39;, b&#39;BALL&#39;, b&#39; malware&#39;, b&#39; to&#39;, b&#39; obtain&#39;, b&#39; information&#39;, b&#39; about&#39;, b&#39; files&#39;, b&#39; and&#39;, b&#39; directories&#39;, b&#39;:\n\n&#39;, b&#39;LOW&#39;, b&#39;BALL&#39;, b&#39; malware&#39;, b&#39;,\n\n&#39;, b&#39;admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39; actors&#39;, b&#39; created&#39;, b&#39; a&#39;, b&#39; file&#39;, b&#39; containing&#39;, b&#39; a&#39;, b&#39; list&#39;, b&#39; of&#39;, b&#39; commands&#39;, b&#39; to&#39;, b&#39; be&#39;, b&#39; executed&#39;, b&#39; on&#39;, b&#39; the&#39;, b&#39; compromised&#39;, b&#39; computer&#39;, b&#39;.(&#39;, b&#39;C&#39;, b&#39;itation&#39;, b&#39;:&#39;, b&#39; Fire&#39;, b&#39;Eye&#39;, b&#39; admin&#39;, b&#39;@&#39;, b&#39;338&#39;, b&#39;)|&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create a length function to calculate the min, max, and avg token count across all document</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tiktoken_len</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">text</span><span class="p">,</span>
+        <span class="n">disallowed_special</span><span class="o">=</span><span class="p">()</span> <span class="c1">#To disable this check for all special tokens</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+<span class="c1"># Get token counts</span>
+<span class="n">token_counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">tiktoken_len</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">md_docs</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;[+] Token Counts:</span>
+<span class="s2">Min: </span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="n">token_counts</span><span class="p">)</span><span class="si">}</span>
+<span class="s2">Avg: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">token_counts</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">token_counts</span><span class="p">))</span><span class="si">}</span>
+<span class="s2">Max: </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="n">token_counts</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Token Counts:
+Min: 176
+Avg: 1619
+Max: 7346
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use langchain text splitter</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">RecursiveCharacterTextSplitter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Chunking Text</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[+] Initializing RecursiveCharacterTextSplitter..&#39;</span><span class="p">)</span>
+<span class="n">text_splitter</span> <span class="o">=</span> <span class="n">RecursiveCharacterTextSplitter</span><span class="p">(</span>
+    <span class="n">chunk_size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>  <span class="c1"># number of tokens overlap between chunks</span>
+    <span class="n">length_function</span><span class="o">=</span><span class="n">tiktoken_len</span><span class="p">,</span>
+    <span class="n">separators</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Initializing RecursiveCharacterTextSplitter..
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[+] Splitting documents in chunks..&#39;</span><span class="p">)</span>
+<span class="n">chunks</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_documents</span><span class="p">(</span><span class="n">md_docs</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[+] Number of documents: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">md_docs</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[+] Number of chunks: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Splitting documents in chunks..
+[+] Number of documents: 134
+[+] Number of chunks: 534
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">chunks</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">chunks</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>page_content=&#39;admin@338 - G0018\n\nCreated: 2017-05-31T21:31:53.579Z\n\nModified: 2020-03-18T19:54:59.120Z\n\nContributors: Tatsuya Daitoku, Cyber Defense Institute, Inc.\n\nAliases\n\nadmin@338\n\nDescription\n\nadmin@338 is a China-based cyber threat group. It has previously used newsworthy events as lures to deliver malware and has primarily targeted organizations involved in financial, economic, and trade policy, typically using publicly available RATs such as PoisonIvy, as well as some non-public backdoors. (Citation: FireEye admin@338)\n\nTechniques Used\n\nadmin@338 has sent emails with malicious Microsoft Office documents attached.(Citation: FireEye admin@338)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1204.002|Malicious File|\n\nadmin@338 has attempted to get victims to launch malicious Microsoft Word attachments delivered via spearphishing emails.(Citation: FireEye admin@338)|\n|mitre-attack|enterprise-attack|Linux,Windows,macOS|T1203|Exploitation for Client Execution|\n\nadmin@338 has exploited client software vulnerabilities for execution, such as Microsoft Word CVE-2012-0158.(Citation: FireEye admin@338)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1087.001|Local Account|\n\nadmin@338 actors used the following commands following exploitation of a machine with\n\nLOWBALL malware to enumerate user accounts:\n\nadmin@338 actors used the following command to rename one of their tools to a benign file name:\n\nadmin@338 actors used the following command following exploitation of a machine with\n\nLOWBALL malware to list local groups:\n\nadmin@338 actors used the following commands after exploiting a machine with\n\nLOWBALL malware to obtain information about the OS:\n\nadmin@338 actors used the following command after exploiting a machine with\n\nLOWBALL malware to acquire information about local networks:\n\nadmin@338 actors used the following command following exploitation of a machine with\n\nLOWBALL malware to obtain information about services:\n\nadmin@338 actors used the following command following exploitation of a machine with\n\nLOWBALL malware to display network connections:\n\nadmin@338 actors used the following commands after exploiting a machine with&#39; metadata={&#39;source&#39;: &#39;documents\\admin@338.md&#39;}
+page_content=&#39;LOWBALL malware to obtain information about services:\n\nadmin@338 actors used the following command following exploitation of a machine with\n\nLOWBALL malware to display network connections:\n\nadmin@338 actors used the following commands after exploiting a machine with\n\nLOWBALL malware to obtain information about files and directories:\n\nLOWBALL malware,\n\nadmin@338 actors created a file containing a list of commands to be executed on the compromised computer.(Citation: FireEye admin@338)|&#39; metadata={&#39;source&#39;: &#39;documents\\admin@338.md&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="contribute-split-documents-optional">
+<h3>Contribute Split Documents (Optional)<a class="headerlink" href="#contribute-split-documents-optional" title="Permalink to this heading">#</a></h3>
+<p>We can contribute this so that others can use the data generated so far.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="n">json_documents</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">md_docs</span><span class="p">:</span>
+    <span class="n">doc_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">])</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">doc_name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="n">uid</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">12</span><span class="p">]</span>
+    <span class="n">chunks_strings</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chunks_strings</span><span class="p">):</span>
+        <span class="c1"># Add JSON object to array</span>
+        <span class="n">json_documents</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">chunk</span><span class="p">,</span>
+            <span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="n">doc_name</span>
+        <span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json_documents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json_documents</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;id&#39;: &#39;4d1ab63e9fd8-0&#39;, &#39;text&#39;: &#39;admin@338 - G0018\n\nCreated: 2017-05-31T21:31:53.579Z\n\nModified: 2020-03-18T19:54:59.120Z\n\nContributors: Tatsuya Daitoku, Cyber Defense Institute, Inc.\n\nAliases\n\nadmin@338\n\nDescription\n\nadmin@338 is a China-based cyber threat group. It has previously used newsworthy events as lures to deliver malware and has primarily targeted organizations involved in financial, economic, and trade policy, typically using publicly available RATs such as PoisonIvy, as well as some non-public backdoors. (Citation: FireEye admin@338)\n\nTechniques Used\n\nadmin@338 has sent emails with malicious Microsoft Office documents attached.(Citation: FireEye admin@338)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1204.002|Malicious File|\n\nadmin@338 has attempted to get victims to launch malicious Microsoft Word attachments delivered via spearphishing emails.(Citation: FireEye admin@338)|\n|mitre-attack|enterprise-attack|Linux,Windows,macOS|T1203|Exploitation for Client Execution|\n\nadmin@338 has exploited client software vulnerabilities for execution, such as Microsoft Word CVE-2012-0158.(Citation: FireEye admin@338)|\n|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1087.001|Local Account|\n\nadmin@338 actors used the following commands following exploitation of a machine with\n\nLOWBALL malware to enumerate user accounts:\n\nadmin@338 actors used the following command to rename one of their tools to a benign file name:\n\nadmin@338 actors used the following command following exploitation of a machine with\n\nLOWBALL malware to list local groups:\n\nadmin@338 actors used the following commands after exploiting a machine with\n\nLOWBALL malware to obtain information about the OS:\n\nadmin@338 actors used the following command after exploiting a machine with\n\nLOWBALL malware to acquire information about local networks:\n\nadmin@338 actors used the following command following exploitation of a machine with\n\nLOWBALL malware to obtain information about services:\n\nadmin@338 actors used the following command following exploitation of a machine with\n\nLOWBALL malware to display network connections:\n\nadmin@338 actors used the following commands after exploiting a machine with&#39;, &#39;source&#39;: &#39;admin@338.md&#39;}
+{&#39;id&#39;: &#39;4d1ab63e9fd8-1&#39;, &#39;text&#39;: &#39;LOWBALL malware to obtain information about services:\n\nadmin@338 actors used the following command following exploitation of a machine with\n\nLOWBALL malware to display network connections:\n\nadmin@338 actors used the following commands after exploiting a machine with\n\nLOWBALL malware to obtain information about files and directories:\n\nLOWBALL malware,\n\nadmin@338 actors created a file containing a list of commands to be executed on the compromised computer.(Citation: FireEye admin@338)|&#39;, &#39;source&#39;: &#39;admin@338.md&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Export Knowledge Base as JSONL File (Optional)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[+] Exporting groups as .jsonl file..&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">contrib_directory</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;attack-groups.jsonl&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">json_documents</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[+] Exporting groups as .jsonl file..
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generate-embeddings">
+<h3>Generate Embeddings<a class="headerlink" href="#generate-embeddings" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.embeddings.sentence_transformer</span> <span class="kn">import</span> <span class="n">SentenceTransformerEmbeddings</span>
+<span class="kn">from</span> <span class="nn">langchain.vectorstores</span> <span class="kn">import</span> <span class="n">Chroma</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create the open-source embedding function</span>
+<span class="n">embedding_function</span> <span class="o">=</span> <span class="n">SentenceTransformerEmbeddings</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;all-mpnet-base-v2&quot;</span><span class="p">)</span>
+
+<span class="c1"># load it into Chroma and save it to disk</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">Chroma</span><span class="o">.</span><span class="n">from_documents</span><span class="p">(</span><span class="n">chunks</span><span class="p">,</span> <span class="n">embedding_function</span><span class="p">,</span> <span class="n">collection_name</span><span class="o">=</span><span class="s2">&quot;groups_collection&quot;</span><span class="p">,</span> <span class="n">persist_directory</span><span class="o">=</span><span class="s2">&quot;./chroma_db&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\RobertoRodriguez\AppData\Local\Programs\Python\Python311\Lib\site-packages\tqdm\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div>
+</div>
+</div>
+</div>
+<p>ask a question directly to the DB</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># query it</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What threat actors send text messages to their targets?&quot;</span>
+<span class="n">relevant_docs</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">similarity_search</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+<span class="c1"># print results</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">relevant_docs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Lazarus Group has created new Twitter accounts to conduct social engineering against potential victims.(Citation: Google TAG Lazarus Jan 2021)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1566.003|Spearphishing via Service|
+
+Lazarus Group has used social media platforms, including LinkedIn and Twitter, to send spearphishing messages.(Citation: Google TAG Lazarus Jan 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1584.004|Server|
+
+Lazarus Group has compromised servers to stage malicious tools.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1591|Gather Victim Org Information|
+
+Lazarus Group has studied publicly available information about a targeted organization to tailor spearphishing efforts against specific departments and/or individuals.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1585.002|Email Accounts|
+
+Lazarus Group has created new email accounts for spearphishing operations.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1588.002|Tool|
+
+Lazarus Group has obtained a variety of tools for their operations, including
+
+Responder and PuTTy PSCP.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1589.002|Email Addresses|
+
+Lazarus Group collected email addresses belonging to various departments of a targeted organization which were used in follow-on phishing campaigns.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1218.011|Rundll32|
+
+Lazarus Group has used rundll32 to execute malicious payloads on a compromised host.(Citation: ESET Twitter Ida Pro Nov 2021)|
+|mitre-attack|enterprise-attack,ics-attack|macOS,Windows|T1553.002|Code Signing|
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./experiments\RAG\Threat-Intelligence\ATTCK-Groups\source-knowledge"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../../../Basics/OAI-Summarizing-Incident.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Summarizing: Incident Data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../LangChain/notebook.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">RAG - LangChain and ATT&amp;CK Groups</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-modules">Import Modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-initial-variables">Define Initial Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-att-ck-client">Initialize ATT&amp;CK Client</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-att-ck-groups">Get ATT&amp;CK Groups</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-att-ck-groups-documents">Create ATT&amp;CK Groups Documents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#index-source-knowledge">Index Source Knowledge</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-documents">Load Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#split-documents">Split Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contribute-split-documents-optional">Contribute Split Documents (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings">Generate Embeddings</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Roberto Rodriguez @Cyb3rWard0g
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

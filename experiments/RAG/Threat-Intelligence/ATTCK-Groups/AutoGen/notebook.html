@@ -1,0 +1,1411 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>RAG - AutoGen and ATT&amp;CK Groups &#8212; GPT Security Adventures</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/jquery.js"></script>
+    <script src="../../../../../_static/underscore.js"></script>
+    <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../../_static/copybutton.js"></script>
+    <script src="../../../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/RAG/Threat-Intelligence/ATTCK-Groups/AutoGen/notebook';</script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="Bloodhound GPT" href="../../../../Bloodhound-GPT/notebook.html" />
+    <link rel="prev" title="RAG - LangChain and ATT&amp;CK Groups" href="../LangChain/notebook.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../../../README.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../../../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting-started/Embeddings.html">Embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Basics/OAI-Inferring-Sentiment.html">Inferring: Sentiment Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Basics/OAI-Summarizing-Incident.html">Summarizing: Incident Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-knowledge/notebook.html">Create ATT&amp;CK Groups Source knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LangChain/notebook.html">RAG - LangChain and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">RAG - AutoGen and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Bloodhound-GPT/notebook.html">Bloodhound GPT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Local-GPT/notebook.html">Local Experiment: GPT4All</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ROADTools-GPT/notebook.html">ROADTools GPT</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures/issues/new?title=Issue%20on%20page%20%2Fexperiments/RAG/Threat-Intelligence/ATTCK-Groups/AutoGen/notebook.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../_sources/experiments/RAG/Threat-Intelligence/ATTCK-Groups/AutoGen/notebook.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>RAG - AutoGen and ATT&CK Groups</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-modules">Import Modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-initial-variables">Define Initial Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-api-endpoint">Set Up API Endpoint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-agents-for-retrievechat">Construct agents for RetrieveChat</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-retrieveassistantagent">Create the RetrieveAssistantAgent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-retrieveuserproxyagent">Create the RetrieveUserProxyAgent</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#query-att-ck-groups-knowledge-base">Query ATT&amp;CK Groups Knowledge Base</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="rag-autogen-and-att-ck-groups">
+<h1>RAG - AutoGen and ATT&amp;CK Groups<a class="headerlink" href="#rag-autogen-and-att-ck-groups" title="Permalink to this heading">#</a></h1>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>Collaborators:</p>
+<ul>
+<li><p>Roberto Rodriguez (&#64;Cyb3rWard0g)</p></li>
+</ul>
+</li>
+<li><p>References:</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/microsoft/autogen/blob/main/notebook/agentchat_RetrieveChat.ipynb">microsoft/autogen</a></p></li>
+</ul>
+</li>
+</ul>
+<section id="import-modules">
+<h2>Import Modules<a class="headerlink" href="#import-modules" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">autogen</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">import</span> <span class="nn">os</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="define-initial-variables">
+<h2>Define Initial Variables<a class="headerlink" href="#define-initial-variables" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s2">&quot;__file__&quot;</span><span class="p">)</span>
+<span class="n">chroma_db</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;../source-knowledge/chroma_db&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="set-up-api-endpoint">
+<h2>Set Up API Endpoint<a class="headerlink" href="#set-up-api-endpoint" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get your key: https://platform.openai.com/account/api-keys</span>
+<span class="n">load_dotenv</span><span class="p">()</span>
+
+<span class="c1"># Set up AutoGen config list</span>
+<span class="n">config_list</span> <span class="o">=</span> <span class="n">autogen</span><span class="o">.</span><span class="n">config_list_from_models</span><span class="p">(</span>
+    <span class="n">model_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span> <span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Set up LLM Config</span>
+<span class="n">llm_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;request_timeout&quot;</span> <span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="s2">&quot;seed&quot;</span> <span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="s2">&quot;config_list&quot;</span> <span class="p">:</span> <span class="n">config_list</span><span class="p">,</span>
+    <span class="s2">&quot;temperature&quot;</span> <span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="construct-agents-for-retrievechat">
+<h2>Construct agents for RetrieveChat<a class="headerlink" href="#construct-agents-for-retrievechat" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">autogen.agentchat.contrib.retrieve_assistant_agent</span> <span class="kn">import</span> <span class="n">RetrieveAssistantAgent</span>
+<span class="kn">from</span> <span class="nn">autogen.agentchat.contrib.retrieve_user_proxy_agent</span> <span class="kn">import</span> <span class="n">RetrieveUserProxyAgent</span>
+<span class="kn">import</span> <span class="nn">chromadb</span>
+
+<span class="n">autogen</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">start_logging</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="create-the-retrieveassistantagent">
+<h3>Create the RetrieveAssistantAgent<a class="headerlink" href="#create-the-retrieveassistantagent" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">assistant</span> <span class="o">=</span> <span class="n">RetrieveAssistantAgent</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span> 
+    <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a helpful assistant.&quot;</span><span class="p">,</span>
+    <span class="n">llm_config</span><span class="o">=</span><span class="n">llm_config</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-the-retrieveuserproxyagent">
+<h3>Create the RetrieveUserProxyAgent<a class="headerlink" href="#create-the-retrieveuserproxyagent" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ragproxyagent</span> <span class="o">=</span> <span class="n">RetrieveUserProxyAgent</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ragproxyagent&quot;</span><span class="p">,</span>
+    <span class="n">human_input_mode</span><span class="o">=</span><span class="s2">&quot;NEVER&quot;</span><span class="p">,</span>
+    <span class="n">max_consecutive_auto_reply</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">retrieve_config</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;qa&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;collection_name&quot;</span><span class="p">:</span> <span class="s2">&quot;groups_collection&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">config_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;client&quot;</span><span class="p">:</span> <span class="n">chromadb</span><span class="o">.</span><span class="n">PersistentClient</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">chroma_db</span><span class="p">),</span>
+        <span class="s2">&quot;embedding_model&quot;</span><span class="p">:</span> <span class="s2">&quot;all-mpnet-base-v2&quot;</span><span class="p">,</span> <span class="c1">#Sentence-transformers model</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="query-att-ck-groups-knowledge-base">
+<h2>Query ATT&amp;CK Groups Knowledge Base<a class="headerlink" href="#query-att-ck-groups-knowledge-base" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qa_problem</span> <span class="o">=</span> <span class="s2">&quot;Describe the ATT&amp;CK Group CURIUM&quot;</span>
+<span class="n">ragproxyagent</span><span class="o">.</span><span class="n">initiate_chat</span><span class="p">(</span><span class="n">assistant</span><span class="p">,</span> <span class="n">problem</span><span class="o">=</span><span class="n">qa_problem</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\RobertoRodriguez\AppData\Local\Programs\Python\Python311\Lib\site-packages\tqdm\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>doc_ids:  [[&#39;50b52dc3-6c5f-11ee-a92e-6479f0659de9&#39;, &#39;50b5070b-6c5f-11ee-95d5-6479f0659de9&#39;, &#39;50b50711-6c5f-11ee-8573-6479f0659de9&#39;, &#39;50b507a0-6c5f-11ee-a94c-6479f0659de9&#39;, &#39;50b5075b-6c5f-11ee-8a2d-6479f0659de9&#39;, &#39;50b52df5-6c5f-11ee-b1f9-6479f0659de9&#39;, &#39;50b507a2-6c5f-11ee-80fb-6479f0659de9&#39;, &#39;50b50705-6c5f-11ee-8831-6479f0659de9&#39;, &#39;50b52dbe-6c5f-11ee-bce4-6479f0659de9&#39;, &#39;50b507a1-6c5f-11ee-a264-6479f0659de9&#39;, &#39;50b52dc4-6c5f-11ee-bbb2-6479f0659de9&#39;, &#39;50b507a4-6c5f-11ee-b040-6479f0659de9&#39;, &#39;50b52d89-6c5f-11ee-a906-6479f0659de9&#39;, &#39;50b506cb-6c5f-11ee-a5d7-6479f0659de9&#39;, &#39;50b50761-6c5f-11ee-9e87-6479f0659de9&#39;, &#39;50b50762-6c5f-11ee-9ac7-6479f0659de9&#39;, &#39;50b50707-6c5f-11ee-a422-6479f0659de9&#39;, &#39;50b52dc2-6c5f-11ee-b170-6479f0659de9&#39;, &#39;50b5075c-6c5f-11ee-bc89-6479f0659de9&#39;, &#39;50b50708-6c5f-11ee-baaa-6479f0659de9&#39;]]
+<span class=" -Color -Color-Green">Adding doc_id 50b52dc3-6c5f-11ee-a92e-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b5070b-6c5f-11ee-95d5-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b50711-6c5f-11ee-8573-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b507a0-6c5f-11ee-a94c-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b5075b-6c5f-11ee-8a2d-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b52df5-6c5f-11ee-b1f9-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b507a2-6c5f-11ee-80fb-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b50705-6c5f-11ee-8831-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b52dbe-6c5f-11ee-bce4-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b507a1-6c5f-11ee-a264-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b52dc4-6c5f-11ee-bbb2-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b507a4-6c5f-11ee-b040-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b52d89-6c5f-11ee-a906-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b506cb-6c5f-11ee-a5d7-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Yellow">ragproxyagent</span> (to assistant):
+
+You&#39;re a retrieve augmented chatbot. You answer user&#39;s questions based on your own knowledge and the
+context provided by the user.
+If you can&#39;t answer the question with or without the current context, you should reply exactly `UPDATE CONTEXT`.
+You must give as short an answer as possible.
+
+User&#39;s question is: Describe the ATT&amp;CK Group CURIUM
+
+Context is: TeamTNT has modified the permissions on binaries with
+
+TeamTNT has enumerated the host machine’s IP address.(Citation: Trend Micro TeamTNT)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1014|Rootkit|
+
+TeamTNT has used rootkits such as the open-source Diamorphine rootkit and their custom bots to hide cryptocurrency mining activities on the machine.(Citation: Trend Micro TeamTNT) (Citation: Cisco Talos Intelligence Group)|
+|mitre-attack|enterprise-attack|macOS,Windows,Linux|T1027.002|Software Packing|
+
+TeamTNT has used UPX and Ezuri packer to pack its binaries.(Citation: Trend Micro TeamTNT)|
+|mitre-attack|enterprise-attack|macOS,Linux|T1059.004|Unix Shell|
+
+TeamTNT has used shell scripts for execution.(Citation: Trend Micro TeamTNT)(Citation: Cisco Talos Intelligence Group)|
+|mitre-attack|enterprise-attack|Windows|T1543.003|Windows Service|
+
+TeamTNT has used malware that adds cryptocurrency miners as a service.(Citation: ATT TeamTNT Chimaera September 2020)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1071|Application Layer Protocol|
+
+TeamTNT has used an IRC bot for C2 communications.(Citation: Trend Micro TeamTNT)|
+|mitre-attack|enterprise-attack|Windows|T1059.003|Windows Command Shell|
+
+TeamTNT has used batch scripts to download tools and executing cryptocurrency miners.(Citation: ATT TeamTNT Chimaera September 2020)|
+|mitre-attack|enterprise-attack|Windows|T1059.001|PowerShell|
+
+TeamTNT has executed PowerShell commands in batch scripts.(Citation: ATT TeamTNT Chimaera September 2020)|
+|mitre-attack|enterprise-attack|Windows|T1547.001|Registry Run Keys / Startup Folder|
+Cobalt Group has used regsvr32.exe to execute scripts.(Citation: Talos Cobalt Group July 2018)(Citation: Morphisec Cobalt Gang Oct 2018)(Citation: TrendMicro Cobalt Group Nov 2017)|
+|mitre-attack|enterprise-attack|Windows,macOS,Linux|T1059.005|Visual Basic|
+
+Cobalt Group has sent Word OLE compound documents with malicious obfuscated VBA macros that will run upon user execution.(Citation: Talos Cobalt Group July 2018)(Citation: PTSecurity Cobalt Group Aug 2017)(Citation: Group IB Cobalt Aug 2017)(Citation: Morphisec Cobalt Gang Oct 2018)(Citation: Unit 42 Cobalt Gang Oct 2018)(Citation: TrendMicro Cobalt Group Nov 2017)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1055|Process Injection|
+
+Cobalt Group has injected code into trusted processes.(Citation: Group IB Cobalt Aug 2017)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows,Containers|T1068|Exploitation for Privilege Escalation|
+
+Cobalt Group has used exploits to increase their levels of rights and privileges.(Citation: Group IB Cobalt Aug 2017)|
+|mitre-attack|enterprise-attack|Windows|T1543.003|Windows Service|
+
+Cobalt Group has created new services to establish persistence.(Citation: Group IB Cobalt Aug 2017)|
+CURIUM - G1012
+
+Created: 2023-01-13T20:51:13.494Z
+
+Modified: 2023-04-12T13:21:41.276Z
+
+Contributors:
+
+Aliases
+
+CURIUM
+
+Description
+
+CURIUM is an Iranian threat group first reported in November 2021 that has invested in building a relationship with potential targets via social media over a period of months to establish trust and confidence before sending malware. Security researchers note CURIUM has demonstrated great patience and persistence by chatting with potential targets daily and sending benign files to help lower their security consciousness.(Citation: Microsoft Iranian Threat Actor Trends November 2021)
+
+Techniques Used
+
+|Matrix|Domain|Platform|Technique ID|Technique Name|Use|
+| :---| :---| :---| :---| :---| :---|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows,Network|T1005|Data from Local System|CURIUM has exfiltrated data from a compromised machine.(Citation: Microsoft Iranian Threat Actor Trends November 2021)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1566.003|Spearphishing via Service|CURIUM has used social media to deliver malicious files to victims.(Citation: Microsoft Iranian Threat Actor Trends November 2021)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1204.002|Malicious File|CURIUM has lured users into opening malicious files delivered via social media.(Citation: Microsoft Iranian Threat Actor Trends November 2021)|
+|mitre-attack|enterprise-attack|PRE|T1585.001|Social Media Accounts|CURIUM has established a network of fictitious social media accounts, including on Facebook and LinkedIn, to establish relationships with victims, often posing as an attractive woman.(Citation: Microsoft Iranian Threat Actor Trends November 2021)|
+Lazarus Group - G0032
+
+Created: 2017-05-31T21:32:03.807Z
+
+Modified: 2023-03-30T19:01:41.451Z
+
+Contributors: Kyaw Pyiyt Htet, @KyawPyiytHtet,Dragos  Threat  Intelligence
+
+Aliases
+
+Lazarus Group,Labyrinth Chollima,HIDDEN COBRA,Guardians of Peace,ZINC,NICKEL ACADEMY
+
+Description
+
+Lazarus Group is a North Korean state-sponsored cyber threat group that has been attributed to the Reconnaissance General Bureau.(Citation: US-CERT HIDDEN COBRA June 2017)(Citation: Treasury North Korean Cyber Groups September 2019) The group has been active since at least 2009 and was reportedly responsible for the November 2014 destructive wiper attack against Sony Pictures Entertainment as part of a campaign named Operation Blockbuster by Novetta. Malware used by Lazarus Group correlates to other reported campaigns, including Operation Flame, Operation 1Mission, Operation Troy, DarkSeoul, and Ten Days of Rain. (Citation: Novetta Blockbuster)
+
+North Korean group definitions are known to have significant overlap, and some security researchers report all North Korean state-sponsored cyber activity under the name Lazarus Group instead of tracking clusters or subgroups, such as Andariel, APT37, APT38, and Kimsuky.
+
+Techniques Used
+
+Lazarus Group has used a custom hashing method to resolve APIs used in shellcode.(Citation: Lazarus APT January 2022)|
+|mitre-attack|enterprise-attack,ics-attack|Windows,Linux,macOS|T1036.004|Masquerade Task or Service|
+
+Lazarus Group has used a scheduled task named
+
+Lazarus Group has restored malicious
+
+KernelCallbackTable code to its original state after the process execution flow has been hijacked.(Citation: Lazarus APT January 2022)|
+|mitre-attack|enterprise-attack,ics-attack|macOS,Linux,Windows|T1620|Reflective Code Loading|
+
+Lazarus Group has changed memory protection permissions then overwritten in memory DLL function code with shellcode, which was later executed via
+
+KernelCallbackTable hijacking.
+GALLIUM - G0093
+
+Created: 2019-07-18T20:47:50.050Z
+
+Modified: 2022-08-12T21:26:22.303Z
+
+Contributors: Daniyal Naeem, BT Security,Cybereason Nocturnus, @nocturnus
+
+Aliases
+
+GALLIUM,Operation Soft Cell
+
+Description
+
+GALLIUM is a cyberespionage group that has been active since at least 2012, primarily targeting telecommunications companies, financial institutions, and government entities in Afghanistan, Australia, Belgium, Cambodia, Malaysia, Mozambique, the Philippines, Russia, and Vietnam. Security researchers have identified GALLIUM as a likely Chinese state-sponsored group, based in part on tools used and TTPs commonly associated with Chinese threat actors.(Citation: Cybereason Soft Cell June 2019)(Citation: Microsoft GALLIUM December 2019)(Citation: Unit 42 PingPull Jun 2022)
+
+Techniques Used
+
+GALLIUM has used Taiwan-based servers that appear to be exclusive to
+
+GALLIUM.(Citation: Microsoft GALLIUM December 2019)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1570|Lateral Tool Transfer|
+
+GALLIUM has used
+
+PsExec to move laterally between hosts in the target network.(Citation: Microsoft GALLIUM December 2019)|
+|mitre-attack|enterprise-attack|PRE|T1588.002|Tool|
+
+GALLIUM has used a variety of widely-available tools, which in some cases they modified to add functionality and/or subvert antimalware solutions.(Citation: Microsoft GALLIUM December 2019)|
+|mitre-attack|enterprise-attack|macOS,Windows|T1553.002|Code Signing|
+
+GALLIUM has used stolen certificates to sign its tools including those from Whizzimo LLC.(Citation: Microsoft GALLIUM December 2019)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1041|Exfiltration Over C2 Channel|
+
+GALLIUM used Web shells and
+Winnti Group - G0044
+
+Created: 2017-05-31T21:32:08.682Z
+
+Modified: 2023-03-20T22:02:53.982Z
+
+Contributors: Edward Millington
+
+Aliases
+
+Winnti Group,Blackfly
+
+Description
+
+Winnti Group is a threat group with Chinese origins that has been active since at least 2010. The group has heavily targeted the gaming industry, but it has also expanded the scope of its targeting.(Citation: Kaspersky Winnti April 2013)(Citation: Kaspersky Winnti June 2015)(Citation: Novetta Winnti April 2015) Some reporting suggests a number of other groups, including Axiom, APT17, and Ke3chang, are closely linked to Winnti Group.(Citation: 401 TRG Winnti Umbrella May 2018)
+
+Techniques Used
+
+Winnti Group has downloaded an auxiliary program named ff.exe to infected machines.(Citation: Kaspersky Winnti April 2013)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows,Network|T1083|File and Directory Discovery|
+
+Winnti Group has used a program named ff.exe to search for specific documents on compromised hosts.(Citation: Kaspersky Winnti April 2013)|
+|mitre-attack|enterprise-attack|PRE|T1583.001|Domains|
+
+Winnti Group has registered domains for C2 that mimicked sites of their intended targets.(Citation: Kaspersky Winnti April 2013)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1014|Rootkit|
+
+Winnti Group used a rootkit to modify typical server functionality.(Citation: Kaspersky Winnti April 2013)|
+|mitre-attack|enterprise-attack|macOS,Windows|T1553.002|Code Signing|
+
+Winnti Group used stolen certificates to sign its malware.(Citation: Kaspersky Winnti April 2013)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows,Network|T1057|Process Discovery|
+Lazarus Group has created new Twitter accounts to conduct social engineering against potential victims.(Citation: Google TAG Lazarus Jan 2021)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1566.003|Spearphishing via Service|
+
+Lazarus Group has used social media platforms, including LinkedIn and Twitter, to send spearphishing messages.(Citation: Google TAG Lazarus Jan 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1584.004|Server|
+
+Lazarus Group has compromised servers to stage malicious tools.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1591|Gather Victim Org Information|
+
+Lazarus Group has studied publicly available information about a targeted organization to tailor spearphishing efforts against specific departments and/or individuals.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1585.002|Email Accounts|
+
+Lazarus Group has created new email accounts for spearphishing operations.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1588.002|Tool|
+
+Lazarus Group has obtained a variety of tools for their operations, including
+
+Responder and PuTTy PSCP.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1589.002|Email Addresses|
+
+Lazarus Group collected email addresses belonging to various departments of a targeted organization which were used in follow-on phishing campaigns.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1218.011|Rundll32|
+
+Lazarus Group has used rundll32 to execute malicious payloads on a compromised host.(Citation: ESET Twitter Ida Pro Nov 2021)|
+|mitre-attack|enterprise-attack,ics-attack|macOS,Windows|T1553.002|Code Signing|
+Cobalt Group - G0080
+
+Created: 2018-10-17T00:14:20.652Z
+
+Modified: 2023-03-22T03:28:29.415Z
+
+Contributors:
+
+Aliases
+
+Cobalt Group,GOLD KINGSWOOD,Cobalt Gang,Cobalt Spider
+
+Description
+
+Cobalt Group is a financially motivated threat group that has primarily targeted financial institutions since at least 2016. The group has conducted intrusions to steal money via targeting ATM systems, card processing, payment systems and SWIFT systems. Cobalt Group has mainly targeted banks in Eastern Europe, Central Asia, and Southeast Asia. One of the alleged leaders was arrested in Spain in early 2018, but the group still appears to be active. The group has been known to target organizations in order to use their access to then compromise additional victims.(Citation: Talos Cobalt Group July 2018)(Citation: PTSecurity Cobalt Group Aug 2017)(Citation: PTSecurity Cobalt Dec 2016)(Citation: Group IB Cobalt Aug 2017)(Citation: Proofpoint Cobalt June 2017)(Citation: RiskIQ Cobalt Nov 2017)(Citation: RiskIQ Cobalt Jan 2018) Reporting indicates there may be links between Cobalt Group and both the malware Carbanak and the group Carbanak.(Citation: Europol Cobalt Mar 2018)
+
+Techniques Used
+
+Cobalt Group has obtained and used a variety of tools including
+
+Mimikatz,
+
+PsExec,
+
+Cobalt Strike, and
+
+SDelete.(Citation: PTSecurity Cobalt Dec 2016)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1195.002|Compromise Software Supply Chain|
+
+Cobalt Group has compromised legitimate web browser updates to deliver a backdoor. (Citation: Crowdstrike GTR2020 Mar 2020)|
+|mitre-attack|enterprise-attack|Windows,macOS,Linux|T1059.007|JavaScript|
+TeamTNT - G0139
+
+Created: 2021-10-01T01:57:31.229Z
+
+Modified: 2022-10-19T21:35:03.147Z
+
+Contributors: Will Thomas, Cyjax,Darin Smith, Cisco
+
+Aliases
+
+TeamTNT
+
+Description
+
+TeamTNT is a threat group that has primarily targeted cloud and containerized environments. The group as been active since at least October 2019 and has mainly focused its efforts on leveraging cloud and container resources to deploy cryptocurrency miners in victim environments.(Citation: Palo Alto Black-T October 2020)(Citation: Lacework TeamTNT May 2021)(Citation: Intezer TeamTNT September 2020)(Citation: Cado Security TeamTNT Worm August 2020)(Citation: Unit 42 Hildegard Malware)(Citation: Trend Micro TeamTNT)(Citation: ATT TeamTNT Chimaera September 2020)(Citation: Aqua TeamTNT August 2020)(Citation: Intezer TeamTNT Explosion September 2021)
+
+Techniques Used
+
+TeamTNT has leveraged AWS CLI to enumerate cloud environments with compromised credentials.(Citation: Talos TeamTNT)|
+|mitre-attack|enterprise-attack|Windows,macOS,Linux|T1569|System Services|
+
+TeamTNT has created system services to execute cryptocurrency mining software.(Citation: Cisco Talos Intelligence Group)|
+|mitre-attack|enterprise-attack|Windows,Linux,macOS|T1140|Deobfuscate/Decode Files or Information|
+
+TeamTNT has used a script that decodes a Base64-encoded version of WeaveWorks Scope.(Citation: Cisco Talos Intelligence Group)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows,Network|T1083|File and Directory Discovery|
+
+TeamTNT has used a script that checks
+
+TeamTNT has sent locally staged files with collected credentials to C2 servers using cURL.(Citation: Cisco Talos Intelligence Group)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1074.001|Local Data Staging|
+Lazarus Group has changed memory protection permissions then overwritten in memory DLL function code with shellcode, which was later executed via
+
+KernelCallbackTable hijacking.
+
+Lazarus Group has also used shellcode within macros to decrypt and manually map DLLs into memory at runtime.(Citation: Lazarus APT January 2022)(Citation: Qualys LolZarus)|
+|mitre-attack|enterprise-attack,ics-attack|Windows,Linux,macOS|T1140|Deobfuscate/Decode Files or Information|
+
+Lazarus Group has used shellcode within macros to decrypt and manually map DLLs and shellcode into memory at runtime.(Citation: Lazarus APT January 2022)(Citation: Qualys LolZarus)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1104|Multi-Stage Channels|
+
+Lazarus Group has used multi-stage malware components that inject later stages into separate processes.(Citation: Lazarus APT January 2022)|
+|mitre-attack|enterprise-attack,ics-attack|Windows,Linux,macOS|T1218|System Binary Proxy Execution|
+
+Lazarus Group lnk files used for persistence have abused the Windows Update Client (
+
+Lazarus Group has used GitHub as C2, pulling hosted image payloads then committing command execution output to files in specific directories.(Citation: Lazarus APT January 2022)|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1218.005|Mshta|
+
+Lazarus Group has used
+
+Lazarus Group persistence mechanisms have used
+
+Lazarus Group has renamed system utilities such as
+
+Lazarus Group has replaced
+
+Lazarus Group has abused the
+
+Lazarus Group has routinely deleted log files on a compromised router, including automatic log deletion through the use of the logrotate utility.(Citation: Kaspersky ThreatNeedle Feb 2021) |
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1585.001|Social Media Accounts|
+TeamTNT has added batch scripts to the startup folder.(Citation: ATT TeamTNT Chimaera September 2020)|
+|mitre-attack|enterprise-attack|Windows,Azure AD,Office 365,SaaS,IaaS,Linux,macOS,Google Workspace|T1518.001|Security Software Discovery|
+
+TeamTNT has searched for security products on infected machines.(Citation: ATT TeamTNT Chimaera September 2020)(Citation: Cisco Talos Intelligence Group)|
+|mitre-attack|enterprise-attack|Windows,IaaS,Linux,macOS,Network|T1082|System Information Discovery|
+
+TeamTNT has searched for system version, architecture, disk partition, logical volume, and hostname information.(Citation: ATT TeamTNT Chimaera September 2020)(Citation: Cisco Talos Intelligence Group)|
+|mitre-attack|enterprise-attack|Windows,macOS,Linux,Containers,IaaS|T1562.001|Disable or Modify Tools|
+
+TeamTNT has disabled and uninstalled security tools such as Alibaba, Tencent, and BMC cloud monitoring agents on cloud-based infrastructure.(Citation: ATT TeamTNT Chimaera September 2020)(Citation: Cisco Talos Intelligence Group)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1070.004|File Deletion|
+
+TeamTNT has used a payload that removes itself after running.
+
+TeamTNT also has deleted locally staged files for collecting credentials or scan results for local IP addresses after exfiltrating them.(Citation: ATT TeamTNT Chimaera September 2020)(Citation: Cisco Talos Intelligence Group)|
+|mitre-attack|enterprise-attack|Linux,macOS,IaaS,Network|T1098.004|SSH Authorized Keys|
+
+TeamTNT has added RSA keys in
+
+TeamTNT has leveraged iplogger.org to send collected data back to C2.(Citation: Aqua TeamTNT August 2020)(Citation: Cisco Talos Intelligence Group)|
+|mitre-attack|enterprise-attack|Linux,macOS|T1070.002|Clear Linux or Mac System Logs|
+
+TeamTNT has removed system logs from
+
+TeamTNT has disabled
+Lazarus Group has used the Windows API
+
+Lazarus Group has also used various, often lesser known, functions to perform various types of Discovery and
+
+Process Injection.(Citation: Lazarus APT January 2022)(Citation: Qualys LolZarus)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS|T1021.004|SSH|
+
+Lazarus Group used SSH and the PuTTy PSCP utility to gain access to a restricted segment of a compromised network.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows,Containers|T1036.005|Match Legitimate Name or Location|
+
+Lazarus Group has renamed malicious code to disguise it as Microsoft&#39;s narrator and other legitimate files.(Citation: CISA MAR-10288834-2.v1  TAINTEDSCRIBE MAY 2020)(Citation: Qualys LolZarus)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1583.006|Web Services|
+
+Lazarus Group has hosted malicious downloads on Github.(Citation: CISA AppleJeus Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1588.004|Digital Certificates|
+
+Lazarus Group has obtained SSL certificates for their C2 domains.(Citation: CISA AppleJeus Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1587.001|Malware|
+
+Lazarus Group has developed custom malware for use in their operations.(Citation: CISA AppleJeus Feb 2021)(Citation: Google TAG Lazarus Jan 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1583.001|Domains|
+
+Lazarus Group has acquired domains related to their campaigns to act as distribution points and C2 channels.(Citation: CISA AppleJeus Feb 2021)(Citation: Google TAG Lazarus Jan 2021)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1571|Non-Standard Port|Some
+Rocke has distributed cryptomining malware.(Citation: Talos Rocke August 2018)(Citation: Unit 42 Rocke January 2019)|
+|mitre-attack|enterprise-attack|Windows,IaaS,Network,Linux,macOS,Containers|T1190|Exploit Public-Facing Application|
+
+Rocke exploited Apache Struts, Oracle WebLogic (CVE-2017-10271), and Adobe ColdFusion (CVE-2017-3066) vulnerabilities to deliver malware.(Citation: Talos Rocke August 2018)(Citation: Unit 42 Rocke January 2019)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1105|Ingress Tool Transfer|
+
+Rocke used malware to download additional malicious files to the target system.(Citation: Talos Rocke August 2018) |
+|mitre-attack|enterprise-attack|macOS,Linux|T1059.004|Unix Shell|
+
+Rocke used shell scripts to run commands which would obtain persistence and execute the cryptocurrency mining malware.(Citation: Talos Rocke August 2018) |
+|mitre-attack|enterprise-attack|Linux,macOS|T1053.003|Cron|
+
+Rocke installed a cron job that downloaded and executed files from the C2.(Citation: Talos Rocke August 2018)(Citation: Unit 42 Rocke January 2019)(Citation: Anomali Rocke March 2019)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1071.001|Web Protocols|
+
+Rocke has executed wget and curl commands to Pastebin over the HTTPS protocol.(Citation: Anomali Rocke March 2019)|
+|mitre-attack|enterprise-attack|Windows,IaaS,Linux,macOS,Containers,Network|T1046|Network Service Discovery|
+
+Rocke conducted scanning for exposed TCP port 7001 as well as SSH and Redis servers.(Citation: Talos Rocke August 2018)(Citation: Anomali Rocke March 2019)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1562.004|Disable or Modify System Firewall|
+APT38 - G0082
+
+Created: 2019-01-29T21:27:24.793Z
+
+Modified: 2022-01-18T17:13:14.610Z
+
+Contributors:
+
+Aliases
+
+APT38,NICKEL GLADSTONE,BeagleBoyz,Bluenoroff,Stardust Chollima
+
+Description
+
+APT38 is a North Korean state-sponsored threat group that specializes in financial cyber operations; it has been attributed to the Reconnaissance General Bureau.(Citation: CISA AA20-239A BeagleBoyz August 2020) Active since at least 2014, APT38 has targeted banks, financial institutions, casinos, cryptocurrency exchanges, SWIFT system endpoints, and ATMs in at least 38 countries worldwide. Significant operations include the 2016 Bank of Bangladesh heist, during which APT38 stole $81 million, as well as attacks against Bancomext (2018) and Banco de Chile (2018); some of their attacks have been destructive.(Citation: CISA AA20-239A BeagleBoyz August 2020)(Citation: FireEye APT38 Oct 2018)(Citation: DOJ North Korea Indictment Feb 2021)(Citation: Kaspersky Lazarus Under The Hood Blog 2017)
+
+North Korean group definitions are known to have significant overlap, and some security researchers report all North Korean state-sponsored cyber activity under the name Lazarus Group instead of tracking clusters or subgroups.
+
+Techniques Used
+
+APT38 has used CHM files to move concealed payloads.(Citation: Kaspersky Lazarus Under The Hood APR 2017)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1588.002|Tool|
+
+APT38 has obtained and used open-source tools such as
+
+Mimikatz.(Citation: ESET Lazarus KillDisk April 2018)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1070.006|Timestomp|
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------------------------------------------------------------
+<span class=" -Color -Color-Yellow">assistant</span> (to ragproxyagent):
+
+CURIUM is an Iranian threat group first reported in November 2021. They build relationships with potential targets via social media over months to establish trust before sending malware. They have demonstrated great patience and persistence by chatting with potential targets daily and sending benign files to lower their security consciousness. They have used techniques such as exfiltrating data from a compromised machine, using social media to deliver malicious files to victims, and luring users into opening malicious files delivered via social media.
+
+--------------------------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># reset the assistant. Always reset the assistant before starting a new conversation.</span>
+<span class="n">assistant</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+<span class="n">qa_problem</span> <span class="o">=</span> <span class="s2">&quot;List the most used Phishing techniques across all threat actors&quot;</span>
+<span class="n">ragproxyagent</span><span class="o">.</span><span class="n">initiate_chat</span><span class="p">(</span><span class="n">assistant</span><span class="p">,</span> <span class="n">problem</span><span class="o">=</span><span class="n">qa_problem</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>doc_ids:  [[&#39;50b507ca-6c5f-11ee-9f30-6479f0659de9&#39;, &#39;50b50778-6c5f-11ee-b752-6479f0659de9&#39;, &#39;50b506f1-6c5f-11ee-909b-6479f0659de9&#39;, &#39;50b5073b-6c5f-11ee-a971-6479f0659de9&#39;, &#39;50b50779-6c5f-11ee-a428-6479f0659de9&#39;, &#39;50b507a2-6c5f-11ee-80fb-6479f0659de9&#39;, &#39;50b52dbc-6c5f-11ee-ab0e-6479f0659de9&#39;, &#39;50b52d94-6c5f-11ee-a52f-6479f0659de9&#39;, &#39;50b50743-6c5f-11ee-aaa3-6479f0659de9&#39;, &#39;50b5074b-6c5f-11ee-b4b7-6479f0659de9&#39;, &#39;50b52dcd-6c5f-11ee-84e2-6479f0659de9&#39;, &#39;50b52dfd-6c5f-11ee-a5d4-6479f0659de9&#39;, &#39;50b506fb-6c5f-11ee-9003-6479f0659de9&#39;, &#39;50b50734-6c5f-11ee-bfff-6479f0659de9&#39;, &#39;50b507cb-6c5f-11ee-a84c-6479f0659de9&#39;, &#39;50b50738-6c5f-11ee-81b0-6479f0659de9&#39;, &#39;50b50736-6c5f-11ee-8d9b-6479f0659de9&#39;, &#39;50b50742-6c5f-11ee-bf76-6479f0659de9&#39;, &#39;50b507e3-6c5f-11ee-bba3-6479f0659de9&#39;, &#39;50b52d90-6c5f-11ee-8013-6479f0659de9&#39;]]
+<span class=" -Color -Color-Green">Adding doc_id 50b507ca-6c5f-11ee-9f30-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b50778-6c5f-11ee-b752-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b506f1-6c5f-11ee-909b-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b5073b-6c5f-11ee-a971-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b50779-6c5f-11ee-a428-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b507a2-6c5f-11ee-80fb-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b52dbc-6c5f-11ee-ab0e-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b52d94-6c5f-11ee-a52f-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b50743-6c5f-11ee-aaa3-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b5074b-6c5f-11ee-b4b7-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b52dcd-6c5f-11ee-84e2-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b52dfd-6c5f-11ee-a5d4-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b506fb-6c5f-11ee-9003-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Green">Adding doc_id 50b50734-6c5f-11ee-bfff-6479f0659de9 to context.</span>
+<span class=" -Color -Color-Yellow">ragproxyagent</span> (to assistant):
+
+You&#39;re a retrieve augmented chatbot. You answer user&#39;s questions based on your own knowledge and the
+context provided by the user.
+If you can&#39;t answer the question with or without the current context, you should reply exactly `UPDATE CONTEXT`.
+You must give as short an answer as possible.
+
+User&#39;s question is: List the most used Phishing techniques across all threat actors
+
+Context is: Magic Hound has attempted to lure victims into opening malicious email attachments.(Citation: ClearSky Kittens Back 3 August 2020)|
+|mitre-attack|enterprise-attack|PRE|T1585.001|Social Media Accounts|
+
+Magic Hound has created fake LinkedIn and other social media accounts to contact targets and convince them--through messages and voice communications--to open malicious links.(Citation: ClearSky Kittens Back 3 August 2020)|
+|mitre-attack|enterprise-attack|PRE|T1584.001|Domains|
+
+Magic Hound has used compromised domains to host links targeted to specific phishing victims.(Citation: ClearSky Kittens Back 3 August 2020)(Citation: Proofpoint TA453 July2021)(Citation: Certfa Charming Kitten January 2021)(Citation: Google Iran Threats October 2021)|
+|mitre-attack|enterprise-attack|PRE|T1583.001|Domains|
+
+Magic Hound has registered fraudulent domains such as &quot;mail-newyorker.com&quot; and &quot;news12.com.recover-session-service.site&quot; to target specific victims with phishing attacks.(Citation: Certfa Charming Kitten January 2021)|
+|mitre-attack|enterprise-attack|PRE|T1598.003|Spearphishing Link|
+
+Magic Hound has used SMS and email messages with links designed to steal credentials or track victims.(Citation: Certfa Charming Kitten January 2021)(Citation: ClearSky Kittens Back 3 August 2020)(Citation: Proofpoint TA453 March 2021)(Citation: Proofpoint TA453 July2021)(Citation: Google Iran Threats October 2021)(Citation: Microsoft Iranian Threat Actor Trends November 2021)|
+|mitre-attack|enterprise-attack|Windows,Office 365,Google Workspace,macOS,Linux|T1114|Email Collection|
+
+Magic Hound has compromised email credentials in order to steal sensitive data.(Citation: Certfa Charming Kitten January 2021)|
+|mitre-attack|enterprise-attack|PRE|T1586.002|Email Accounts|
+HEXANE has identified specific potential victims at targeted organizations.(Citation: ClearSky Siamesekitten August 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1591.004|Identify Roles|
+
+HEXANE has identified executives, HR, and IT staff at victim organizations for further targeting.(Citation: SecureWorks August 2019)(Citation: ClearSky Siamesekitten August 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1583.001|Domains|
+
+HEXANE has registered and operated domains for campaigns, often using a security or web technology theme or impersonating the targeted organization.(Citation: SecureWorks August 2019)(Citation: Dragos Hexane)(Citation: ClearSky Siamesekitten August 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1589.002|Email Addresses|
+
+HEXANE has targeted executives, human resources staff, and IT personnel for spearphishing.(Citation: SecureWorks August 2019)(Citation: ClearSky Siamesekitten August 2021)
+|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1021.001|Remote Desktop Protocol|
+
+HEXANE has used remote desktop sessions for lateral movement.(Citation: SecureWorks August 2019)|
+|mitre-attack|enterprise-attack,ics-attack|macOS,Windows,Linux|T1010|Application Window Discovery|
+
+HEXANE has used a PowerShell-based keylogging tool to capture the window title.(Citation: SecureWorks August 2019)|
+|mitre-attack|enterprise-attack,ics-attack|Windows,macOS,Linux,Network|T1056.001|Keylogging|
+
+HEXANE has used a PowerShell-based keylogger named
+
+HEXANE has used PowerShell-based tools and scripts for discovery and collection on compromised hosts.(Citation: SecureWorks August 2019)(Citation: Kaspersky APT Trends Q1 April 2021)(Citation: Kaspersky Lyceum October 2021)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1204.002|Malicious File|
+BlackTech has used built-in API functions.(Citation: IronNet BlackTech Oct 2021)|
+|mitre-attack|enterprise-attack|Linux,macOS|T1021.004|SSH|
+
+BlackTech has used Putty for remote access.(Citation: Symantec Palmerworm Sep 2020)|
+|mitre-attack|enterprise-attack|Windows|T1574.002|DLL Side-Loading|
+
+BlackTech has used DLL side loading by giving DLLs hardcoded names and placing them in searched directories.(Citation: Trend Micro Waterbear December 2019) |
+|mitre-attack|enterprise-attack|macOS,Windows,Linux|T1566.001|Spearphishing Attachment|
+
+BlackTech has used spearphishing e-mails with malicious password-protected archived files (ZIP or RAR) to deliver malware.(Citation: TrendMicro BlackTech June 2017)(Citation: NTT Security Flagpro new December 2021)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1204.002|Malicious File|
+
+BlackTech has used e-mails with malicious documents to lure victims into installing malware.(Citation: TrendMicro BlackTech June 2017)(Citation: NTT Security Flagpro new December 2021)   |
+|mitre-attack|enterprise-attack|Linux,macOS,Windows,Office 365,SaaS,Google Workspace|T1566.002|Spearphishing Link|
+
+BlackTech has used spearphishing e-mails with links to cloud services to deliver malware.(Citation: TrendMicro BlackTech June 2017)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1204.001|Malicious Link|
+
+BlackTech has used e-mails with malicious links to lure victims into installing malware.(Citation: TrendMicro BlackTech June 2017)     |
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1036.002|Right-to-Left Override|
+FIN4 - G0085
+
+Created: 2019-01-31T02:01:45.129Z
+
+Modified: 2023-02-01T21:27:44.778Z
+
+Contributors:
+
+Aliases
+
+FIN4
+
+Description
+
+FIN4 is a financially-motivated threat group that has targeted confidential information related to the public financial market, particularly regarding healthcare and pharmaceutical companies, since at least 2013.(Citation: FireEye Hacking FIN4 Dec 2014)(Citation: FireEye FIN4 Stealing Insider NOV 2014) FIN4 is unique in that they do not infect victims with typical persistent malware, but rather they focus on capturing credentials authorized to access email and other non-public correspondence.(Citation: FireEye Hacking FIN4 Dec 2014)(Citation: FireEye Hacking FIN4 Video Dec 2014)
+
+Techniques Used
+
+FIN4 has lured victims to click malicious links delivered via spearphishing emails (often sent from compromised accounts).(Citation: FireEye Hacking FIN4 Dec 2014)(Citation: FireEye Hacking FIN4 Video Dec 2014)|
+|mitre-attack|enterprise-attack|Windows,Office 365,Linux,macOS,Google Workspace|T1564.008|Email Hiding Rules|
+
+FIN4 has created rules in victims&#39; Microsoft Outlook accounts to automatically delete emails containing words such as “hacked,&quot; &quot;phish,&quot; and “malware&quot; in a likely attempt to prevent organizations from communicating about their activities.(Citation: FireEye Hacking FIN4 Dec 2014)|
+|mitre-attack|enterprise-attack|macOS,Windows,Linux|T1566.001|Spearphishing Attachment|
+
+FIN4 has used spearphishing emails containing attachments (which are often stolen, legitimate documents sent from compromised accounts) with embedded malicious macros.(Citation: FireEye Hacking FIN4 Dec 2014)(Citation: FireEye Hacking FIN4 Video Dec 2014)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1204.002|Malicious File|
+HEXANE has relied on victim&#39;s executing malicious file attachments delivered via email or embedded within actor-controlled websites to deliver malware.(Citation: SecureWorks August 2019)(Citation: Dragos Hexane)(Citation: ClearSky Siamesekitten August 2021)(Citation: Zscaler Lyceum DnsSystem June 2022)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1586.002|Email Accounts|
+
+HEXANE has used compromised accounts to send spearphishing emails.(Citation: SecureWorks August 2019)|
+|mitre-attack|enterprise-attack,ics-attack|Windows,Azure AD,Office 365,SaaS,IaaS,Linux,macOS,Google Workspace,Containers,Network|T1110|Brute Force|
+
+HEXANE has used brute force attacks to compromise valid credentials.(Citation: SecureWorks August 2019)|
+|mitre-attack|enterprise-attack,ics-attack|Windows,Azure AD,Office 365,SaaS,IaaS,Linux,macOS,Google Workspace,Containers|T1110.003|Password Spraying|
+
+HEXANE has used password spraying attacks to obtain valid credentials.(Citation: SecureWorks August 2019)|
+Lazarus Group has created new Twitter accounts to conduct social engineering against potential victims.(Citation: Google TAG Lazarus Jan 2021)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1566.003|Spearphishing via Service|
+
+Lazarus Group has used social media platforms, including LinkedIn and Twitter, to send spearphishing messages.(Citation: Google TAG Lazarus Jan 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1584.004|Server|
+
+Lazarus Group has compromised servers to stage malicious tools.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1591|Gather Victim Org Information|
+
+Lazarus Group has studied publicly available information about a targeted organization to tailor spearphishing efforts against specific departments and/or individuals.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1585.002|Email Accounts|
+
+Lazarus Group has created new email accounts for spearphishing operations.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1588.002|Tool|
+
+Lazarus Group has obtained a variety of tools for their operations, including
+
+Responder and PuTTy PSCP.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|PRE|T1589.002|Email Addresses|
+
+Lazarus Group collected email addresses belonging to various departments of a targeted organization which were used in follow-on phishing campaigns.(Citation: Kaspersky ThreatNeedle Feb 2021)|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1218.011|Rundll32|
+
+Lazarus Group has used rundll32 to execute malicious payloads on a compromised host.(Citation: ESET Twitter Ida Pro Nov 2021)|
+|mitre-attack|enterprise-attack,ics-attack|macOS,Windows|T1553.002|Code Signing|
+TA551 - G0127
+
+Created: 2021-03-19T21:04:00.692Z
+
+Modified: 2023-03-22T05:40:21.255Z
+
+Contributors: Shuhei Sasada, Cyber Defense Institute, Inc,Ryo Tamura, SecureBrain Corporation,Shotaro Hamamoto, NEC Solution Innovators, Ltd,Yusuke Niwa, ITOCHU Corporation,Takuma Matsumoto, LAC Co., Ltd
+
+Aliases
+
+TA551,GOLD CABIN,Shathak
+
+Description
+
+TA551 is a financially-motivated threat group that has been active since at least 2018. (Citation: Secureworks GOLD CABIN) The group has primarily targeted English, German, Italian, and Japanese speakers through email-based malware distribution campaigns. (Citation: Unit 42 TA551 Jan 2021)
+
+Techniques Used
+
+TA551 has used mshta.exe to execute malicious payloads.(Citation: Unit 42 TA551 Jan 2021)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1204.002|Malicious File|
+
+TA551 has prompted users to enable macros within spearphishing attachments to install malware.(Citation: Unit 42 TA551 Jan 2021)|
+|mitre-attack|enterprise-attack|macOS,Windows,Linux|T1566.001|Spearphishing Attachment|
+
+TA551 has sent spearphishing attachments with password protected ZIP files.(Citation: Unit 42 Valak July 2020)(Citation: Unit 42 TA551 Jan 2021)(Citation: Secureworks GOLD CABIN)|
+|mitre-attack|enterprise-attack|Windows|T1059.003|Windows Command Shell|
+
+TA551 has used
+
+TA551 has used a DGA to generate URLs from executed macros.(Citation: Unit 42 TA551 Jan 2021)(Citation: Secureworks GOLD CABIN)|
+|mitre-attack|enterprise-attack|PRE|T1589.002|Email Addresses|
+Sandworm Team has registered domain names and created URLs that are often designed to mimic or spoof legitimate websites, such as email login pages, online file sharing and storage websites, and password reset pages.(Citation: US District Court Indictment GRU Unit 74455 October 2020)|
+|mitre-attack|ics-attack,enterprise-attack,mobile-attack|Linux,macOS,Windows,Office 365,SaaS,Google Workspace|T1566.002|Spearphishing Link|
+
+Sandworm Team has crafted phishing emails containing malicious hyperlinks.(Citation: US District Court Indictment GRU Unit 74455 October 2020)|
+|mitre-attack|ics-attack,enterprise-attack,mobile-attack|Linux,macOS,Windows|T1204.001|Malicious Link|
+
+Sandworm Team has tricked unwitting recipients into clicking on malicious hyperlinks within emails crafted to resemble trustworthy senders.(Citation: US District Court Indictment GRU Unit 74455 October 2020)|
+|mitre-attack|ics-attack,enterprise-attack,mobile-attack|Windows,SaaS,IaaS,Linux,macOS,Office 365|T1199|Trusted Relationship|
+
+Sandworm Team has used dedicated network connections from one victim organization to gain unauthorized access to a separate organization.(Citation: US District Court Indictment GRU Unit 74455 October 2020)|
+|mitre-attack|ics-attack,enterprise-attack,mobile-attack|PRE|T1585.002|Email Accounts|
+
+Sandworm Team has created email accounts that mimic legitimate organizations for its spearphishing operations.(Citation: US District Court Indictment GRU Unit 74455 October 2020)|
+|mitre-attack|ics-attack,enterprise-attack,mobile-attack|PRE|T1585.001|Social Media Accounts|
+
+Sandworm Team has established social media accounts to disseminate victim internal-only documents and other sensitive data.(Citation: US District Court Indictment GRU Unit 74455 October 2020)|
+|mitre-attack|ics-attack,enterprise-attack,mobile-attack|PRE|T1587.001|Malware|
+
+Sandworm Team has developed malware for its operations, including malicious mobile applications and destructive malware such as
+FIN6 has deployed a utility script named
+
+FIN6 has used has used Metasploit’s named-pipe impersonation technique to escalate privileges.(Citation: FireEye FIN6 Apr 2019)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows,Office 365,Azure AD,Network|T1110.002|Password Cracking|
+
+FIN6 has extracted password hashes from ntds.dit to crack offline.(Citation: FireEye FIN6 April 2016)|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1003.003|NTDS|
+
+FIN6 has used Metasploit’s
+
+PsExec NTDSGRAB module to obtain a copy of the victim&#39;s Active Directory database.(Citation: FireEye FIN6 April 2016)(Citation: FireEye FIN6 Apr 2019) |
+|mitre-attack|enterprise-attack,ics-attack|Windows,IaaS,Linux,macOS|T1074.002|Remote Data Staging|
+
+FIN6 actors have compressed data from remote systems and moved it to another staging system before exfiltration.(Citation: FireEye FIN6 April 2016)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1566.003|Spearphishing via Service|
+
+FIN6 has used fake job advertisements sent via LinkedIn to spearphish targets.(Citation: Security Intelligence More Eggs Aug 2019)|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1047|Windows Management Instrumentation|
+
+FIN6 has used WMI to automate the remote execution of PowerShell scripts.(Citation: Security Intelligence More Eggs Aug 2019)  |
+|mitre-attack|enterprise-attack,ics-attack|macOS,Windows|T1553.002|Code Signing|
+
+FIN6 has used Comodo code-signing certificates.(Citation: Security Intelligence More Eggs Aug 2019)    |
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1569.002|Service Execution|
+FIN7 used JavaScript scripts to help perform tasks on the victim&#39;s machine.(Citation: FireEye FIN7 Aug 2018)(Citation: Flashpoint FIN 7 March 2019)(Citation: FireEye FIN7 Aug 2018)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1571|Non-Standard Port|
+
+FIN7 has used port-protocol mismatches on ports such as 53, 80, 443, and 8080 during C2.(Citation: FireEye FIN7 Aug 2018)|
+|mitre-attack|enterprise-attack,ics-attack|Windows,macOS,Linux|T1059.005|Visual Basic|
+
+FIN7 used VBS scripts to help perform tasks on the victim&#39;s machine.(Citation: FireEye FIN7 Aug 2018)(Citation: Flashpoint FIN 7 March 2019)(Citation: CrowdStrike Carbon Spider August 2021)|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1059.003|Windows Command Shell|
+
+FIN7 used the command prompt to launch commands on the victim’s machine.(Citation: FireEye FIN7 Aug 2018)(Citation: Flashpoint FIN 7 March 2019) |
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1497.002|User Activity Based Checks|
+
+FIN7 used images embedded into document lures that only activate the payload when a user double clicks to avoid sandboxes.(Citation: FireEye FIN7 April 2017)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1204.002|Malicious File|
+
+FIN7 lured victims to double-click on images in the attachments they sent which would then execute the hidden LNK file.(Citation: FireEye FIN7 April 2017)(Citation: eSentire FIN7 July 2021)(Citation: CrowdStrike Carbon Spider August 2021)|
+|mitre-attack|enterprise-attack,ics-attack|macOS,Windows|T1553.002|Code Signing|
+
+FIN7 has signed
+
+Carbanak payloads with legally purchased code signing certificates.
+Threat Group-3390 has used
+
+Threat Group-3390 has packed malware and tools, including using VMProtect.(Citation: Trend Micro DRBControl February 2020)(Citation: Trend Micro Iron Tiger April 2021)|
+|mitre-attack|enterprise-attack|PRE|T1608.001|Upload Malware|
+
+Threat Group-3390 has hosted malicious payloads on Dropbox.(Citation: Trend Micro DRBControl February 2020)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1567.002|Exfiltration to Cloud Storage|
+
+Threat Group-3390 has exfiltrated stolen data to Dropbox.(Citation: Trend Micro DRBControl February 2020)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1195.002|Compromise Software Supply Chain|
+
+Threat Group-3390 has compromised the Able Desktop installer to gain access to victim&#39;s environments.(Citation: Trend Micro Iron Tiger April 2021)|
+|mitre-attack|enterprise-attack|Windows,SaaS,IaaS,Linux,macOS,Office 365|T1199|Trusted Relationship|
+
+Threat Group-3390 has compromised third party service providers to gain access to victim&#39;s environments.(Citation: Profero APT27 December 2020)|
+|mitre-attack|enterprise-attack|macOS,Windows,Linux|T1566.001|Spearphishing Attachment|
+
+Threat Group-3390 has used e-mail to deliver malicious attachments to victims.(Citation: Trend Micro DRBControl February 2020)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1204.002|Malicious File|
+
+Threat Group-3390 has lured victims into opening malicious files containing malware.(Citation: Trend Micro DRBControl February 2020)|
+|mitre-attack|enterprise-attack|PRE|T1588.002|Tool|
+
+Threat Group-3390 has obtained and used tools such as
+
+Impacket,
+
+pwdump,
+
+Mimikatz,
+
+gsecdump,
+
+NBTscan, and
+Wizard Spider has used the “net view” command to locate mapped network shares.(Citation: DHS/CISA Ransomware Targeting Healthcare October 2020)|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1021.006|Windows Remote Management|
+
+Wizard Spider has used Window Remote Management to move laterally through a victim network.(Citation: DHS/CISA Ransomware Targeting Healthcare October 2020)|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1558.003|Kerberoasting|
+
+Wizard Spider has used Rubeus, MimiKatz Kerberos module, and the Invoke-Kerberoast cmdlet to steal AES hashes.(Citation: DFIR Ryuk&#39;s Return October 2020)(Citation: FireEye KEGTAP SINGLEMALT October 2020)(Citation: DHS/CISA Ransomware Targeting Healthcare October 2020)(Citation: DFIR Ryuk 2 Hour Speed Run November 2020)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows,Office 365,SaaS,Google Workspace|T1566.002|Spearphishing Link|
+
+Wizard Spider has sent phishing emails containing a link to an actor-controlled Google Drive document or other free online file hosting services.(Citation: DHS/CISA Ransomware Targeting Healthcare October 2020)(Citation: DFIR Ryuk 2 Hour Speed Run November 2020)|
+|mitre-attack|enterprise-attack,ics-attack|Linux,macOS,Windows|T1204.001|Malicious Link|
+
+Wizard Spider has lured victims into clicking a malicious link delivered through spearphishing.(Citation: DHS/CISA Ransomware Targeting Healthcare October 2020)|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1003.003|NTDS|
+
+Wizard Spider has gained access to credentials via exported copies of the ntds.dit Active Directory database.(Citation: FireEye KEGTAP SINGLEMALT October 2020)|
+|mitre-attack|enterprise-attack,ics-attack|Windows|T1055.001|Dynamic-link Library Injection|
+BRONZE BUTLER has used PowerShell for execution.(Citation: Secureworks BRONZE BUTLER Oct 2017)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows,Network|T1005|Data from Local System|
+
+BRONZE BUTLER has exfiltrated files stolen from local systems.(Citation: Secureworks BRONZE BUTLER Oct 2017)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1105|Ingress Tool Transfer|
+
+BRONZE BUTLER has used various tools to download files, including DGet (a similar tool to wget).(Citation: Secureworks BRONZE BUTLER Oct 2017)|
+|mitre-attack|enterprise-attack|Windows|T1003.001|LSASS Memory|
+
+BRONZE BUTLER has used various tools (such as Mimikatz and WCE) to perform credential dumping.(Citation: Secureworks BRONZE BUTLER Oct 2017)|
+|mitre-attack|enterprise-attack|Windows|T1547.001|Registry Run Keys / Startup Folder|
+
+BRONZE BUTLER has used a batch script that adds a Registry Run key to establish malware persistence.(Citation: Secureworks BRONZE BUTLER Oct 2017)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1113|Screen Capture|
+
+BRONZE BUTLER has used a tool to capture screenshots.(Citation: Secureworks BRONZE BUTLER Oct 2017)(Citation: Trend Micro Tick November 2019)|
+Evilnum has deleted files used during infection.(Citation: ESET EvilNum July 2020)|
+|mitre-attack|enterprise-attack|Windows,macOS,Linux|T1059.007|JavaScript|
+
+Evilnum has used malicious JavaScript files on the victim&#39;s machine.(Citation: ESET EvilNum July 2020)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1555|Credentials from Password Stores|
+
+Evilnum can collect email credentials from victims.(Citation: ESET EvilNum July 2020)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows|T1204.001|Malicious Link|
+
+Evilnum has sent spearphishing emails designed to trick the recipient into opening malicious shortcut links which downloads a .LNK file.(Citation: ESET EvilNum July 2020)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows,Office 365,SaaS,Google Workspace|T1566.002|Spearphishing Link|
+
+Evilnum has sent spearphishing emails containing a link to a zip file hosted on Google Drive.(Citation: ESET EvilNum July 2020)|
+|mitre-attack|enterprise-attack|Linux,macOS,Windows,Office 365,SaaS,Google Workspace|T1539|Steal Web Session Cookie|
+
+Evilnum can steal cookies and session information from browsers.(Citation: ESET EvilNum July 2020)|
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------------------------------------------------------------
+<span class=" -Color -Color-Yellow">assistant</span> (to ragproxyagent):
+
+The most used phishing techniques across all threat actors include:
+
+1. Luring victims into opening malicious email attachments.
+2. Creating fake social media accounts to contact targets and convince them to open malicious links.
+3. Using compromised domains to host phishing links.
+4. Registering fraudulent domains to target specific victims.
+5. Using SMS and email messages with links designed to steal credentials or track victims.
+6. Compromising email credentials to steal sensitive data.
+7. Identifying specific potential victims at targeted organizations.
+8. Using spearphishing emails with malicious attachments or links.
+9. Using social engineering via social media platforms for spearphishing.
+10. Compromising servers to stage malicious tools.
+11. Using malicious payloads hosted on cloud storage.
+12. Compromising software supply chain to gain access to victim&#39;s environments.
+13. Using malicious links delivered through spearphishing.
+14. Stealing credentials from password stores.
+15. Stealing web session cookies from browsers.
+
+--------------------------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./experiments\RAG\Threat-Intelligence\ATTCK-Groups\AutoGen"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../LangChain/notebook.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">RAG - LangChain and ATT&amp;CK Groups</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../../../Bloodhound-GPT/notebook.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Bloodhound GPT</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-modules">Import Modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-initial-variables">Define Initial Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-api-endpoint">Set Up API Endpoint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-agents-for-retrievechat">Construct agents for RetrieveChat</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-retrieveassistantagent">Create the RetrieveAssistantAgent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-retrieveuserproxyagent">Create the RetrieveUserProxyAgent</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#query-att-ck-groups-knowledge-base">Query ATT&amp;CK Groups Knowledge Base</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Roberto Rodriguez @Cyb3rWard0g
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

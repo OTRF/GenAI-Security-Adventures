@@ -1,0 +1,5 @@
+.env
+embeddings/embeddings.pkl
+.ipynb_checkpoints
+db/db.pkl
+chroma_db

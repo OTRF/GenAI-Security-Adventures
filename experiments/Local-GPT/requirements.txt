@@ -1,1 +1,2 @@
-langchain==0.0.173
+gpt4all==2.0.2
+langchain==0.0.327

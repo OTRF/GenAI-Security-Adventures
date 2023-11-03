@@ -2,3 +2,4 @@
 db/db.pkl
 .ipynb_checkpoints
 scripts/__pycache__
+model/

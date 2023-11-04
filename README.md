@@ -1,4 +1,4 @@
-# GPT Security Adventures
+# Generative AI Security Adventures
 
 [![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://cyb3rward0g.github.io/GPT-Security-Adventures/README.html)
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
@@ -6,11 +6,11 @@
 
 An open-source initiative to share notes, presentations, and a diverse collection of experiments presented in Jupyter Notebooks, all aimed at helping you grasp the essential concepts behind large language models and exploring the intriguing intersection of security and natural language processing.
 
-## https://otrf.github.io/GPT-Security-Adventures/README.html
+## https://otrf.github.io/GenAI-Security-Adventures/README.html
 
 ## Contributing
 
-We encourage everyone interested in exploring the connection between security and natural language processing using large language models, such as those from the GPT family, to contribute to our project. If you have an experiment or adventure to share, please don't hesitate to submit a pull request! Consider this repository as a platform to showcase your proof of concept before creating a more advanced repository to put it into action. Your contributions are highly valued and welcomed!
+We encourage everyone interested in exploring the connection between security and natural language processing using large language models, such as those from the GPT family, to contribute to our project. If you have an experiment that you would like to share, please don't hesitate to submit a pull request! Consider this repository as a platform to showcase your proof of concept before creating a more advanced repository to put it into action. Your contributions are highly valued and welcomed!
 
 ## Presentations
 

@@ -1,0 +1,1133 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Local: Tokenizing &amp; Embedding &#8212; GenAI Security Adventures</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/Basics/Local-Tokenizing-Embedding';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Inferring: Remote Sentiment Classifier" href="OAI-Inferring-Sentiment.html" />
+    <link rel="prev" title="Inferring: Local Sentiment Classifier" href="Local-Inferring-Sentiment.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/Embeddings.html">Embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Local-Inferring-Sentiment.html">Inferring: Local Sentiment Classifier</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Local: Tokenizing &amp; Embedding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OAI-Inferring-Sentiment.html">Inferring: Remote Sentiment Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OAI-Summarizing-Incident.html">Summarizing: Remote Incident Handler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook.html">Create ATT&amp;CK Groups Source knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAG/Threat-Intelligence/ATTCK-Groups/LangChain/notebook.html">RAG - LangChain and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAG/Threat-Intelligence/ATTCK-Groups/AutoGen/notebook.html">RAG - AutoGen and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Bloodhound-GPT/notebook.html">Bloodhound GPT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Local-GPT/notebook.html">Local Experiment: GPT4All</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ROADTools-GPT/notebook.html">ROADTools GPT</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures/issues/new?title=Issue%20on%20page%20%2Fexperiments/Basics/Local-Tokenizing-Embedding.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/experiments/Basics/Local-Tokenizing-Embedding.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Local: Tokenizing & Embedding</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-example">Basic Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenizing-with-bigbird-model-tokenizer">Tokenizing with BigBird Model Tokenizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-index-ids-for-the-tokens-in-the-vocabulary">Get Index IDs for the Tokens in the Vocabulary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-embeddings-with-bigbird-model">Get Embeddings with BigBird Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenizing-and-embedding-a-security-event-log">Tokenizing and Embedding a Security Event Log</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-data-sample">Download Data Sample</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#read-security-event-logs">Read Security Event Logs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenize-one-event-log">Tokenize One Event Log</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#raw-example-log-index-7">Raw Example Log - Index 7</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings-for-one-event-log">Generate Embeddings for One Event Log</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="local-tokenizing-embedding">
+<h1>Local: Tokenizing &amp; Embedding<a class="headerlink" href="#local-tokenizing-embedding" title="Permalink to this heading">#</a></h1>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>Collaborators:</p>
+<ul>
+<li><p>Roberto Rodriguez (&#64;Cyb3rWard0g)</p></li>
+</ul>
+</li>
+<li><p>References:</p>
+<ul>
+<li><p><a class="reference external" href="https://huggingface.co/docs/transformers/main/tokenizer_summary">https://huggingface.co/docs/transformers/main/tokenizer_summary</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/docs/transformers/model_doc/big_bird">https://huggingface.co/docs/transformers/model_doc/big_bird</a></p></li>
+</ul>
+</li>
+</ul>
+<section id="basic-example">
+<h2>Basic Example<a class="headerlink" href="#basic-example" title="Permalink to this heading">#</a></h2>
+<section id="tokenizing-with-bigbird-model-tokenizer">
+<h3>Tokenizing with BigBird Model Tokenizer<a class="headerlink" href="#tokenizing-with-bigbird-model-tokenizer" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;google/bigbird-roberta-base&quot;</span><span class="p">)</span>
+
+<span class="c1"># Tokenize an event log</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s2">&quot;Hello, my name is Roberto&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tokens</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;▁Hello&#39;, &#39;,&#39;, &#39;▁my&#39;, &#39;▁name&#39;, &#39;▁is&#39;, &#39;▁Roberto&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-index-ids-for-the-tokens-in-the-vocabulary">
+<h3>Get Index IDs for the Tokens in the Vocabulary<a class="headerlink" href="#get-index-ids-for-the-tokens-in-the-vocabulary" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="c1"># Convert tokens to input IDs</span>
+<span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_ids</span><span class="p">(</span><span class="n">tokens</span><span class="p">,)</span>
+
+<span class="c1"># Create a PyTorch tensor</span>
+<span class="n">input_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Add a batch dimension</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">input_ids</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[18536,   112,   717,  1539,   419, 32177]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-embeddings-with-bigbird-model">
+<h3>Get Embeddings with BigBird Model<a class="headerlink" href="#get-embeddings-with-bigbird-model" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BigBirdConfig</span><span class="p">,</span> <span class="n">BigBirdModel</span>
+
+<span class="c1"># Define a configuration with &quot;original_full&quot; attention</span>
+<span class="n">model_config</span> <span class="o">=</span> <span class="n">BigBirdConfig</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;google/bigbird-roberta-base&quot;</span><span class="p">)</span>
+<span class="n">model_config</span><span class="o">.</span><span class="n">attention_type</span> <span class="o">=</span> <span class="s2">&quot;original_full&quot;</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">BigBirdModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;google/bigbird-roberta-base&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">model_config</span><span class="p">)</span>
+
+<span class="c1"># Get BigBird Embeddings</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
+
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">last_hidden_state</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Token: </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Index ID: </span><span class="si">{</span><span class="n">input_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Embedding: </span><span class="si">{</span><span class="n">embeddings</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Token: ▁Hello
+Index ID: 18536
+Embedding: tensor([-1.1636e-01, -2.0380e-02, -6.1083e-02, -3.8545e-01,  5.7417e-01,
+         1.0884e-01, -1.0427e-01,  9.3820e-02, -5.6838e-02, -3.1793e-01,
+         6.8207e-02, -2.5721e-02,  6.7848e-02, -9.3928e-02,  1.1609e-01,
+         1.4538e-01,  2.2018e-02, -5.3071e-02,  7.6467e-03,  4.7149e-02,
+        -1.6713e-01,  1.7986e-01, -7.9160e-02, -1.1746e-02, -2.7829e-01,
+         2.2447e-01, -2.6268e-02,  1.2537e-01,  2.0905e-02, -1.1724e-01,
+         2.1016e-01,  2.1734e-01,  3.0937e-02,  2.7159e-01, -2.1522e-01,
+         3.5828e-01,  1.3691e-01,  1.3992e-02,  2.4448e-02,  1.2941e-01,
+         3.6535e-01,  2.9806e-01,  4.1460e-02,  4.4437e-02, -2.3589e-01,
+         2.3958e-01,  1.0241e-01, -1.2554e-01,  1.6656e-02, -6.7489e-02,
+        -1.3410e-01, -1.0509e-01,  1.7687e-01, -1.3179e-02, -7.9537e-02,
+         1.3339e-01, -1.1378e-01,  4.0585e-02,  7.6636e-02, -4.1417e-01,
+         2.2140e-01, -9.4216e-02, -3.1294e-01,  3.3909e-02, -5.8064e-02,
+         5.5965e-03,  1.0053e-01,  7.6107e-02, -1.6494e-01,  1.0267e-01,
+        -8.9715e-02, -2.3077e-01, -5.9641e-04, -1.6648e-01,  1.3973e-01,
+         6.6399e-02,  5.1237e-02, -6.1343e-01,  7.7089e-02,  1.9489e-01,
+         1.6679e-01, -3.6878e-01,  4.0401e-01,  4.3976e-02,  7.0080e-02,
+        -1.1072e-01, -3.1902e-01,  5.7557e-02,  1.5039e-01,  3.7570e-01,
+        -6.5676e-03, -1.8109e-01, -2.6733e-02,  6.4456e-02, -1.5362e-02,
+        -3.9735e-01, -1.7642e-01, -8.8574e-02,  8.2169e-02, -2.3364e-01,
+        -9.7785e-03,  5.4608e-02,  6.5257e-02,  1.3635e-01,  3.4155e-01,
+         7.6657e-02, -3.1519e-01, -2.6139e-01, -2.7790e-03,  8.6237e-02,
+        -2.3414e-02, -1.5799e-02,  9.2869e-02,  1.5318e-01, -2.2860e-01,
+         7.2682e-02, -1.6873e-01, -3.0805e-01,  5.8212e-03,  3.4121e-02,
+        -5.9611e-02, -2.1086e-01, -3.6269e-02,  1.1456e-01,  7.7441e-02,
+         4.0523e-02,  1.2661e-01,  2.6328e-01,  1.1657e-01, -5.4348e-03,
+        -6.1856e-02, -1.2447e-01,  2.9078e-01,  4.8988e-02,  2.3876e-02,
+        -9.2600e-02,  2.2589e-01, -7.1960e-03, -2.0627e-01, -1.8147e-02,
+         5.5104e-02,  1.0189e-01,  1.9438e-01,  4.5833e-02, -9.2392e-03,
+        -1.6446e-01, -2.5202e-01, -3.1434e-01,  4.2671e-02,  1.3502e-01,
+         9.6235e-02,  3.9788e-02, -1.8269e-01, -3.1492e-01, -6.6831e-02,
+         1.1559e+00, -2.9708e-02,  1.5390e-01,  1.1358e-01,  9.6380e-02,
+         2.5466e-01,  1.4219e-01,  1.7253e-01, -6.7271e-02, -8.9888e-02,
+         8.1218e-02, -2.2050e-01,  1.5366e-01, -2.7897e-01, -8.3203e-02,
+        -1.1591e-01,  2.7777e-01, -1.3716e-01, -2.6728e-01,  1.5150e-02,
+        -6.6391e-02,  2.4254e-01,  7.7544e-02, -1.4343e-01, -1.4653e-01,
+        -8.9712e-02,  5.6309e-02,  3.3134e-01, -2.8285e-01,  1.8264e-01,
+         3.4600e-01,  4.7534e-01,  3.5328e-02, -7.8802e-02,  1.7221e-01,
+         1.3720e-01,  1.1759e-01, -8.6466e-02, -1.2543e-02, -6.5371e-02,
+         1.3755e-01, -2.9762e-02, -2.4923e-01,  1.5668e-01, -9.0752e-02,
+         8.2167e-03, -1.6505e-02,  1.6438e-01,  1.8271e-01,  2.1629e-01,
+        -2.0046e-01,  2.3587e-01,  8.4096e-02, -8.9142e-02,  2.1799e-01,
+        -4.7325e-02, -1.8031e-01, -1.3593e-01,  1.1050e-01,  2.8516e-02,
+        -7.0048e-02,  2.3932e-01, -5.8864e-02,  4.4210e-02, -1.9005e-02,
+         4.1998e-01, -1.2285e-01,  1.4732e-01,  1.8190e-01,  1.8617e-01,
+         1.2658e-01,  2.3555e-01, -1.0678e-01,  2.9762e-01,  1.0807e-01,
+        -1.3972e-01,  1.0254e-01,  2.8220e-02, -1.0848e-03, -2.9666e-02,
+        -1.1325e-01, -1.6394e-01, -1.0015e-01, -2.6119e-01, -1.5041e-01,
+         3.7000e-02,  1.3124e-01, -1.1700e-01,  1.5929e-01,  7.0666e-02,
+        -1.4327e-01, -4.5101e-02,  7.7282e-02, -9.3982e-02,  1.0810e-01,
+        -7.8679e-02, -4.2005e-01,  6.4883e-02, -3.6853e-01,  1.3792e-01,
+         9.9273e-02,  7.7822e-02,  8.1490e-03, -2.6939e-01, -2.5332e-01,
+        -1.5344e-01,  3.5467e-01, -7.4576e-02,  1.4070e-01, -1.6303e-01,
+        -4.5512e-01,  3.8096e-03,  1.4180e-01,  2.1611e-01, -1.3778e-01,
+         1.3915e-02,  8.8185e-02,  8.5387e-02, -1.0825e-02, -1.1628e-01,
+         1.5133e-01,  5.1713e-02, -3.6666e-01,  8.9856e-03,  6.1384e-02,
+         3.2566e-01,  1.5698e-01,  4.5102e-02, -9.1748e-02,  6.1022e-03,
+         6.7989e-02, -1.7882e-01, -4.2545e-01,  3.3579e-02,  2.6070e-01,
+         1.9517e-01,  1.6657e-01,  5.0921e-02, -4.0859e-02, -2.3622e-01,
+         1.1225e-01,  1.2212e-01, -3.4605e-02,  8.1477e-02, -1.2558e-01,
+         1.1156e-01,  3.6761e-03, -1.3694e-01, -2.2334e-01,  1.1985e-01,
+        -2.6214e-02,  4.3161e-02, -1.5386e-01,  9.9220e-02, -5.5973e-02,
+        -1.9602e-01,  1.4341e-01,  1.0897e-01,  3.7060e-01, -2.3487e-02,
+        -1.0029e-01,  1.0519e-01,  2.2279e-01,  4.9273e-02, -8.8852e-02,
+        -1.4109e-01,  3.5998e-03,  8.2714e-02, -7.5794e-02,  2.3602e-03,
+         1.1261e-01,  4.3421e-02,  1.7652e-01, -1.0864e-01,  8.2341e-01,
+        -3.4869e-03,  1.0346e-03,  3.5852e-01,  2.1665e-01, -2.8769e-01,
+         7.5744e-02,  1.3908e-01,  1.1003e-01,  4.5481e-01,  1.9171e-01,
+         1.4931e-01,  1.4257e-01, -2.3037e-01,  1.3965e-01, -1.8462e-02,
+         1.0343e-01, -8.1092e-02, -1.8032e-01, -1.8582e-02,  4.3680e-01,
+        -6.0520e-02, -1.1731e-02,  6.8673e-02, -1.7749e-02,  6.9948e-02,
+         4.6084e-02, -1.1374e-01,  2.1613e-01,  1.1426e-01, -4.4291e-01,
+         2.6911e-01,  2.8104e-01, -1.6549e-01,  1.0510e-01, -3.8595e-01,
+        -1.2112e-01,  3.1570e-01,  3.2223e-02,  2.3265e-03,  2.2583e-01,
+         2.2892e-01, -3.5669e-02,  5.5374e-02, -4.6082e-01, -6.9463e-02,
+        -3.1969e-01,  1.4195e-01, -1.0212e-01,  2.4094e-01, -6.6254e-02,
+        -6.5807e-02, -9.6821e-02,  2.3727e-01, -1.5682e-01, -1.8467e-01,
+        -2.6433e-01, -1.2356e-01,  2.8136e-02, -3.8417e-02, -2.2588e-01,
+         8.7069e-02,  1.5041e-01, -1.1330e-02,  2.0777e-01, -5.2667e-02,
+        -3.5839e-01, -2.4291e-01, -3.8074e-02,  2.3650e-01, -6.6348e-02,
+         3.6094e-02,  2.4189e-01,  1.5915e-01,  2.1828e-01, -2.4702e-01,
+         2.0885e-01,  3.0356e-01, -8.4988e-02, -2.0408e-01,  4.1214e-02,
+         2.7640e-02,  1.0529e-01, -1.0015e-01, -7.5593e-02,  2.5404e-01,
+        -3.8558e-02, -9.3942e-02,  9.6083e-02, -6.8022e-02, -1.6198e-01,
+        -2.6486e-02,  2.4777e-01,  2.6740e-01,  1.5189e-01,  1.9176e-01,
+         3.3901e-02,  2.1967e-01, -4.1814e-01, -1.1531e-02, -2.7577e-01,
+         3.1706e-01,  2.2221e-01,  1.5919e-01, -1.2716e-01,  7.8425e-02,
+        -2.4036e-01, -2.4433e-01, -1.0049e-01, -1.7044e-01,  4.4139e-02,
+        -1.4504e-01, -7.0745e-02, -2.1589e-01, -1.0893e-01,  5.3016e-01,
+         6.8166e-02, -1.3483e-01,  1.2181e-01,  3.1380e-01, -2.5864e-01,
+         2.6604e-01,  8.9654e-03, -7.6018e-02, -1.3141e+00, -1.1336e-01,
+        -6.3815e-02,  1.9731e-01,  2.5545e-01, -5.8033e-02,  1.5419e-01,
+        -1.0425e-01, -9.3440e-02, -9.6354e-02,  5.3156e-02, -2.6236e-01,
+        -2.7334e-01,  5.4305e-02,  2.1077e-01, -1.5582e-01,  1.1502e-01,
+        -7.2804e-02, -1.2972e-01, -3.9262e-02, -1.7156e-01,  2.6468e-01,
+        -1.1975e-02,  2.6765e-01,  2.8969e-01, -1.2662e-01, -3.0494e-01,
+         3.2054e-02,  1.3120e-01, -5.3662e-02, -1.3033e-01, -3.3487e-02,
+         6.6659e-02, -1.2525e-01,  6.1176e-02,  3.5805e-02,  7.7177e-02,
+         3.6847e-02, -7.3659e-02,  7.1801e-03,  2.2346e-01, -3.6041e-01,
+         3.2930e-01, -3.6310e-01,  2.0905e-01,  1.1914e-01,  1.8711e-02,
+         3.6424e-02, -2.1259e-01,  1.7280e-01, -1.8592e-01, -9.4130e-03,
+         1.7409e-01, -1.9176e-01,  1.5465e-01,  5.4870e-02, -1.1879e-01,
+        -1.3106e-01, -7.0900e-02,  4.3117e-02,  9.8918e-03,  1.8036e-02,
+        -8.9139e-02,  3.7314e-02, -4.4075e-02, -1.4569e-01,  9.1170e-02,
+         1.4312e-01, -5.3165e-02,  1.1121e-03,  2.0978e-01, -9.8794e-03,
+         4.2158e-02,  2.7332e-01,  2.5068e-01,  2.3489e-01, -2.4546e-01,
+         4.3379e-01, -2.2498e-01, -3.6471e-02,  2.6790e-01, -1.5893e-01,
+        -7.0857e-02,  1.0994e-01,  1.4304e-01, -2.0314e-01,  1.5672e-01,
+        -1.0299e-01, -1.2334e-01,  9.4673e-02, -4.7860e-02,  1.8639e-01,
+        -1.8374e-01, -9.9229e-02,  1.9476e-01,  2.6587e-01, -1.1859e-02,
+        -7.1661e-02,  8.5858e-01, -1.4662e-01, -1.3256e-01,  9.0016e-02,
+         2.8409e-01, -9.3416e-02,  1.3053e-01,  1.9137e-02,  1.4655e-01,
+        -8.9044e-02,  6.3552e-02,  5.1784e-03, -1.0393e-01,  6.8222e-03,
+        -1.0571e-01, -3.6165e-02,  1.3839e-01, -6.1466e-02,  4.1807e-02,
+         1.6402e-01,  5.7555e-01,  4.0541e-02, -1.9156e-01,  2.6890e-01,
+         8.7065e-02,  3.4070e-01,  5.1472e-02, -1.1112e-01,  3.1804e-01,
+        -1.2821e-01, -2.1103e-01,  1.1119e-01, -2.2352e-01, -1.6754e-01,
+         1.2009e-01,  7.7462e-02,  3.1534e-02,  1.4148e+01,  6.7538e-02,
+         8.4337e-03,  1.8661e-01, -2.0979e-01,  1.2481e-01, -1.5175e-02,
+        -3.3540e-02, -1.1672e-01,  1.3878e-01,  2.7092e-02, -1.8306e-01,
+        -5.7783e-02, -2.4391e-01,  9.1538e-02, -8.8047e-02,  4.8807e-02,
+        -5.5185e-02,  1.1760e-01, -1.5016e-03,  2.8545e-01,  3.0705e-02,
+        -2.0540e-01,  5.9746e-02, -3.2546e-04,  3.3889e-01,  2.3636e-01,
+        -1.1071e-01, -1.3425e-01, -9.5960e-02, -2.3532e-01,  2.0827e-01,
+         1.0364e-01,  1.1353e-01,  2.0688e-01, -2.8800e-01,  3.4962e-01,
+         2.0934e-01,  1.4722e-01,  5.1247e-02,  7.2226e-02, -1.4812e-01,
+         4.0343e-02,  3.2904e-01,  2.2009e-01,  2.2765e-01,  1.7634e-01,
+         7.4393e-02,  2.7124e-02, -8.8036e-02,  2.7232e-02,  1.2098e-01,
+         2.1667e-01, -1.3163e-01, -1.9002e-01,  6.3883e-02,  3.7940e-02,
+         7.7639e-02, -3.2495e-02, -1.4721e-01,  2.3456e-03,  1.0726e-01,
+         2.6602e-01,  2.9699e-02, -1.0600e-01, -1.7380e-01,  4.2345e-01,
+         2.1489e-01,  1.7938e-02,  1.0345e-01,  9.4192e-02,  1.3841e-01,
+        -9.0320e-02,  8.9497e-02,  4.8507e-02, -4.2748e-01, -1.4755e-01,
+        -4.5336e-02, -2.6415e-01,  1.5165e-01,  1.2128e-02, -8.0591e-03,
+        -1.2446e-01, -1.8867e-01, -6.1890e-02,  3.0580e-01, -1.1294e-01,
+         2.5704e-02, -2.0962e-02, -2.4601e-01, -1.3209e-01,  2.7346e-01,
+         2.3948e-02, -2.1149e-01, -1.3995e-01, -1.1723e-01,  2.8653e-02,
+        -9.8611e-02,  3.7482e-01, -1.0707e-01, -1.4909e-01, -1.2980e-02,
+        -2.7651e-01,  2.6002e-01, -2.2535e-01,  9.1586e-02, -1.0252e-01,
+         2.9707e-01,  1.0359e-01,  9.4246e-02, -1.4140e-01, -2.0433e-01,
+         1.3755e-01,  8.4514e-02, -3.8167e-02, -1.6627e-01, -2.6318e-01,
+        -1.7245e-01,  1.7124e-01, -2.2904e-01,  1.6619e-01,  8.5417e-02,
+        -2.1021e-01, -8.6555e-02, -8.8081e-02,  7.7535e-02, -4.9845e-02,
+        -1.2976e-01, -3.9131e-02, -1.0433e-03, -3.5251e-02,  2.2621e-02,
+         1.2982e-01, -1.1672e-01,  8.4644e-02,  8.5460e-03, -5.6842e-02,
+        -1.2801e-01,  5.1929e-01,  4.3736e-01,  8.5156e-02, -1.4027e-01,
+         1.6127e-01, -3.8899e-01, -3.6612e-01, -5.7083e-02, -2.0425e-02,
+        -5.9496e-02,  6.1161e-02, -3.4648e-01,  7.1157e-02, -7.4365e-02,
+         1.7982e-02,  3.6682e-02, -5.8530e-02,  2.4198e-01, -9.8698e-04,
+        -4.1814e-02,  1.2658e-01, -2.7362e-02,  1.7819e-01,  4.7886e-02,
+         4.8654e-01, -1.4443e-02,  1.1563e-01, -2.4416e-01,  2.1088e-02,
+        -1.7257e-01, -4.1795e-02, -5.8262e-02,  1.0879e-01, -3.8052e-02,
+         1.2507e-01,  5.6900e-02,  3.1752e-02, -1.3258e-02,  2.6444e-01,
+        -1.6823e-01, -9.8095e-03, -3.2275e-01]) 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the number of elements to display from each embedding</span>
+<span class="n">num_display_elements</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># Display a back-to-back comparison with a subset of each embedding</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)):</span>
+    <span class="n">subset_embedding</span> <span class="o">=</span> <span class="n">embeddings</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">][:</span><span class="n">num_display_elements</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Token: </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Index ID: </span><span class="si">{</span><span class="n">input_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Embedding (subset): </span><span class="si">{</span><span class="n">subset_embedding</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Token: ▁Hello
+Index ID: 18536
+Embedding (subset): tensor([-0.1164, -0.0204, -0.0611, -0.3855,  0.5742])
+
+Token: ,
+Index ID: 112
+Embedding (subset): tensor([-0.1171, -0.0621, -0.0458, -0.3915,  0.6032])
+
+Token: ▁my
+Index ID: 717
+Embedding (subset): tensor([ 0.1982,  0.1183,  0.1312, -0.3132,  0.4452])
+
+Token: ▁name
+Index ID: 1539
+Embedding (subset): tensor([ 0.4725,  0.5227,  0.2076, -0.0177,  0.5755])
+
+Token: ▁is
+Index ID: 419
+Embedding (subset): tensor([ 0.2397,  0.5524, -0.1053, -0.2849,  0.1071])
+
+Token: ▁Roberto
+Index ID: 32177
+Embedding (subset): tensor([ 0.0671,  0.2040, -0.0366, -0.3737,  0.0768])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="tokenizing-and-embedding-a-security-event-log">
+<h2>Tokenizing and Embedding a Security Event Log<a class="headerlink" href="#tokenizing-and-embedding-a-security-event-log" title="Permalink to this heading">#</a></h2>
+<section id="download-data-sample">
+<h3>Download Data Sample<a class="headerlink" href="#download-data-sample" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">repository_url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/OTRF/Security-Datasets/raw/master/datasets/compound/GoldenSAMLADFSMailAccess/Microsoft365DefenderEvents.Zip&#39;</span>
+<span class="n">output_directory</span> <span class="o">=</span> <span class="s1">&#39;./&#39;</span>  <span class="c1"># Destination directory for unzipped files</span>
+
+<span class="c1"># Extract the filename from the URL</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="n">repository_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Check if the file already exists in the output directory</span>
+<span class="n">download_required</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">download_required</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">requests</span>
+    <span class="kn">import</span> <span class="nn">zipfile</span>
+    <span class="kn">import</span> <span class="nn">io</span>
+
+    <span class="c1"># Download the zip file</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">repository_url</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="c1"># Create the output directory if it doesn&#39;t exist</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_directory</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_directory</span><span class="p">)</span>
+
+        <span class="c1"># Unzip the downloaded file to the output directory</span>
+        <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+            <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">output_directory</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Downloaded and unzipped &#39;</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&#39; to &#39;</span><span class="si">{</span><span class="n">output_directory</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to download &#39;</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&#39; from GitHub. Status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File &#39;</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&#39; already exists in &#39;</span><span class="si">{</span><span class="n">output_directory</span><span class="si">}</span><span class="s2">&#39;, no need to download.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &#39;Microsoft365DefenderEvents.Zip&#39; already exists in &#39;./&#39;, no need to download.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="read-security-event-logs">
+<h3>Read Security Event Logs<a class="headerlink" href="#read-security-event-logs" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;Microsoft365DefenderEvents.json&quot;</span>
+
+<span class="c1"># Open and read the JSON file</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># Parse the JSON data</span>
+<span class="n">json_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">json_data</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Timestamp&#39;: &#39;2021-08-02T13:32:07Z&#39;,
+ &#39;ActionType&#39;: &#39;MailItemsAccessed&#39;,
+ &#39;Application&#39;: &#39;Microsoft Exchange Online&#39;,
+ &#39;ApplicationId&#39;: 20893,
+ &#39;AccountObjectId&#39;: &#39;5a95e683-08ad-424e-a441-1d1aec52c02c&#39;,
+ &#39;AccountDisplayName&#39;: &#39;SimuLandApp&#39;,
+ &#39;IsAdminOperation&#39;: 0,
+ &#39;DeviceType&#39;: &#39;Other&#39;,
+ &#39;OSPlatform&#39;: &#39;Unknown&#39;,
+ &#39;IPAddress&#39;: &#39;1.2.3.4&#39;,
+ &#39;IsAnonymousProxy&#39;: 0,
+ &#39;CountryCode&#39;: &#39;US&#39;,
+ &#39;City&#39;: &#39;chicago&#39;,
+ &#39;ISP&#39;: &#39;Microsoft 365 Common and Office Online server&#39;,
+ &#39;UserAgent_dynamic&#39;: None,
+ &#39;UserAgent_string&#39;: &#39;Client=REST;;&#39;,
+ &#39;ActivityType&#39;: &#39;Run&#39;,
+ &#39;ActivityObjects&#39;: [{&#39;ServiceObjectType&#39;: &#39;Session ID&#39;,
+   &#39;Type&#39;: &#39;Structured object&#39;,
+   &#39;Role&#39;: &#39;Parameter&#39;},
+  {&#39;Type&#39;: &#39;Task&#39;, &#39;Role&#39;: &#39;Target object&#39;, &#39;Name&#39;: &#39;MailItemsAccessed&#39;},
+  {&#39;Type&#39;: &#39;Property&#39;,
+   &#39;Role&#39;: &#39;Parameter&#39;,
+   &#39;Name&#39;: &#39;MailAccessType&#39;,
+   &#39;Value&#39;: &#39;Bind&#39;},
+  {&#39;Type&#39;: &#39;Property&#39;,
+   &#39;Role&#39;: &#39;Parameter&#39;,
+   &#39;Name&#39;: &#39;IsThrottled&#39;,
+   &#39;Value&#39;: &#39;False&#39;},
+  {&#39;ApplicationInstance&#39;: 0,
+   &#39;ApplicationId&#39;: 11161,
+   &#39;Type&#39;: &#39;User&#39;,
+   &#39;Role&#39;: &#39;Parameter&#39;,
+   &#39;Name&#39;: &#39;Gustavo Pedro&#39;,
+   &#39;Id&#39;: &#39;aead923d-498b-4f64-a66c-2af91447a8b6&#39;},
+  {&#39;ApplicationInstance&#39;: 0,
+   &#39;ApplicationId&#39;: 11161,
+   &#39;Type&#39;: &#39;Account&#39;,
+   &#39;Role&#39;: &#39;Actor&#39;,
+   &#39;Name&#39;: &#39;SimuLandApp&#39;,
+   &#39;Id&#39;: &#39;5a95e683-08ad-424e-a441-1d1aec52c02c&#39;}],
+ &#39;ObjectName&#39;: &#39;MailItemsAccessed&#39;,
+ &#39;ObjectType&#39;: &#39;Task&#39;,
+ &#39;ObjectId&#39;: &#39;&#39;,
+ &#39;ReportId&#39;: &#39;106830890_20893_699e0b10-1c53-403e-976f-ce0847a92b44&#39;,
+ &#39;AdditionalFields&#39;: {&#39;IsSatelliteProvider&#39;: False},
+ &#39;UserId&#39;: &#39;&#39;,
+ &#39;Permissions&#39;: None,
+ &#39;PermissionsAddedTo&#39;: &#39;&#39;,
+ &#39;RawEventData&#39;: {&#39;OrganizationId&#39;: &#39;00000000-0000-0000-0000-000000000000&#39;,
+  &#39;CreationTime&#39;: &#39;2021-08-02T13:32:07.0000000Z&#39;,
+  &#39;RecordType&#39;: 50,
+  &#39;Operation&#39;: &#39;MailItemsAccessed&#39;,
+  &#39;UserType&#39;: 0,
+  &#39;Workload&#39;: &#39;Exchange&#39;,
+  &#39;Version&#39;: 1,
+  &#39;UserKey&#39;: &#39;100320015858B802&#39;,
+  &#39;UserId&#39;: &#39;pgustavo@simulandlabs.com&#39;,
+  &#39;OriginatingServer&#39;: &#39;AB1CD23EF4567 (15.20.4200.000)\r\n&#39;,
+  &#39;InternalLogonType&#39;: 0,
+  &#39;OrganizationName&#39;: &#39;simulandlabs.onmicrosoft.com&#39;,
+  &#39;ClientInfoString&#39;: &#39;Client=REST;;&#39;,
+  &#39;MailboxOwnerSid&#39;: &#39;S-1-5-21-1825954961-3338807533-2873504967-26087451&#39;,
+  &#39;ClientIPAddress&#39;: &#39;1.2.3.4&#39;,
+  &#39;MailboxOwnerUPN&#39;: &#39;pgustavo@simulandlabs.com&#39;,
+  &#39;ExternalAccess&#39;: False,
+  &#39;ResultStatus&#39;: &#39;Succeeded&#39;,
+  &#39;Id&#39;: &#39;699e0b10-1c53-403e-976f-ce0847a92b44&#39;,
+  &#39;LogonUserSid&#39;: &#39;S-1-5-21-1825954961-3338807533-2873504967-26087451&#39;,
+  &#39;MailboxGuid&#39;: &#39;d0c5f8ae-9ed7-4e46-bfdf-ea1460f5a31b&#39;,
+  &#39;LogonType&#39;: 0,
+  &#39;OperationProperties&#39;: [&#39;@{Value=Bind; Name=MailAccessType}&#39;,
+   &#39;@{Value=False; Name=IsThrottled}&#39;],
+  &#39;OperationCount&#39;: 7,
+  &#39;AppId&#39;: &#39;00000003-0000-0000-c000-000000000000&#39;,
+  &#39;Folders&#39;: [&#39;@{Id=LgAAAAAM7KyTTmWeRac2KXBEz/7aAQARGHK+grzLTpRJraC1QR6kAAAAAAEMAAAB; Path=\\Inbox; FolderItems=System.Object[]}&#39;],
+  &#39;ClientAppId&#39;: &#39;5a95e683-08ad-424e-a441-1d1aec52c02c&#39;},
+ &#39;spnID&#39;: &#39;&#39;,
+ &#39;rawData&#39;: {&#39;OrganizationId&#39;: &#39;00000000-0000-0000-0000-000000000000&#39;,
+  &#39;CreationTime&#39;: &#39;2021-08-02T13:32:07.0000000Z&#39;,
+  &#39;RecordType&#39;: 50,
+  &#39;Operation&#39;: &#39;MailItemsAccessed&#39;,
+  &#39;UserType&#39;: 0,
+  &#39;Workload&#39;: &#39;Exchange&#39;,
+  &#39;Version&#39;: 1,
+  &#39;UserKey&#39;: &#39;100320015858B802&#39;,
+  &#39;UserId&#39;: &#39;pgustavo@simulandlabs.com&#39;,
+  &#39;OriginatingServer&#39;: &#39;AB1CD23EF4567 (15.20.4200.000)\r\n&#39;,
+  &#39;InternalLogonType&#39;: 0,
+  &#39;OrganizationName&#39;: &#39;simulandlabs.onmicrosoft.com&#39;,
+  &#39;ClientInfoString&#39;: &#39;Client=REST;;&#39;,
+  &#39;MailboxOwnerSid&#39;: &#39;S-1-5-21-1825954961-3338807533-2873504967-26087451&#39;,
+  &#39;ClientIPAddress&#39;: &#39;1.2.3.4&#39;,
+  &#39;MailboxOwnerUPN&#39;: &#39;pgustavo@simulandlabs.com&#39;,
+  &#39;ExternalAccess&#39;: False,
+  &#39;ResultStatus&#39;: &#39;Succeeded&#39;,
+  &#39;Id&#39;: &#39;699e0b10-1c53-403e-976f-ce0847a92b44&#39;,
+  &#39;LogonUserSid&#39;: &#39;S-1-5-21-1825954961-3338807533-2873504967-26087451&#39;,
+  &#39;MailboxGuid&#39;: &#39;d0c5f8ae-9ed7-4e46-bfdf-ea1460f5a31b&#39;,
+  &#39;LogonType&#39;: 0,
+  &#39;OperationProperties&#39;: [&#39;@{Value=Bind; Name=MailAccessType}&#39;,
+   &#39;@{Value=False; Name=IsThrottled}&#39;],
+  &#39;OperationCount&#39;: 7,
+  &#39;AppId&#39;: &#39;00000003-0000-0000-c000-000000000000&#39;,
+  &#39;Folders&#39;: [&#39;@{Id=LgAAAAAM7KyTTmWeRac2KXBEz/7aAQARGHK+grzLTpRJraC1QR6kAAAAAAEMAAAB; Path=\\Inbox; FolderItems=System.Object[]}&#39;],
+  &#39;ClientAppId&#39;: &#39;5a95e683-08ad-424e-a441-1d1aec52c02c&#39;},
+ &#39;AppId&#39;: &#39;00000003-0000-0000-c000-000000000000&#39;,
+ &#39;OAuthAppId&#39;: &#39;5a95e683-08ad-424e-a441-1d1aec52c02c&#39;,
+ &#39;TargetAccountUpn&#39;: &#39;&#39;,
+ &#39;TargetAccountDisplayName&#39;: &#39;&#39;,
+ &#39;TargetDeviceName&#39;: &#39;&#39;,
+ &#39;DestinationDeviceName&#39;: &#39;&#39;,
+ &#39;DestinationIPAddress&#39;: &#39;&#39;,
+ &#39;DestinationPort&#39;: None,
+ &#39;Protocol&#39;: &#39;&#39;,
+ &#39;AccountName&#39;: &#39;&#39;,
+ &#39;AccountDomain&#39;: &#39;&#39;,
+ &#39;AccountUpn&#39;: &#39;&#39;,
+ &#39;AccountSid&#39;: &#39;&#39;,
+ &#39;DeviceName&#39;: &#39;&#39;,
+ &#39;Port&#39;: None,
+ &#39;Location&#39;: &#39;&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tokenize-one-event-log">
+<h3>Tokenize One Event Log<a class="headerlink" href="#tokenize-one-event-log" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;google/bigbird-roberta-base&quot;</span><span class="p">)</span>
+
+<span class="c1"># Tokenize an event log</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="mi">7</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="raw-example-log-index-7">
+<h3>Raw Example Log - Index 7<a class="headerlink" href="#raw-example-log-index-7" title="Permalink to this heading">#</a></h3>
+<p>{“Timestamp”:”2021-08-02T13:32:07Z”,”ActionType”:”MailItemsAccessed”,”Application”:”Microsoft Exchange Online”,”ApplicationId”:20893,”AccountObjectId”:”5a95e683-08ad-424e-a441-1d1aec52c02c”,”AccountDisplayName”:”SimuLandApp”,”IsAdminOperation”:0,”DeviceType”:”Other”,”OSPlatform”:”Unknown”,”IPAddress”:”1.2.3.4”,”IsAnonymousProxy”:0,”CountryCode”:”US”,”City”:”chicago”,”ISP”:”Microsoft 365 Common and Office Online server”,”UserAgent_dynamic”:null,”UserAgent_string”:”Client=REST;;”,”ActivityType”:”Run”,”ActivityObjects”:[{“ServiceObjectType”:”Session ID”,”Type”:”Structured object”,”Role”:”Parameter”},{“Type”:”Task”,”Role”:”Target object”,”Name”:”MailItemsAccessed”},{“Type”:”Property”,”Role”:”Parameter”,”Name”:”MailAccessType”,”Value”:”Bind”},{“Type”:”Property”,”Role”:”Parameter”,”Name”:”IsThrottled”,”Value”:”False”},{“ApplicationInstance”:0,”ApplicationId”:11161,”Type”:”User”,”Role”:”Parameter”,”Name”:”Gustavo Pedro”,”Id”:”aead923d-498b-4f64-a66c-2af91447a8b6”},{“ApplicationInstance”:0,”ApplicationId”:11161,”Type”:”Account”,”Role”:”Actor”,”Name”:”SimuLandApp”,”Id”:”5a95e683-08ad-424e-a441-1d1aec52c02c”}],”ObjectName”:”MailItemsAccessed”,”ObjectType”:”Task”,”ObjectId”:””,”ReportId”:”106830890_20893_699e0b10-1c53-403e-976f-ce0847a92b44”,”AdditionalFields”:{“IsSatelliteProvider”:false},”UserId”:””,”Permissions”:null,”PermissionsAddedTo”:””,”RawEventData”:{”<a class="reference external" href="mailto:OrganizationId%22:%2200000000-0000-0000-0000-000000000000%22,%22CreationTime%22:%222021-08-02T13:32:07&#46;0000000Z%22,%22RecordType%22:50,%22Operation%22:%22MailItemsAccessed%22,%22UserType%22:0,%22Workload%22:%22Exchange%22,%22Version%22:1,%22UserKey%22:%22100320015858B802%22,%22UserId%22:%22pgustavo&#37;&#52;&#48;simulandlabs&#46;com">OrganizationId”:”00000000-0000-0000-0000-000000000000”,”CreationTime”:”2021-08-02T13:32:07<span>&#46;</span>0000000Z”,”RecordType”:50,”Operation”:”MailItemsAccessed”,”UserType”:0,”Workload”:”Exchange”,”Version”:1,”UserKey”:”100320015858B802”,”UserId”:”pgustavo<span>&#64;</span>simulandlabs<span>&#46;</span>com</a>”,”OriginatingServer”:”AB1CD23EF4567 (15.20.4200.000)\r\n”,”InternalLogonType”:0,”OrganizationName”:”<a class="reference external" href="http://simulandlabs.onmicrosoft.com">simulandlabs.onmicrosoft.com</a>”,”ClientInfoString”:”Client=REST;;”<a class="reference external" href="mailto:,%22MailboxOwnerSid%22:%22S-1-5-21-1825954961-3338807533-2873504967-26087451%22,%22ClientIPAddress%22:%221&#46;2&#46;3&#46;4%22,%22MailboxOwnerUPN%22:%22pgustavo&#37;&#52;&#48;simulandlabs&#46;com">,”MailboxOwnerSid”:”S-1-5-21-1825954961-3338807533-2873504967-26087451”,”ClientIPAddress”:”1<span>&#46;</span>2<span>&#46;</span>3<span>&#46;</span>4”,”MailboxOwnerUPN”:”pgustavo<span>&#64;</span>simulandlabs<span>&#46;</span>com</a>”,”ExternalAccess”:false,”ResultStatus”:”Succeeded”,”Id”:”699e0b10-1c53-403e-976f-ce0847a92b44”,”LogonUserSid”:”S-1-5-21-1825954961-3338807533-2873504967-26087451”,”MailboxGuid”:”d0c5f8ae-9ed7-4e46-bfdf-ea1460f5a31b”,”LogonType”:0,”OperationProperties”:[“&#64;{Value=Bind; Name=MailAccessType}”,”&#64;{Value=False; Name=IsThrottled}”],”OperationCount”:7,”AppId”:”00000003-0000-0000-c000-000000000000”,”Folders”:[“&#64;{Id=LgAAAAAM7KyTTmWeRac2KXBEz/7aAQARGHK+grzLTpRJraC1QR6kAAAAAAEMAAAB; Path=\Inbox; FolderItems=System.Object[]}”],”ClientAppId”:”5a95e683-08ad-424e-a441-1d1aec52c02c”},”spnID”:””,”rawData”:{”<a class="reference external" href="mailto:OrganizationId%22:%2200000000-0000-0000-0000-000000000000%22,%22CreationTime%22:%222021-08-02T13:32:07&#46;0000000Z%22,%22RecordType%22:50,%22Operation%22:%22MailItemsAccessed%22,%22UserType%22:0,%22Workload%22:%22Exchange%22,%22Version%22:1,%22UserKey%22:%22100320015858B802%22,%22UserId%22:%22pgustavo&#37;&#52;&#48;simulandlabs&#46;com">OrganizationId”:”00000000-0000-0000-0000-000000000000”,”CreationTime”:”2021-08-02T13:32:07<span>&#46;</span>0000000Z”,”RecordType”:50,”Operation”:”MailItemsAccessed”,”UserType”:0,”Workload”:”Exchange”,”Version”:1,”UserKey”:”100320015858B802”,”UserId”:”pgustavo<span>&#64;</span>simulandlabs<span>&#46;</span>com</a>”,”OriginatingServer”:”AB1CD23EF4567 (15.20.4200.000)\r\n”,”InternalLogonType”:0,”OrganizationName”:”<a class="reference external" href="http://simulandlabs.onmicrosoft.com">simulandlabs.onmicrosoft.com</a>”,”ClientInfoString”:”Client=REST;;”<a class="reference external" href="mailto:,%22MailboxOwnerSid%22:%22S-1-5-21-1825954961-3338807533-2873504967-26087451%22,%22ClientIPAddress%22:%221&#46;2&#46;3&#46;4%22,%22MailboxOwnerUPN%22:%22pgustavo&#37;&#52;&#48;simulandlabs&#46;com">,”MailboxOwnerSid”:”S-1-5-21-1825954961-3338807533-2873504967-26087451”,”ClientIPAddress”:”1<span>&#46;</span>2<span>&#46;</span>3<span>&#46;</span>4”,”MailboxOwnerUPN”:”pgustavo<span>&#64;</span>simulandlabs<span>&#46;</span>com</a>”,”ExternalAccess”:false,”ResultStatus”:”Succeeded”,”Id”:”699e0b10-1c53-403e-976f-ce0847a92b44”,”LogonUserSid”:”S-1-5-21-1825954961-3338807533-2873504967-26087451”,”MailboxGuid”:”d0c5f8ae-9ed7-4e46-bfdf-ea1460f5a31b”,”LogonType”:0,”OperationProperties”:[“&#64;{Value=Bind; Name=MailAccessType}”,”&#64;{Value=False; Name=IsThrottled}”],”OperationCount”:7,”AppId”:”00000003-0000-0000-c000-000000000000”,”Folders”:[“&#64;{Id=LgAAAAAM7KyTTmWeRac2KXBEz/7aAQARGHK+grzLTpRJraC1QR6kAAAAAAEMAAAB; Path=\Inbox; FolderItems=System.Object[]}”],”ClientAppId”:”5a95e683-08ad-424e-a441-1d1aec52c02c”},”AppId”:”00000003-0000-0000-c000-000000000000”,”OAuthAppId”:”5a95e683-08ad-424e-a441-1d1aec52c02c”,”TargetAccountUpn”:””,”TargetAccountDisplayName”:””,”TargetDeviceName”:””,”DestinationDeviceName”:””,”DestinationIPAddress”:””,”DestinationPort”:null,”Protocol”:””,”AccountName”:””,”AccountDomain”:””,”AccountUpn”:””,”AccountSid”:””,”DeviceName”:””,”Port”:null,”Location”:””}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tokens</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;▁{&quot;&#39;, &#39;Tim&#39;, &#39;estamp&#39;, &#39;&quot;:&#39;, &#39;▁&quot;&#39;, &#39;2&#39;, &#39;021&#39;, &#39;-&#39;, &#39;08&#39;, &#39;-&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tokens</span><span class="p">[</span><span class="mi">20</span><span class="p">:</span><span class="mi">30</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Action&#39;, &#39;Type&#39;, &#39;&quot;:&#39;, &#39;▁&quot;&#39;, &#39;Mail&#39;, &#39;Items&#39;, &#39;Acc&#39;, &#39;essed&#39;, &#39;&quot;,&#39;, &#39;▁&quot;&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="c1"># Convert tokens to input IDs</span>
+<span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_ids</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+<span class="c1"># Create a PyTorch tensor</span>
+<span class="n">input_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Add a batch dimension</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="generate-embeddings-for-one-event-log">
+<h2>Generate Embeddings for One Event Log<a class="headerlink" href="#generate-embeddings-for-one-event-log" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BigBirdModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">BigBirdModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;google/bigbird-roberta-base&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get BigBird Embeddings</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
+
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">last_hidden_state</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">embeddings</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[ 0.1869,  0.0935, -0.0685,  ..., -0.0211, -0.1009, -0.0862],
+         [ 0.0773, -0.1688, -0.1072,  ...,  0.1626,  0.1574,  0.1664],
+         [ 0.1790, -0.0747,  0.0009,  ...,  0.2164,  0.1874,  0.1451],
+         ...,
+         [ 0.1302, -0.0763, -0.1211,  ...,  0.0049, -0.3677, -0.0096],
+         [ 0.3301, -0.5417, -0.3299,  ..., -0.2153, -0.4639, -0.1000],
+         [ 0.1222, -0.2770, -0.0157,  ...,  0.0253, -0.0452,  0.0553]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1708
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./experiments\Basics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Local-Inferring-Sentiment.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Inferring: Local Sentiment Classifier</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="OAI-Inferring-Sentiment.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Inferring: Remote Sentiment Classifier</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-example">Basic Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenizing-with-bigbird-model-tokenizer">Tokenizing with BigBird Model Tokenizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-index-ids-for-the-tokens-in-the-vocabulary">Get Index IDs for the Tokens in the Vocabulary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-embeddings-with-bigbird-model">Get Embeddings with BigBird Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenizing-and-embedding-a-security-event-log">Tokenizing and Embedding a Security Event Log</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-data-sample">Download Data Sample</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#read-security-event-logs">Read Security Event Logs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenize-one-event-log">Tokenize One Event Log</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#raw-example-log-index-7">Raw Example Log - Index 7</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings-for-one-event-log">Generate Embeddings for One Event Log</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Roberto Rodriguez @Cyb3rWard0g
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

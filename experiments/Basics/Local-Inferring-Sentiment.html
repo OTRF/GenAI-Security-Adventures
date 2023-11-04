@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Inferring: Remote Sentiment Classifier &#8212; GenAI Security Adventures</title>
+    <title>Inferring: Local Sentiment Classifier &#8212; GenAI Security Adventures</title>
   
   
   
@@ -64,11 +64,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/Basics/OAI-Inferring-Sentiment';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/Basics/Local-Inferring-Sentiment';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Summarizing: Remote Incident Handler" href="OAI-Summarizing-Incident.html" />
-    <link rel="prev" title="Local: Tokenizing &amp; Embedding" href="Local-Tokenizing-Embedding.html" />
+    <link rel="next" title="Local: Tokenizing &amp; Embedding" href="Local-Tokenizing-Embedding.html" />
+    <link rel="prev" title="Embeddings" href="../../getting-started/Embeddings.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -157,9 +157,9 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Local-Inferring-Sentiment.html">Inferring: Local Sentiment Classifier</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Inferring: Local Sentiment Classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Local-Tokenizing-Embedding.html">Local: Tokenizing &amp; Embedding</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Inferring: Remote Sentiment Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OAI-Inferring-Sentiment.html">Inferring: Remote Sentiment Classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OAI-Summarizing-Incident.html">Summarizing: Remote Incident Handler</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook.html">Create ATT&amp;CK Groups Source knowledge</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../RAG/Threat-Intelligence/ATTCK-Groups/LangChain/notebook.html">RAG - LangChain and ATT&amp;CK Groups</a></li>
@@ -238,7 +238,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures/issues/new?title=Issue%20on%20page%20%2Fexperiments/Basics/OAI-Inferring-Sentiment.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures/issues/new?title=Issue%20on%20page%20%2Fexperiments/Basics/Local-Inferring-Sentiment.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -268,7 +268,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../_sources/experiments/Basics/OAI-Inferring-Sentiment.ipynb" target="_blank"
+      <li><a href="../../_sources/experiments/Basics/Local-Inferring-Sentiment.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -350,7 +350,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Inferring: Remote Sentiment Classifier</h1>
+    <h1>Inferring: Local Sentiment Classifier</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -361,8 +361,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-modules">Import Modules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-open-ai-key">Set Open AI Key</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-completion-function">Create Completion Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gpt4all-with-local-model">Initialize GPT4All with Local Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#email-sentiment-classifier">Email Sentiment Classifier</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-prompt-classifier">Create Prompt Classifier</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-prompt">Run Prompt</a></li>
@@ -380,8 +379,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="inferring-remote-sentiment-classifier">
-<h1>Inferring: Remote Sentiment Classifier<a class="headerlink" href="#inferring-remote-sentiment-classifier" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="inferring-local-sentiment-classifier">
+<h1>Inferring: Local Sentiment Classifier<a class="headerlink" href="#inferring-local-sentiment-classifier" title="Permalink to this heading">#</a></h1>
 <hr class="docutils" />
 <ul class="simple">
 <li><p>Collaborators:</p>
@@ -392,6 +391,9 @@ document.write(`
 <li><p>References:</p>
 <ul>
 <li><p><a class="reference external" href="https://www.deeplearning.ai/short-courses/">https://www.deeplearning.ai/short-courses/</a></p></li>
+<li><p><a class="reference external" href="https://medium.com/&#64;ssmaameri/private-llms-on-local-and-in-the-cloud-with-langchain-gpt4all-and-cerebrium-6dade79f45f6">https://medium.com/&#64;ssmaameri/private-llms-on-local-and-in-the-cloud-with-langchain-gpt4all-and-cerebrium-6dade79f45f6</a></p></li>
+<li><p><a class="reference external" href="https://docs.gpt4all.io/gpt4all_python.html">https://docs.gpt4all.io/gpt4all_python.html</a></p></li>
+<li><p><a class="reference external" href="https://raw.githubusercontent.com/nomic-ai/gpt4all/main/gpt4all-chat/metadata/models.json">https://raw.githubusercontent.com/nomic-ai/gpt4all/main/gpt4all-chat/metadata/models.json</a></p></li>
 </ul>
 </li>
 </ul>
@@ -399,38 +401,18 @@ document.write(`
 <h2>Import Modules<a class="headerlink" href="#import-modules" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">openai</span>
-<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.llms</span> <span class="kn">import</span> <span class="n">GPT4All</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="set-open-ai-key">
-<h2>Set Open AI Key<a class="headerlink" href="#set-open-ai-key" title="Permalink to this heading">#</a></h2>
+<section id="initialize-gpt4all-with-local-model">
+<h2>Initialize GPT4All with Local Model<a class="headerlink" href="#initialize-gpt4all-with-local-model" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get your key: https://platform.openai.com/account/api-keys</span>
-<span class="n">load_dotenv</span><span class="p">()</span>
-<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="create-completion-function">
-<h2>Create Completion Function<a class="headerlink" href="#create-completion-function" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_completion</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">):</span>
-    <span class="n">messages</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span><span class="n">prompt</span><span class="p">}]</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
-        <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="c1"># Degree of randomness</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Model downloaded manually from https://gpt4all.io/index.html</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">GPT4All</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;./model/orca-mini-3b-gguf2-q4_0.gguf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -459,15 +441,12 @@ document.write(`
 <h3>Run Prompt<a class="headerlink" href="#run-prompt" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">get_completion</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">llm</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Benign.
-
-The email subject text appears to be a request for the recipient to verify their account email by entering a verification code and replying. This does not indicate any malicious intent or harmful content. It seems to be a routine procedure for account security or verification purposes.
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;\nThis email is likely to be considered as a phishing attempt because it requests the recipient to provide an account verification code that they may not have received from the actual email provider. Additionally, the email does not contain any legitimate information or context that would make the recipient believe that this is a genuine request for account verification. Therefore, it can be classified as malicious.&#39;
 </pre></div>
 </div>
 </div>
@@ -504,15 +483,12 @@ The email subject text appears to be a request for the recipient to verify their
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">get_completion</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">llm</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>malicious
-
-Explanation: The subject text contains phrases like &quot;email verification code&quot; and &quot;enter now and reply,&quot; which are commonly used in phishing emails to trick recipients into providing their personal information. This suggests that the email may be attempting to deceive or exploit the recipient, making it malicious.
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;\nSubject: **Your account email verification code**\nLabel: benign&#39;
 </pre></div>
 </div>
 </div>
@@ -553,20 +529,20 @@ Explanation: The subject text contains phrases like &quot;email verification cod
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="Local-Tokenizing-Embedding.html"
+       href="../../getting-started/Embeddings.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Local: Tokenizing &amp; Embedding</p>
+        <p class="prev-next-title">Embeddings</p>
       </div>
     </a>
     <a class="right-next"
-       href="OAI-Summarizing-Incident.html"
+       href="Local-Tokenizing-Embedding.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Summarizing: Remote Incident Handler</p>
+        <p class="prev-next-title">Local: Tokenizing &amp; Embedding</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -589,8 +565,7 @@ Explanation: The subject text contains phrases like &quot;email verification cod
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-modules">Import Modules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-open-ai-key">Set Open AI Key</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-completion-function">Create Completion Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gpt4all-with-local-model">Initialize GPT4All with Local Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#email-sentiment-classifier">Email Sentiment Classifier</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-prompt-classifier">Create Prompt Classifier</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-prompt">Run Prompt</a></li>

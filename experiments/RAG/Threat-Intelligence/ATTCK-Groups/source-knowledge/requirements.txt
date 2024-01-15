@@ -1,6 +1,6 @@
 attackcti==0.4.0
-Jinja2==3.1.2
-langchain==0.0.327
+Jinja2==3.1.3
+langchain==0.1.0
 tiktoken==0.5.1
-openai==0.28.1
+openai==1.6.1
 chromadb==0.4.14

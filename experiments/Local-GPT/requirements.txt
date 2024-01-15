@@ -1,2 +1,2 @@
 gpt4all==2.0.2
-langchain==0.0.327
+langchain==0.1.0

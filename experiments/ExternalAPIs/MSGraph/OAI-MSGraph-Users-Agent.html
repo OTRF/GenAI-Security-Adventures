@@ -1,0 +1,791 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>A MS Graph API (Users) Agent &#8212; GenAI Security Adventures</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/ExternalAPIs/MSGraph/OAI-MSGraph-Users-Agent';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Bloodhound GPT" href="../../Bloodhound-GPT/notebook.html" />
+    <link rel="prev" title="Explore MS Graph API to Create a User" href="OAI-CreateUsers-Arguments.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="GenAI Security Adventures - Home"/>
+    <script>document.write(`<img src="../../../_static/logo.png" class="logo__image only-dark" alt="GenAI Security Adventures - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started/Embeddings.html">Embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/OAI-GPT-Basic-ChatCompletion.html">OAI: Basic Chat Completion API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/Local-Ollama-LiteLLM-Zephyr.html">Local Ollama and LiteLLM: Basic Chat Completion API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/Local-Tokenizing-Embedding.html">Local: Tokenizing and Embedding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/Local-Inferring-Sentiment.html">Local Inferring: Email Subject Sentiment Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/OAI-Inferring-Sentiment.html">OAI Inferring: Email Subject Sentiment Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/OAI-Summarizing-Incident.html">Summarizing: Remote Incident Handler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/OAI-GPT4-Vision-Security.html">GPT4 Vision: Security Ideas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook.html">Create ATT&amp;CK Groups Source knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RAG/Threat-Intelligence/ATTCK-Groups/LangChain/notebook.html">RAG - LangChain and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RAG/Threat-Intelligence/ATTCK-Groups/AutoGen/notebook.html">RAG - AutoGen and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Agents/CoT/Local-CoT-Ollama-LiteLLM-Zephyr.html">CoT Reasoning: Chatting with Zephyr 7b Beta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OAI-CreateUsers-Arguments.html">Explore MS Graph API to Create a User</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">A MS Graph API (Users) Agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Bloodhound-GPT/notebook.html">Bloodhound GPT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Local-GPT/notebook.html">Local Experiment: GPT4All</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ROADTools-GPT/notebook.html">ROADTools GPT</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures/issues/new?title=Issue%20on%20page%20%2Fexperiments/ExternalAPIs/MSGraph/OAI-MSGraph-Users-Agent.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/experiments/ExternalAPIs/MSGraph/OAI-MSGraph-Users-Agent.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>A MS Graph API (Users) Agent</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-ms-graph-user-openapi-specification">Download MS Graph (User) OpenAPI specification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-open-api-specification">Load Open API Specification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-langchain-authorization-header-function">Define LangChain Authorization Header Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ms-graph-api-spec">MS Graph API Spec</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-open-ai-key">Initialize Open AI Key</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-openai-chat-api">Define OpenAI Chat API</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-query">Run Query</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-cell-execution">One Cell Execution</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="a-ms-graph-api-users-agent">
+<h1>A MS Graph API (Users) Agent<a class="headerlink" href="#a-ms-graph-api-users-agent" title="Permalink to this heading">#</a></h1>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>Collaborators:</p>
+<ul>
+<li><p>Roberto Rodriguez (&#64;Cyb3rWard0g)</p></li>
+</ul>
+</li>
+<li><p>References:</p>
+<ul>
+<li><p><a class="reference external" href="https://python.langchain.com/docs/use_cases/apis">https://python.langchain.com/docs/use_cases/apis</a></p></li>
+<li><p><a class="reference external" href="https://python.langchain.com/docs/integrations/toolkits/openapi">https://python.langchain.com/docs/integrations/toolkits/openapi</a></p></li>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/graph/api/resources/users?view=graph-rest-1.0">https://learn.microsoft.com/en-us/graph/api/resources/users?view=graph-rest-1.0</a></p></li>
+</ul>
+</li>
+</ul>
+<section id="download-ms-graph-user-openapi-specification">
+<h2>Download MS Graph (User) OpenAPI specification<a class="headerlink" href="#download-ms-graph-user-openapi-specification" title="Permalink to this heading">#</a></h2>
+<p>Location: <a class="github reference external" href="https://github.com/microsoftgraph/msgraph-sdk-powershell/blob/dev/openApiDocs/v1.0/Users.yml">microsoftgraph/msgraph-sdk-powershell</a></p>
+</section>
+<section id="load-open-api-specification">
+<h2>Load Open API Specification<a class="headerlink" href="#load-open-api-specification" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">from</span> <span class="nn">langchain.agents.agent_toolkits.openapi.spec</span> <span class="kn">import</span> <span class="n">reduce_openapi_spec</span>
+
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">data_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span>
+<span class="n">msgraph_api_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_directory</span><span class="p">,</span> <span class="s2">&quot;OpenAPI-MSGraph-v1.0-Users.yml&quot;</span><span class="p">)</span>
+
+<span class="n">raw_msgraph_api_spec</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">msgraph_api_file</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">Loader</span><span class="p">)</span>
+<span class="n">msgraph_api_spec</span> <span class="o">=</span> <span class="n">reduce_openapi_spec</span><span class="p">(</span><span class="n">raw_msgraph_api_spec</span><span class="p">,</span><span class="n">dereference</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="define-langchain-authorization-header-function">
+<h2>Define LangChain Authorization Header Function<a class="headerlink" href="#define-langchain-authorization-header-function" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">InteractiveBrowserCredential</span>
+<span class="kn">from</span> <span class="nn">langchain.requests</span> <span class="kn">import</span> <span class="n">RequestsWrapper</span>
+
+<span class="k">def</span> <span class="nf">construct_auth_headers</span><span class="p">(</span><span class="n">raw_spec</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="n">credential</span> <span class="o">=</span> <span class="n">InteractiveBrowserCredential</span><span class="p">()</span>
+    <span class="n">access_token</span> <span class="o">=</span> <span class="p">(</span><span class="n">credential</span><span class="o">.</span><span class="n">get_token</span><span class="p">(</span><span class="s2">&quot;https://graph.microsoft.com/.default&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">token</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+
+
+<span class="c1"># Get API credentials.</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="n">construct_auth_headers</span><span class="p">(</span><span class="n">raw_msgraph_api_spec</span><span class="p">)</span>
+<span class="n">requests_wrapper</span> <span class="o">=</span> <span class="n">RequestsWrapper</span><span class="p">(</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ms-graph-api-spec">
+<h2>MS Graph API Spec<a class="headerlink" href="#ms-graph-api-spec" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">endpoints</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">operation</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">route</span><span class="p">,</span> <span class="n">operations</span> <span class="ow">in</span> <span class="n">raw_msgraph_api_spec</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">operation</span> <span class="ow">in</span> <span class="n">operations</span>
+    <span class="k">if</span> <span class="n">operation</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;get&quot;</span><span class="p">,</span> <span class="s2">&quot;post&quot;</span><span class="p">]</span>
+<span class="p">]</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">endpoints</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>140
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initialize-open-ai-key">
+<h2>Initialize Open AI Key<a class="headerlink" href="#initialize-open-ai-key" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">import</span> <span class="nn">openai</span>
+
+<span class="c1"># Get your key: https://platform.openai.com/account/api-keys</span>
+<span class="n">load_dotenv</span><span class="p">()</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="define-openai-chat-api">
+<h2>Define OpenAI Chat API<a class="headerlink" href="#define-openai-chat-api" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.chat_models</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span> <span class="nn">langchain.agents.agent_toolkits.openapi</span> <span class="kn">import</span> <span class="n">planner</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">msgraph_agent</span> <span class="o">=</span> <span class="n">planner</span><span class="o">.</span><span class="n">create_openapi_agent</span><span class="p">(</span><span class="n">msgraph_api_spec</span><span class="p">,</span> <span class="n">requests_wrapper</span><span class="p">,</span> <span class="n">llm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="run-query">
+<h2>Run Query<a class="headerlink" href="#run-query" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">user_query</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Search for user with id 3b83a100-f4b1-4b9a-934e-5626c7c00dbd&quot;</span>
+<span class="p">)</span>
+<span class="n">msgraph_agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">user_query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">&gt; Entering new AgentExecutor chain...</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action: api_planner</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action Input: Search for user with id 3b83a100-f4b1-4b9a-934e-5626c7c00dbd</span>
+Observation: <span class=" -Color -Color-Bold -Color-Bold-Cyan">1. GET /users/{user-id} to retrieve the properties and relationships of the user with the id 3b83a100-f4b1-4b9a-934e-5626c7c00dbd.</span>
+Thought:<span class=" -Color -Color-Bold -Color-Bold-Green">I&#39;m ready to execute the API call.</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action: api_controller</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action Input: GET /users/{user-id} to retrieve the properties and relationships of the user with the id 3b83a100-f4b1-4b9a-934e-5626c7c00dbd.</span>
+
+<span class=" -Color -Color-Bold">&gt; Entering new AgentExecutor chain...</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">I need to use the requests_get tool to make a GET request to the /users/{user-id} endpoint of the API. The user-id is 3b83a100-f4b1-4b9a-934e-5626c7c00dbd. I don&#39;t need any parameters for this request. I will extract the id and name from the response.</span>
+
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action: requests_get</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action Input: </span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">{</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">  &quot;url&quot;: &quot;https://graph.microsoft.com/v1.0/users/3b83a100-f4b1-4b9a-934e-5626c7c00dbd&quot;,</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">  &quot;params&quot;: {},</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">  &quot;output_instructions&quot;: {</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">    &quot;id&quot;: &quot;id&quot;,</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">    &quot;name&quot;: &quot;displayName&quot;</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">  }</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">}</span>
+
+Observation: <span class=" -Color -Color-Bold -Color-Bold-Cyan">{&#39;id&#39;: &#39;3b83a100-f4b1-4b9a-934e-5626c7c00dbd&#39;, &#39;name&#39;: &#39;Cyb3rWard0g&#39;}</span>
+Thought:<span class=" -Color -Color-Bold -Color-Bold-Green">I have successfully retrieved the user&#39;s id and name. The user&#39;s id is 3b83a100-f4b1-4b9a-934e-5626c7c00dbd and the name is Cyb3rWard0g. I have completed the plan.</span>
+
+<span class=" -Color -Color-Bold -Color-Bold-Green">Final Answer: {&#39;id&#39;: &#39;3b83a100-f4b1-4b9a-934e-5626c00dbd&#39;, &#39;name&#39;: &#39;Cyb3rWard0g&#39;}</span>
+
+<span class=" -Color -Color-Bold">&gt; Finished chain.</span>
+
+Observation: <span class=" -Color -Color-Bold -Color-Bold-Yellow">{&#39;id&#39;: &#39;3b83a100-f4b1-4b9a-934e-5626c00dbd&#39;, &#39;name&#39;: &#39;Cyb3rWard0g&#39;}</span>
+Thought:<span class=" -Color -Color-Bold -Color-Bold-Green">I am finished executing the plan and have the information the user asked for.</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Final Answer: The user with id 3b83a100-f4b1-4b9a-934e-5626c7c00dbd is named &#39;Cyb3rWard0g&#39;.</span>
+
+<span class=" -Color -Color-Bold">&gt; Finished chain.</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;The user with id 3b83a100-f4b1-4b9a-934e-5626c7c00dbd is named &#39;Cyb3rWard0g&#39;.&quot;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="one-cell-execution">
+<h2>One Cell Execution<a class="headerlink" href="#one-cell-execution" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download MS Graph API OpenAPI Specification:</span>
+<span class="c1">#  https://github.com/microsoftgraph/msgraph-sdk-powershell/blob/dev/openApiDocs/v1.0/Users.yml</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">from</span> <span class="nn">langchain.agents.agent_toolkits.openapi.spec</span> <span class="kn">import</span> <span class="n">reduce_openapi_spec</span>
+
+<span class="c1"># Read File Locally</span>
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">msgraph_api_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s2">&quot;OpenAPI-MSGraph-v1.0-Users.yml&quot;</span><span class="p">)</span>
+<span class="n">raw_msgraph_api_spec</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">msgraph_api_file</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">Loader</span><span class="p">)</span>
+
+<span class="c1"># Read as OpenAPI Specification</span>
+<span class="n">msgraph_api_spec</span> <span class="o">=</span> <span class="n">reduce_openapi_spec</span><span class="p">(</span><span class="n">raw_msgraph_api_spec</span><span class="p">,</span><span class="n">dereference</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Define LangChain Authorization Header Function </span>
+<span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">InteractiveBrowserCredential</span>
+<span class="kn">from</span> <span class="nn">langchain.requests</span> <span class="kn">import</span> <span class="n">RequestsWrapper</span>
+
+<span class="k">def</span> <span class="nf">construct_auth_headers</span><span class="p">(</span><span class="n">raw_spec</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="n">credential</span> <span class="o">=</span> <span class="n">InteractiveBrowserCredential</span><span class="p">()</span>
+    <span class="n">access_token</span> <span class="o">=</span> <span class="p">(</span><span class="n">credential</span><span class="o">.</span><span class="n">get_token</span><span class="p">(</span><span class="s2">&quot;https://graph.microsoft.com/.default&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">token</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+
+<span class="c1"># Get Access Token -&gt; Authorization Header.</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="n">construct_auth_headers</span><span class="p">(</span><span class="n">raw_msgraph_api_spec</span><span class="p">)</span>
+<span class="n">requests_wrapper</span> <span class="o">=</span> <span class="n">RequestsWrapper</span><span class="p">(</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="c1"># Define OpenAI Chat API</span>
+<span class="kn">from</span> <span class="nn">langchain.chat_models</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span> <span class="nn">langchain.agents.agent_toolkits.openapi</span> <span class="kn">import</span> <span class="n">planner</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">import</span> <span class="nn">openai</span>
+<span class="c1"># Initialize OpenAI Key. Get your key: https://platform.openai.com/account/api-keys</span>
+<span class="n">load_dotenv</span><span class="p">()</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+
+<span class="c1"># Create OpenAPI Agent</span>
+<span class="n">msgraph_agent</span> <span class="o">=</span> <span class="n">planner</span><span class="o">.</span><span class="n">create_openapi_agent</span><span class="p">(</span><span class="n">msgraph_api_spec</span><span class="p">,</span> <span class="n">requests_wrapper</span><span class="p">,</span> <span class="n">llm</span><span class="p">)</span>
+
+<span class="c1"># Pass prompt (Natural Language) to Agent -&gt; Call MS Graph API</span>
+<span class="n">msgraph_agent</span><span class="o">.</span><span class="n">run</span><span class="p">((</span><span class="s2">&quot;Search for user with id 3b83a100-f4b1-4b9a-934e-5626c7c00dbd&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">&gt; Entering new AgentExecutor chain...</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action: api_planner</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action Input: Search for user with id 3b83a100-f4b1-4b9a-934e-5626c7c00dbd</span>
+Observation: <span class=" -Color -Color-Bold -Color-Bold-Cyan">1. GET /users/{user-id} to retrieve the properties and relationships of the user with the id 3b83a100-f4b1-4b9a-934e-5626c7c00dbd.</span>
+Thought:<span class=" -Color -Color-Bold -Color-Bold-Green">I&#39;m ready to execute the API call.</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action: api_controller</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action Input: GET /users/{user-id} to retrieve the properties and relationships of the user with the id 3b83a100-f4b1-4b9a-934e-5626c7c00dbd.</span>
+
+<span class=" -Color -Color-Bold">&gt; Entering new AgentExecutor chain...</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">I need to use the requests_get tool to make a GET request to the /users/{user-id} endpoint of the API. The user-id in the path should be replaced with the actual user id.</span>
+
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action: requests_get</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Action Input: </span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">{</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">  &quot;url&quot;: &quot;https://graph.microsoft.com/v1.0/users/3b83a100-f4b1-4b9a-934e-5626c7c00dbd&quot;,</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">  &quot;params&quot;: {},</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">  &quot;output_instructions&quot;: &quot;Extract the id and name of the user&quot;</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">}</span>
+Observation: <span class=" -Color -Color-Bold -Color-Bold-Cyan">The user&#39;s ID is &quot;3b83a100-f4b1-4b9a-934e-5626c7c00dbd&quot; and the name is &quot;Cyb3rWard0g&quot;.</span>
+Thought:<span class=" -Color -Color-Bold -Color-Bold-Green">I have successfully retrieved the user&#39;s information. The plan has been executed successfully.</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Final Answer: The user&#39;s ID is &quot;3b83a100-f4b1-4b9a-934e-5626c7c00dbd&quot; and the name is &quot;Cyb3rWard0g&quot;.</span>
+
+<span class=" -Color -Color-Bold">&gt; Finished chain.</span>
+
+Observation: <span class=" -Color -Color-Bold -Color-Bold-Yellow">The user&#39;s ID is &quot;3b83a100-f4b1-4b9a-934e-5626c7c00dbd&quot; and the name is &quot;Cyb3rWard0g&quot;.</span>
+Thought:<span class=" -Color -Color-Bold -Color-Bold-Green">I am finished executing the plan and have the information the user asked for.</span>
+<span class=" -Color -Color-Bold -Color-Bold-Green">Final Answer: The user&#39;s ID is &quot;3b83a100-f4b1-4b9a-934e-5626c7c00dbd&quot; and the name is &quot;Cyb3rWard0g&quot;.</span>
+
+<span class=" -Color -Color-Bold">&gt; Finished chain.</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The user\&#39;s ID is &quot;3b83a100-f4b1-4b9a-934e-5626c7c00dbd&quot; and the name is &quot;Cyb3rWard0g&quot;.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./experiments/ExternalAPIs/MSGraph"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="OAI-CreateUsers-Arguments.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Explore MS Graph API to Create a User</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../Bloodhound-GPT/notebook.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Bloodhound GPT</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-ms-graph-user-openapi-specification">Download MS Graph (User) OpenAPI specification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-open-api-specification">Load Open API Specification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-langchain-authorization-header-function">Define LangChain Authorization Header Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ms-graph-api-spec">MS Graph API Spec</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-open-ai-key">Initialize Open AI Key</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-openai-chat-api">Define OpenAI Chat API</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-query">Run Query</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-cell-execution">One Cell Execution</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Roberto Rodriguez @Cyb3rWard0g
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1113 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Explore MS Graph API to Create a User &#8212; GenAI Security Adventures</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/ExternalAPIs/MSGraph/OAI-CreateUsers-Arguments';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="A MS Graph API (Users) Agent" href="OAI-MSGraph-Users-Agent.html" />
+    <link rel="prev" title="CoT Reasoning: Chatting with Zephyr 7b Beta" href="../../Agents/CoT/Local-CoT-Ollama-LiteLLM-Zephyr.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="GenAI Security Adventures - Home"/>
+    <script>document.write(`<img src="../../../_static/logo.png" class="logo__image only-dark" alt="GenAI Security Adventures - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started/Embeddings.html">Embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/OAI-GPT-Basic-ChatCompletion.html">OAI: Basic Chat Completion API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/Local-Ollama-LiteLLM-Zephyr.html">Local Ollama and LiteLLM: Basic Chat Completion API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/Local-Tokenizing-Embedding.html">Local: Tokenizing and Embedding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/Local-Inferring-Sentiment.html">Local Inferring: Email Subject Sentiment Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/OAI-Inferring-Sentiment.html">OAI Inferring: Email Subject Sentiment Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/OAI-Summarizing-Incident.html">Summarizing: Remote Incident Handler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Basics/OAI-GPT4-Vision-Security.html">GPT4 Vision: Security Ideas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook.html">Create ATT&amp;CK Groups Source knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RAG/Threat-Intelligence/ATTCK-Groups/LangChain/notebook.html">RAG - LangChain and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RAG/Threat-Intelligence/ATTCK-Groups/AutoGen/notebook.html">RAG - AutoGen and ATT&amp;CK Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Agents/CoT/Local-CoT-Ollama-LiteLLM-Zephyr.html">CoT Reasoning: Chatting with Zephyr 7b Beta</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Explore MS Graph API to Create a User</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OAI-MSGraph-Users-Agent.html">A MS Graph API (Users) Agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Bloodhound-GPT/notebook.html">Bloodhound GPT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Local-GPT/notebook.html">Local Experiment: GPT4All</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ROADTools-GPT/notebook.html">ROADTools GPT</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Cyb3rWard0g/GPT-Security-Adventures/issues/new?title=Issue%20on%20page%20%2Fexperiments/ExternalAPIs/MSGraph/OAI-CreateUsers-Arguments.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/experiments/ExternalAPIs/MSGraph/OAI-CreateUsers-Arguments.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Explore MS Graph API to Create a User</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-ms-graph-user-openapi-specification">Download MS Graph (User) OpenAPI specification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-open-api-specification">Load Open API Specification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-open-ai-key">Initialize Open AI Key</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-chatopenai-model">Initialize ChatOpenAI Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-function-arguments">Generate Function Arguments</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="explore-ms-graph-api-to-create-a-user">
+<h1>Explore MS Graph API to Create a User<a class="headerlink" href="#explore-ms-graph-api-to-create-a-user" title="Permalink to this heading">#</a></h1>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>Collaborators:</p>
+<ul>
+<li><p>Roberto Rodriguez (&#64;Cyb3rWard0g)</p></li>
+</ul>
+</li>
+<li><p>References:</p>
+<ul>
+<li><p><a class="reference external" href="https://python.langchain.com/docs/use_cases/apis">https://python.langchain.com/docs/use_cases/apis</a></p></li>
+<li><p><a class="reference external" href="https://python.langchain.com/docs/integrations/toolkits/openapi">https://python.langchain.com/docs/integrations/toolkits/openapi</a></p></li>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/graph/api/user-post-users?view=graph-rest-1.0&amp;amp;tabs=http">https://learn.microsoft.com/en-us/graph/api/user-post-users?view=graph-rest-1.0&amp;tabs=http</a></p></li>
+</ul>
+</li>
+</ul>
+<section id="download-ms-graph-user-openapi-specification">
+<h2>Download MS Graph (User) OpenAPI specification<a class="headerlink" href="#download-ms-graph-user-openapi-specification" title="Permalink to this heading">#</a></h2>
+<p>Location: <a class="github reference external" href="https://github.com/microsoftgraph/msgraph-sdk-powershell/blob/dev/openApiDocs/v1.0/Users.yml">microsoftgraph/msgraph-sdk-powershell</a></p>
+</section>
+<section id="load-open-api-specification">
+<h2>Load Open API Specification<a class="headerlink" href="#load-open-api-specification" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.chains.openai_functions.openapi</span> <span class="kn">import</span> <span class="n">openapi_spec_to_openai_fn</span>
+<span class="kn">from</span> <span class="nn">langchain.utilities.openapi</span> <span class="kn">import</span> <span class="n">OpenAPISpec</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">data_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span>
+<span class="n">msgraph_api_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_directory</span><span class="p">,</span> <span class="s2">&quot;OpenAPI-MSGraph-v1.0-Users.yml&quot;</span><span class="p">)</span>
+
+<span class="n">openapi_spec</span> <span class="o">=</span> <span class="n">OpenAPISpec</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">msgraph_api_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attempting to load an OpenAPI 3.0.1 spec.  This may result in degraded performance. Convert your OpenAPI spec to 3.1.* spec for better support.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_openai_functions</span><span class="p">,</span> <span class="n">graph_callables</span> <span class="o">=</span> <span class="n">openapi_spec_to_openai_fn</span><span class="p">(</span><span class="n">openapi_spec</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter If-Match. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+Unsupported APIPropertyLocation &quot;ParameterLocation.HEADER&quot; for parameter ConsistencyLevel. Valid values are [&#39;path&#39;, &#39;query&#39;] Ignoring optional parameter
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_openai_functions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;name&#39;: &#39;user_CreateUser&#39;,
+ &#39;description&#39;: &#39;Create a new user object.&#39;,
+ &#39;parameters&#39;: {&#39;type&#39;: &#39;object&#39;,
+  &#39;properties&#39;: {&#39;json&#39;: {&#39;allOf&#39;: [{&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.directoryObject&#39;},
+     {&#39;properties&#39;: {&#39;signInActivity&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.signInActivity&#39;},
+       &#39;accountEnabled&#39;: {&#39;type&#39;: &#39;boolean&#39;,
+        &#39;description&#39;: &#39;true if the account is enabled; otherwise, false. This property is required when a user is created. Returned only on $select. Supports $filter (eq, ne, not, and in).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;ageGroup&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Sets the age group of the user. Allowed values: null, Minor, NotAdult and Adult. For more information, see legal age group property definitions. Returned only on $select. Supports $filter (eq, ne, not, and in).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;assignedLicenses&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.assignedLicense&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;The licenses that are assigned to the user, including inherited (group-based) licenses. This property doesn&#39;t differentiate directly assigned and inherited licenses. Use the licenseAssignmentStates property to identify the directly assigned and inherited licenses.  Not nullable. Returned only on $select. Supports $filter (eq, not, /$count eq 0, /$count ne 0).&quot;},
+       &#39;assignedPlans&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.assignedPlan&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The plans that are assigned to the user. Read-only. Not nullable. Returned only on $select. Supports $filter (eq and not).&#39;},
+       &#39;authorizationInfo&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.authorizationInfo&#39;},
+       &#39;businessPhones&#39;: {&#39;items&#39;: {&#39;type&#39;: &#39;string&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The telephone numbers for the user. NOTE: Although this is a string collection, only one number can be set for this property. Read-only for users synced from on-premises directory. Returned by default. Supports $filter (eq, not, ge, le, startsWith).&#39;},
+       &#39;city&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;The city where the user is located. Maximum length is 128 characters. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;companyName&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;The name of the company that the user is associated with. This property can be useful for describing the company that an external user comes from. The maximum length is 64 characters.Returned only on $select. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;consentProvidedForMinor&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Sets whether consent has been obtained for minors. Allowed values: null, Granted, Denied and NotRequired. Refer to the legal age group property definitions for further information. Returned only on $select. Supports $filter (eq, ne, not, and in).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;country&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;The country or region where the user is located; for example, US or UK. Maximum length is 128 characters. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;createdDateTime&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;pattern&#39;: &#39;^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$&#39;,
+        &#39;schema_format&#39;: &#39;date-time&#39;,
+        &#39;description&#39;: &#39;The date and time the user was created, in ISO 8601 format and in UTC time. The value cannot be modified and is automatically populated when the entity is created. Nullable. For on-premises users, the value represents when they were first created in Azure AD. Property is null for some users created before June 2018 and on-premises users that were synced to Azure AD before June 2018. Read-only. Returned only on $select. Supports $filter (eq, ne, not , ge, le, in).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;creationType&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Indicates whether the user account was created through one of the following methods:  As a regular school or work account (null). As an external account (Invitation). As a local account for an Azure Active Directory B2C tenant (LocalAccount). Through self-service sign-up by an internal user using email verification (EmailVerified). Through self-service sign-up by an external user signing up through a link that is part of a user flow (SelfServiceSignUp). Read-only.Returned only on $select. Supports $filter (eq, ne, not, in).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;customSecurityAttributes&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.customSecurityAttributeValue&#39;},
+       &#39;department&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;The name for the department in which the user works. Maximum length is 64 characters. Returned only on $select. Supports $filter (eq, ne, not , ge, le, in, and eq on null values).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;displayName&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;The name displayed in the address book for the user. This is usually the combination of the user&#39;s first name, middle initial and last name. This property is required when a user is created and it cannot be cleared during updates. Maximum length is 256 characters. Returned by default. Supports $filter (eq, ne, not , ge, le, in, startsWith, and eq on null values), $orderby, and $search.&quot;,
+        &#39;nullable&#39;: True},
+       &#39;employeeHireDate&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;pattern&#39;: &#39;^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$&#39;,
+        &#39;schema_format&#39;: &#39;date-time&#39;,
+        &#39;description&#39;: &#39;The date and time when the user was hired or will start work in case of a future hire. Returned only on $select. Supports $filter (eq, ne, not , ge, le, in).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;employeeId&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;The employee identifier assigned to the user by the organization. The maximum length is 16 characters. Returned only on $select. Supports $filter (eq, ne, not , ge, le, in, startsWith, and eq on null values).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;employeeLeaveDateTime&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;pattern&#39;: &#39;^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$&#39;,
+        &#39;schema_format&#39;: &#39;date-time&#39;,
+        &#39;description&#39;: &#39;The date and time when the user left or will leave the organization. To read this property, the calling app must be assigned the User-LifeCycleInfo.Read.All permission. To write this property, the calling app must be assigned the User.Read.All and User-LifeCycleInfo.ReadWrite.All permissions. To read this property in delegated scenarios, the admin needs one of the following Azure AD roles: Lifecycle Workflows Administrator, Global Reader, or Global Administrator. To write this property in delegated scenarios, the admin needs the Global Administrator role. Supports $filter (eq, ne, not , ge, le, in). For more information, see Configure the employeeLeaveDateTime property for a user.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;employeeOrgData&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.employeeOrgData&#39;},
+       &#39;employeeType&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Captures enterprise worker type. For example, Employee, Contractor, Consultant, or Vendor. Returned only on $select. Supports $filter (eq, ne, not , ge, le, in, startsWith).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;externalUserState&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;For an external user invited to the tenant using the invitation API, this property represents the invited user&#39;s invitation status. For invited users, the state can be PendingAcceptance or Accepted, or null for all other users. Returned only on $select. Supports $filter (eq, ne, not , in).&quot;,
+        &#39;nullable&#39;: True},
+       &#39;externalUserStateChangeDateTime&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;pattern&#39;: &#39;^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$&#39;,
+        &#39;schema_format&#39;: &#39;date-time&#39;,
+        &#39;description&#39;: &#39;Shows the timestamp for the latest change to the externalUserState property. Returned only on $select. Supports $filter (eq, ne, not , in).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;faxNumber&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;The fax number of the user. Returned only on $select. Supports $filter (eq, ne, not , ge, le, in, startsWith, and eq on null values).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;givenName&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;The given name (first name) of the user. Maximum length is 64 characters. Returned by default. Supports $filter (eq, ne, not , ge, le, in, startsWith, and eq on null values).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;identities&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.objectIdentity&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;Represents the identities that can be used to sign in to this user account. An identity can be provided by Microsoft (also known as a local account), by organizations, or by social identity providers such as Facebook, Google, and Microsoft, and tied to a user account. May contain multiple items with the same signInType value. Returned only on $select. Supports $filter (eq) including on null values, only where the signInType is not userPrincipalName.&#39;},
+       &#39;imAddresses&#39;: {&#39;items&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;nullable&#39;: True},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The instant message voice over IP (VOIP) session initiation protocol (SIP) addresses for the user. Read-only. Returned only on $select. Supports $filter (eq, not, ge, le, startsWith).&#39;},
+       &#39;isResourceAccount&#39;: {&#39;type&#39;: &#39;boolean&#39;,
+        &#39;description&#39;: &#39;Do not use â€“ reserved for future use.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;jobTitle&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;The user&#39;s job title. Maximum length is 128 characters. Returned by default. Supports $filter (eq, ne, not , ge, le, in, startsWith, and eq on null values).&quot;,
+        &#39;nullable&#39;: True},
+       &#39;lastPasswordChangeDateTime&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;pattern&#39;: &#39;^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$&#39;,
+        &#39;schema_format&#39;: &#39;date-time&#39;,
+        &#39;description&#39;: &#39;The time when this Azure AD user last changed their password or when their password was created, whichever date the latest action was performed. The date and time information uses ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Returned only on $select.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;legalAgeGroupClassification&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Used by enterprise applications to determine the legal age group of the user. This property is read-only and calculated based on ageGroup and consentProvidedForMinor properties. Allowed values: null, MinorWithOutParentalConsent, MinorWithParentalConsent, MinorNoParentalConsentRequired, NotAdult and Adult. Refer to the legal age group property definitions for further information. Returned only on $select.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;licenseAssignmentStates&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.licenseAssignmentState&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;State of license assignments for this user. Also indicates licenses that are directly assigned or the user has inherited through group memberships. Read-only. Returned only on $select.&#39;},
+       &#39;mail&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;The SMTP address for the user, for example, jeff@contoso.onmicrosoft.com. Changes to this property will also update the user&#39;s proxyAddresses collection to include the value as an SMTP address. This property can&#39;t contain accent characters.  NOTE: We don&#39;t recommend updating this property for Azure AD B2C user profiles. Use the otherMails property instead. Returned by default. Supports $filter (eq, ne, not, ge, le, in, startsWith, endsWith, and eq on null values).&quot;,
+        &#39;nullable&#39;: True},
+       &#39;mailNickname&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;The mail alias for the user. This property must be specified when a user is created. Maximum length is 64 characters. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;mobilePhone&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;The primary cellular telephone number for the user. Read-only for users synced from on-premises directory. Maximum length is 64 characters. Returned by default. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values) and $search.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;officeLocation&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;The office location in the user&#39;s place of business. Returned by default. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values).&quot;,
+        &#39;nullable&#39;: True},
+       &#39;onPremisesDistinguishedName&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Contains the on-premises Active Directory distinguished name or DN. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only. Returned only on $select.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;onPremisesDomainName&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Contains the on-premises domainFQDN, also called dnsDomainName synchronized from the on-premises directory. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only. Returned only on $select.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;onPremisesExtensionAttributes&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.onPremisesExtensionAttributes&#39;},
+       &#39;onPremisesImmutableId&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;This property is used to associate an on-premises Active Directory user account to their Azure AD user object. This property must be specified when creating a new user account in the Graph if you&#39;re using a federated domain for the user&#39;s userPrincipalName (UPN) property. NOTE: The $ and _ characters can&#39;t be used when specifying this property. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in)..&quot;,
+        &#39;nullable&#39;: True},
+       &#39;onPremisesLastSyncDateTime&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;pattern&#39;: &#39;^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$&#39;,
+        &#39;schema_format&#39;: &#39;date-time&#39;,
+        &#39;description&#39;: &#39;Indicates the last time at which the object was synced with the on-premises directory; for example: 2013-02-16T03:04:54Z. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;onPremisesProvisioningErrors&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.onPremisesProvisioningError&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;Errors when using Microsoft synchronization product during provisioning. Returned only on $select. Supports $filter (eq, not, ge, le).&#39;},
+       &#39;onPremisesSamAccountName&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Contains the on-premises samAccountName synchronized from the on-premises directory. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in, startsWith).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;onPremisesSecurityIdentifier&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Contains the on-premises security identifier (SID) for the user that was synchronized from on-premises to the cloud. Read-only. Returned only on $select.  Supports $filter (eq including on null values).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;onPremisesSyncEnabled&#39;: {&#39;type&#39;: &#39;boolean&#39;,
+        &#39;description&#39;: &quot;true if this user object is currently being synced from an on-premises Active Directory (AD); otherwise the user isn&#39;t being synced and can be managed in Azure Active Directory (Azure AD). Read-only. Returned only on $select. Supports $filter (eq, ne, not, in, and eq on null values).&quot;,
+        &#39;nullable&#39;: True},
+       &#39;onPremisesUserPrincipalName&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Contains the on-premises userPrincipalName synchronized from the on-premises directory. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in, startsWith).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;otherMails&#39;: {&#39;items&#39;: {&#39;type&#39;: &#39;string&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;A list of additional email addresses for the user; for example: [&#39;bob@contoso.com&#39;, &#39;Robert@fabrikam.com&#39;]. NOTE: This property can&#39;t contain accent characters. Returned only on $select. Supports $filter (eq, not, ge, le, in, startsWith, endsWith, /$count eq 0, /$count ne 0).&quot;},
+       &#39;passwordPolicies&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Specifies password policies for the user. This value is an enumeration with one possible value being DisableStrongPassword, which allows weaker passwords than the default policy to be specified. DisablePasswordExpiration can also be specified. The two may be specified together; for example: DisablePasswordExpiration, DisableStrongPassword. Returned only on $select. For more information on the default password policies, see Azure AD password policies. Supports $filter (ne, not, and eq on null values).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;passwordProfile&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.passwordProfile&#39;},
+       &#39;postalCode&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;The postal code for the user&#39;s postal address. The postal code is specific to the user&#39;s country/region. In the United States of America, this attribute contains the ZIP code. Maximum length is 40 characters. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values).&quot;,
+        &#39;nullable&#39;: True},
+       &#39;preferredDataLocation&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;The preferred data location for the user. For more information, see OneDrive Online Multi-Geo.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;preferredLanguage&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;The preferred language for the user. The preferred language format is based on RFC 4646. The name is a combination of an ISO 639 two-letter lowercase culture code associated with the language, and an ISO 3166 two-letter uppercase subculture code associated with the country or region. Example: &#39;en-US&#39;, or &#39;es-ES&#39;. Returned by default. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values)&quot;,
+        &#39;nullable&#39;: True},
+       &#39;provisionedPlans&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.provisionedPlan&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The plans that are provisioned for the user. Read-only. Not nullable. Returned only on $select. Supports $filter (eq, not, ge, le).&#39;},
+       &#39;proxyAddresses&#39;: {&#39;items&#39;: {&#39;type&#39;: &#39;string&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;For example: [&#39;SMTP: bob@contoso.com&#39;, &#39;smtp: bob@sales.contoso.com&#39;]. Changes to the mail property will also update this collection to include the value as an SMTP address. For more information, see mail and proxyAddresses properties. The proxy address prefixed with SMTP (capitalized) is the primary proxy address while those prefixed with smtp are the secondary proxy addresses. For Azure AD B2C accounts, this property has a limit of 10 unique addresses. Read-only in Microsoft Graph; you can update this property only through the Microsoft 365 admin center. Not nullable. Returned only on $select. Supports $filter (eq, not, ge, le, startsWith, endsWith, /$count eq 0, /$count ne 0).&quot;},
+       &#39;securityIdentifier&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;Security identifier (SID) of the user, used in Windows scenarios. Read-only. Returned by default. Supports $select and $filter (eq, not, ge, le, startsWith).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;serviceProvisioningErrors&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.serviceProvisioningError&#39;},
+        &#39;type&#39;: &#39;array&#39;},
+       &#39;showInAddressList&#39;: {&#39;type&#39;: &#39;boolean&#39;,
+        &#39;description&#39;: &#39;Do not use in Microsoft Graph. Manage this property through the Microsoft 365 admin center instead. Represents whether the user should be included in the Outlook global address list. See Known issue.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;signInSessionsValidFromDateTime&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;pattern&#39;: &#39;^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$&#39;,
+        &#39;schema_format&#39;: &#39;date-time&#39;,
+        &#39;description&#39;: &#39;Any refresh tokens or sessions tokens (session cookies) issued before this time are invalid, and applications get an error when using an invalid refresh or sessions token to acquire a delegated access token (to access APIs such as Microsoft Graph).  If this happens, the application needs to acquire a new refresh token by making a request to the authorize endpoint. Read-only. Use revokeSignInSessions to reset. Returned only on $select.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;state&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;The state or province in the user&#39;s address. Maximum length is 128 characters. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values).&quot;,
+        &#39;nullable&#39;: True},
+       &#39;streetAddress&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;The street address of the user&#39;s place of business. Maximum length is 1024 characters. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values).&quot;,
+        &#39;nullable&#39;: True},
+       &#39;surname&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;The user&#39;s surname (family name or last name). Maximum length is 64 characters. Returned by default. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values).&quot;,
+        &#39;nullable&#39;: True},
+       &#39;usageLocation&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;A two letter country code (ISO standard 3166). Required for users that are assigned licenses due to legal requirement to check for availability of services in countries.  Examples include: US, JP, and GB. Not nullable. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values).&#39;,
+        &#39;nullable&#39;: True},
+       &#39;userPrincipalName&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;The user principal name (UPN) of the user. The UPN is an Internet-style sign-in name for the user based on the Internet standard RFC 822. By convention, this should map to the user&#39;s email name. The general format is alias@domain, where domain must be present in the tenant&#39;s collection of verified domains. This property is required when a user is created. The verified domains for the tenant can be accessed from the verifiedDomains property of organization.NOTE: This property can&#39;t contain accent characters. Only the following characters are allowed A - Z, a - z, 0 - 9, &#39; . - _ ! # ^ ~. For the complete list of allowed characters, see username policies. Returned by default. Supports $filter (eq, ne, not, ge, le, in, startsWith, endsWith) and $orderby.&quot;,
+        &#39;nullable&#39;: True},
+       &#39;userType&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;A string value that can be used to classify user types in your directory, such as Member and Guest. Returned only on $select. Supports $filter (eq, ne, not, in, and eq on null values). NOTE: For more information about the permissions for member and guest users, see What are the default user permissions in Azure Active Directory?&#39;,
+        &#39;nullable&#39;: True},
+       &#39;mailboxSettings&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.mailboxSettings&#39;},
+       &#39;deviceEnrollmentLimit&#39;: {&#39;type&#39;: &#39;integer&#39;,
+        &#39;maximum&#39;: 2147483647.0,
+        &#39;minimum&#39;: -2147483648.0,
+        &#39;schema_format&#39;: &#39;int32&#39;,
+        &#39;description&#39;: &#39;The limit on the maximum number of devices that the user is permitted to enroll. Allowed values are 5 or 1000.&#39;},
+       &#39;print&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.userPrint&#39;},
+       &#39;aboutMe&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;A freeform text entry field for the user to describe themselves. Returned only on $select.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;birthday&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;pattern&#39;: &#39;^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$&#39;,
+        &#39;schema_format&#39;: &#39;date-time&#39;,
+        &#39;description&#39;: &#39;The birthday of the user. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Returned only on $select.&#39;},
+       &#39;hireDate&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;pattern&#39;: &#39;^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$&#39;,
+        &#39;schema_format&#39;: &#39;date-time&#39;,
+        &#39;description&#39;: &#39;The hire date of the user. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Returned only on $select.  Note: This property is specific to SharePoint Online. We recommend using the native employeeHireDate property to set and update hire date values using Microsoft Graph APIs.&#39;},
+       &#39;interests&#39;: {&#39;items&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;nullable&#39;: True},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;A list for the user to describe their interests. Returned only on $select.&#39;},
+       &#39;mySite&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &quot;The URL for the user&#39;s personal site. Returned only on $select.&quot;,
+        &#39;nullable&#39;: True},
+       &#39;pastProjects&#39;: {&#39;items&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;nullable&#39;: True},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;A list for the user to enumerate their past projects. Returned only on $select.&#39;},
+       &#39;preferredName&#39;: {&#39;type&#39;: &#39;string&#39;,
+        &#39;description&#39;: &#39;The preferred name for the user. Not Supported. This attribute returns an empty string.Returned only on $select.&#39;,
+        &#39;nullable&#39;: True},
+       &#39;responsibilities&#39;: {&#39;items&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;nullable&#39;: True},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;A list for the user to enumerate their responsibilities. Returned only on $select.&#39;},
+       &#39;schools&#39;: {&#39;items&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;nullable&#39;: True},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;A list for the user to enumerate the schools they have attended. Returned only on $select.&#39;},
+       &#39;skills&#39;: {&#39;items&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;nullable&#39;: True},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;A list for the user to enumerate their skills. Returned only on $select.&#39;},
+       &#39;appRoleAssignments&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.appRoleAssignment&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;Represents the app roles a user has been granted for an application. Supports $expand.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;createdObjects&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.directoryObject&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;Directory objects that the user created. Read-only. Nullable.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;directReports&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.directoryObject&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The users and contacts that report to the user. (The users and contacts that have their manager property set to this user.) Read-only. Nullable. Supports $expand.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;licenseDetails&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.licenseDetails&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;A collection of this user&#39;s license details. Read-only.&quot;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;manager&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.directoryObject&#39;},
+       &#39;memberOf&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.directoryObject&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The groups and directory roles that the user is a member of. Read-only. Nullable. Supports $expand.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;oauth2PermissionGrants&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.oAuth2PermissionGrant&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;ownedDevices&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.directoryObject&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;Devices that are owned by the user. Read-only. Nullable. Supports $expand and $filter (/$count eq 0, /$count ne 0, /$count eq 1, /$count ne 1).&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;ownedObjects&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.directoryObject&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;Directory objects that are owned by the user. Read-only. Nullable. Supports $expand, $select nested in $expand, and $filter (/$count eq 0, /$count ne 0, /$count eq 1, /$count ne 1).&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;registeredDevices&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.directoryObject&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;Devices that are registered for the user. Read-only. Nullable. Supports $expand and returns up to 100 objects.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;scopedRoleMemberOf&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.scopedRoleMembership&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;transitiveMemberOf&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.directoryObject&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The groups, including nested groups, and directory roles that a user is a member of. Nullable.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;calendar&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.calendar&#39;},
+       &#39;calendarGroups&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.calendarGroup&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;The user&#39;s calendar groups. Read-only. Nullable.&quot;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;calendars&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.calendar&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;The user&#39;s calendars. Read-only. Nullable.&quot;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;calendarView&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.event&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The calendar view for the calendar. Read-only. Nullable.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;contactFolders&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.contactFolder&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;The user&#39;s contacts folders. Read-only. Nullable.&quot;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;contacts&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.contact&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;The user&#39;s contacts. Read-only. Nullable.&quot;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;events&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.event&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;The user&#39;s events. Default is to show Events under the Default Calendar. Read-only. Nullable.&quot;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;inferenceClassification&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.inferenceClassification&#39;},
+       &#39;mailFolders&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.mailFolder&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;The user&#39;s mail folders. Read-only. Nullable.&quot;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;messages&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.message&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The messages in a mailbox or folder. Read-only. Nullable.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;outlook&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.outlookUser&#39;},
+       &#39;people&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.person&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;People that are relevant to the user. Read-only. Nullable.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;drive&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.drive&#39;},
+       &#39;drives&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.drive&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;A collection of drives available for this user. Read-only.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;followedSites&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.site&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;extensions&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.extension&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The collection of open extensions defined for the user. Read-only. Supports $expand. Nullable.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;agreementAcceptances&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.agreementAcceptance&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;The user&#39;s terms of use acceptance statuses. Read-only. Nullable.&quot;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;managedDevices&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.managedDevice&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The managed devices associated with the user.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;managedAppRegistrations&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.managedAppRegistration&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;Zero or more managed app registrations that belong to the user.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;deviceManagementTroubleshootingEvents&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.deviceManagementTroubleshootingEvent&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &#39;The list of troubleshooting events for this user.&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;planner&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.plannerUser&#39;},
+       &#39;insights&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.officeGraphInsights&#39;},
+       &#39;settings&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.userSettings&#39;},
+       &#39;onenote&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.onenote&#39;},
+       &#39;photo&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.profilePhoto&#39;},
+       &#39;photos&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.profilePhoto&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;activities&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.userActivity&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;The user&#39;s activities across devices. Read-only. Nullable.&quot;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;onlineMeetings&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.onlineMeeting&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;description&#39;: &quot;Information about a meeting, including the URL used to join a meeting, the attendees&#39; list, and the description.&quot;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;presence&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.presence&#39;},
+       &#39;authentication&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.authentication&#39;},
+       &#39;chats&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.chat&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;joinedTeams&#39;: {&#39;items&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.team&#39;},
+        &#39;type&#39;: &#39;array&#39;,
+        &#39;x-ms-navigationProperty&#39;: True},
+       &#39;teamwork&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.userTeamwork&#39;},
+       &#39;todo&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.todo&#39;},
+       &#39;employeeExperience&#39;: {&#39;ref&#39;: &#39;#/components/schemas/microsoft.graph.employeeExperienceUser&#39;}},
+      &#39;additionalProperties&#39;: {&#39;type&#39;: &#39;object&#39;},
+      &#39;type&#39;: &#39;object&#39;,
+      &#39;title&#39;: &#39;user&#39;}]}}}}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># InvalidRequestError: &#39;$.functions&#39; is too long. Maximum length is 128, but got 179 items.</span>
+<span class="n">createuser_graph_openai_function</span> <span class="o">=</span> <span class="n">graph_openai_functions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initialize-open-ai-key">
+<h2>Initialize Open AI Key<a class="headerlink" href="#initialize-open-ai-key" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.chat_models</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">import</span> <span class="nn">openai</span>
+
+<span class="c1"># Get your key: https://platform.openai.com/account/api-keys</span>
+<span class="n">load_dotenv</span><span class="p">()</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initialize-chatopenai-model">
+<h2>Initialize ChatOpenAI Model<a class="headerlink" href="#initialize-chatopenai-model" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">functions</span><span class="o">=</span><span class="p">[</span><span class="n">createuser_graph_openai_function</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generate-function-arguments">
+<h2>Generate Function Arguments<a class="headerlink" href="#generate-function-arguments" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;Create user Roberto Rodriguez in the security research department working in the US and as a disabled account. &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AIMessage(content=&#39;&#39;, additional_kwargs={&#39;function_call&#39;: {&#39;name&#39;: &#39;user_CreateUser&#39;, &#39;arguments&#39;: &#39;{\n  &quot;json&quot;: {\n    &quot;signInActivity&quot;: {},\n    &quot;accountEnabled&quot;: false,\n    &quot;ageGroup&quot;: &quot;&quot;,\n    &quot;assignedLicenses&quot;: [],\n    &quot;assignedPlans&quot;: [],\n    &quot;authorizationInfo&quot;: {},\n    &quot;businessPhones&quot;: [],\n    &quot;city&quot;: &quot;&quot;,\n    &quot;companyName&quot;: &quot;&quot;,\n    &quot;consentProvidedForMinor&quot;: &quot;&quot;,\n    &quot;country&quot;: &quot;US&quot;,\n    &quot;createdDateTime&quot;: &quot;&quot;,\n    &quot;creationType&quot;: &quot;&quot;,\n    &quot;customSecurityAttributes&quot;: {},\n    &quot;department&quot;: &quot;Security Research&quot;,\n    &quot;displayName&quot;: &quot;Roberto Rodriguez&quot;,\n    &quot;employeeHireDate&quot;: &quot;&quot;,\n    &quot;employeeId&quot;: &quot;&quot;,\n    &quot;employeeLeaveDateTime&quot;: &quot;&quot;,\n    &quot;employeeOrgData&quot;: {},\n    &quot;employeeType&quot;: &quot;&quot;,\n    &quot;externalUserState&quot;: &quot;&quot;,\n    &quot;externalUserStateChangeDateTime&quot;: &quot;&quot;,\n    &quot;faxNumber&quot;: &quot;&quot;,\n    &quot;givenName&quot;: &quot;Roberto&quot;,\n    &quot;identities&quot;: [],\n    &quot;imAddresses&quot;: [],\n    &quot;isResourceAccount&quot;: false,\n    &quot;jobTitle&quot;: &quot;&quot;,\n    &quot;lastPasswordChangeDateTime&quot;: &quot;&quot;,\n    &quot;legalAgeGroupClassification&quot;: &quot;&quot;,\n    &quot;licenseAssignmentStates&quot;: [],\n    &quot;mail&quot;: &quot;&quot;,\n    &quot;mailNickname&quot;: &quot;&quot;,\n    &quot;mobilePhone&quot;: &quot;&quot;,\n    &quot;officeLocation&quot;: &quot;&quot;,\n    &quot;onPremisesDistinguishedName&quot;: &quot;&quot;,\n    &quot;onPremisesDomainName&quot;: &quot;&quot;,\n    &quot;onPremisesExtensionAttributes&quot;: {},\n    &quot;onPremisesImmutableId&quot;: &quot;&quot;,\n    &quot;onPremisesLastSyncDateTime&quot;: &quot;&quot;,\n    &quot;onPremisesProvisioningErrors&quot;: [],\n    &quot;onPremisesSamAccountName&quot;: &quot;&quot;,\n    &quot;onPremisesSecurityIdentifier&quot;: &quot;&quot;,\n    &quot;onPremisesSyncEnabled&quot;: false,\n    &quot;onPremisesUserPrincipalName&quot;: &quot;&quot;,\n    &quot;otherMails&quot;: [],\n    &quot;passwordPolicies&quot;: &quot;&quot;,\n    &quot;passwordProfile&quot;: {},\n    &quot;postalCode&quot;: &quot;&quot;,\n    &quot;preferredDataLocation&quot;: &quot;&quot;,\n    &quot;preferredLanguage&quot;: &quot;&quot;,\n    &quot;provisionedPlans&quot;: [],\n    &quot;proxyAddresses&quot;: [],\n    &quot;securityIdentifier&quot;: &quot;&quot;,\n    &quot;serviceProvisioningErrors&quot;: [],\n    &quot;showInAddressList&quot;: false,\n    &quot;signInSessionsValidFromDateTime&quot;: &quot;&quot;,\n    &quot;state&quot;: &quot;&quot;,\n    &quot;streetAddress&quot;: &quot;&quot;,\n    &quot;surname&quot;: &quot;Rodriguez&quot;,\n    &quot;usageLocation&quot;: &quot;&quot;,\n    &quot;userPrincipalName&quot;: &quot;&quot;,\n    &quot;userType&quot;: &quot;&quot;,\n    &quot;mailboxSettings&quot;: {},\n    &quot;deviceEnrollmentLimit&quot;: 0,\n    &quot;print&quot;: {},\n    &quot;aboutMe&quot;: &quot;&quot;,\n    &quot;birthday&quot;: &quot;&quot;,\n    &quot;hireDate&quot;: &quot;&quot;,\n    &quot;interests&quot;: [],\n    &quot;mySite&quot;: &quot;&quot;,\n    &quot;pastProjects&quot;: [],\n    &quot;preferredName&quot;: &quot;&quot;,\n    &quot;responsibilities&quot;: [],\n    &quot;schools&quot;: [],\n    &quot;skills&quot;: [],\n    &quot;appRoleAssignments&quot;: [],\n    &quot;createdObjects&quot;: [],\n    &quot;directReports&quot;: [],\n    &quot;licenseDetails&quot;: [],\n    &quot;manager&quot;: {},\n    &quot;memberOf&quot;: [],\n    &quot;oauth2PermissionGrants&quot;: [],\n    &quot;ownedDevices&quot;: [],\n    &quot;ownedObjects&quot;: [],\n    &quot;registeredDevices&quot;: [],\n    &quot;scopedRoleMemberOf&quot;: [],\n    &quot;transitiveMemberOf&quot;: [],\n    &quot;calendar&quot;: {},\n    &quot;calendarGroups&quot;: [],\n    &quot;calendars&quot;: [],\n    &quot;calendarView&quot;: [],\n    &quot;contactFolders&quot;: [],\n    &quot;contacts&quot;: [],\n    &quot;events&quot;: [],\n    &quot;inferenceClassification&quot;: {},\n    &quot;mailFolders&quot;: [],\n    &quot;messages&quot;: [],\n    &quot;outlook&quot;: {},\n    &quot;people&quot;: [],\n    &quot;drive&quot;: {},\n    &quot;drives&quot;: [],\n    &quot;followedSites&quot;: [],\n    &quot;extensions&quot;: [],\n    &quot;agreementAcceptances&quot;: [],\n    &quot;managedDevices&quot;: [],\n    &quot;managedAppRegistrations&quot;: [],\n    &quot;deviceManagementTroubleshootingEvents&quot;: [],\n    &quot;planner&quot;: {},\n    &quot;insights&quot;: {},\n    &quot;settings&quot;: {},\n    &quot;onenote&quot;: {},\n    &quot;photo&quot;: {},\n    &quot;photos&quot;: [],\n    &quot;activities&quot;: [],\n    &quot;onlineMeetings&quot;: [],\n    &quot;presence&quot;: {},\n    &quot;authentication&quot;: {},\n    &quot;chats&quot;: [],\n    &quot;joinedTeams&quot;: [],\n    &quot;teamwork&quot;: {},\n    &quot;todo&quot;: {},\n    &quot;employeeExperience&quot;: {}\n  }\n}&#39;}})
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./experiments/ExternalAPIs/MSGraph"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../Agents/CoT/Local-CoT-Ollama-LiteLLM-Zephyr.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">CoT Reasoning: Chatting with Zephyr 7b Beta</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="OAI-MSGraph-Users-Agent.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">A MS Graph API (Users) Agent</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-ms-graph-user-openapi-specification">Download MS Graph (User) OpenAPI specification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-open-api-specification">Load Open API Specification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-open-ai-key">Initialize Open AI Key</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-chatopenai-model">Initialize ChatOpenAI Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-function-arguments">Generate Function Arguments</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Roberto Rodriguez @Cyb3rWard0g
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

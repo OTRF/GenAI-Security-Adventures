@@ -15,3 +15,4 @@ We encourage everyone interested in exploring the connection between security an
 ## Presentations
 
 * X33fcon 2023 - Empowering Security Teams with Generative AI: Fundamentals and Applications of GPT models ([slides](https://1drv.ms/b/s!Al3n8YlNIUPUhk0s7GVXOnA53ggE?e=N7jhVP))
+* NDC Security 2023 - Empowering Security Teams with Generative AI: Fundamentals and Applications of GPT models ([slides](https://www.canva.com/design/DAF5d45kTik/t0te4HGMeqL0ja9-ZOzh0g/view?utm_content=DAF5d45kTik&utm_campaign=designshare&utm_medium=link&utm_source=editor))

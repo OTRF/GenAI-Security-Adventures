@@ -9,15 +9,19 @@ parts:
     - file: getting-started/Embeddings
   - caption: Experiments
     chapters:
+    - file: experiments/Basics/OAI-GPT-Basic-ChatCompletion
+    - file: experiments/Basics/Local-Ollama-LiteLLM-Zephyr
     - file: experiments/Basics/Local-Tokenizing-Embedding
     - file: experiments/Basics/Local-Inferring-Sentiment
     - file: experiments/Basics/OAI-Inferring-Sentiment
     - file: experiments/Basics/OAI-Summarizing-Incident
+    - file: experiments/Basics/OAI-GPT4-Vision-Security
     - file: experiments/RAG/Threat-Intelligence/ATTCK-Groups/source-knowledge/notebook
     - file: experiments/RAG/Threat-Intelligence/ATTCK-Groups/LangChain/notebook
     - file: experiments/RAG/Threat-Intelligence/ATTCK-Groups/AutoGen/notebook
-    - file: experiments/ExternalAPIs/OAI-CreateUsers-Arguments
-    - file: experiments/ExternalAPIs/OAI-MSGraph-Users-Agent
+    - file: experiments/Agents/CoT/Local-CoT-Ollama-LiteLLM-Zephyr
+    - file: experiments/ExternalAPIs/MSGraph/OAI-CreateUsers-Arguments
+    - file: experiments/ExternalAPIs/MSGraph/OAI-MSGraph-Users-Agent
     - file: experiments/Bloodhound-GPT/notebook
     - file: experiments/Local-GPT/notebook
     - file: experiments/ROADTools-GPT/notebook

@@ -14,5 +14,6 @@ We encourage everyone interested in exploring the connection between security an
 
 ## Presentations
 
-* X33fcon 2023 - Empowering Security Teams with Generative AI: Fundamentals and Applications of GPT models ([slides](https://1drv.ms/b/s!Al3n8YlNIUPUhk0s7GVXOnA53ggE?e=N7jhVP))
-* NDC Security 2023 - Empowering Security Teams with Generative AI: Fundamentals and Applications of GPT models ([slides](https://www.canva.com/design/DAF5d45kTik/t0te4HGMeqL0ja9-ZOzh0g/view?utm_content=DAF5d45kTik&utm_campaign=designshare&utm_medium=link&utm_source=editor))
+* 2023 - X33fcon (Poland): Empowering Security Teams with Generative AI: Fundamentals and Applications of GPT models ([Slides](https://1drv.ms/b/s!Al3n8YlNIUPUhk0s7GVXOnA53ggE?e=N7jhVP))
+* 2024 - NDC Security (Norway): Empowering Security Teams with Generative AI: Fundamentals and Applications of GPT models ([Slides](https://1drv.ms/b/s!Al3n8YlNIUPUj21iXHY3Gm3O4q_e?e=ia5lKc))
+* 2024 - SANS CTI Summit (USA): Beyond the Basics - The Role of LLMs in Threat Intelligence ([Slides](https://1drv.ms/b/s!Al3n8YlNIUPUj2q5uxCdXektWY6r?e=uq5am5))
